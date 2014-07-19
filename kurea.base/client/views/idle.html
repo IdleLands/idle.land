@@ -1,10 +1,107 @@
 <template name="idle">
-    I am a idle
     {{#each players}}
-        <a href="{{pathFor 'idle.player' name=name}}">{{name}}</a>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="{{pathFor 'idle.player' name=name}}">{{name}}</a>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        Level {{level.__current}}
+                    </div>
+                    <div>
+                        {{professionName}}
+                    </div>
+                </div>
+            </div>
+        </div>
     {{/each}}
 </template>
 
 <template name="idle.player">
-    I am {{name}}
+    <a href="{{pathFor 'idle'}}">&laquo; Back to Player List</a>
+    <div class="row">
+        <h1>{{name}}, the level {{level.__current}}&nbsp;{{professionName}}</h1>
+        <h4>{{ personalityString }}</h4>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Maximum HP</div>
+                                <div class="panel-body">{{hp.maximum}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Maximum MP</div>
+                                <div class="panel-body">{{mp.maximum}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">XP</div>
+                                <div class="panel-body">{{xp.__current}}/{{xp.maximum}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Special Stat</div>
+                                <div class="panel-body">{{special.__current}}/{{special.maximum}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{#each equipment}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                {{type}} - {{name}}
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    {{> stat name='str' val=str width='col-md-1'}}
+                                    {{> stat name='con' val=con width='col-md-1'}}
+                                    {{> stat name='dex' val=dex width='col-md-1'}}
+                                    {{> stat name='int' val=int width='col-md-1'}}
+                                    {{> stat name='wis' val=wis width='col-md-1'}}
+                                    {{> stat name='agi' val=agi width='col-md-1'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{map}} - {{x}},{{y}}</div>
+                        <div class="panel-body">Map image will go here</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                player stats
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="__stat">
+    <div class="{{width}} text-right">{{name}}</div>
+    <div class="{{width}} stat-value">{{val}}</div>
 </template>
