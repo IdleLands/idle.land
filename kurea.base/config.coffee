@@ -1,6 +1,10 @@
 
 @Messages = new Meteor.Collection "Log_messages"
-@Players = []
+
+IdleMeteor = DDP.connect "http://localhost:10023"
+IdleMeteor.subscribe "players"
+#TODO Fallback
+IdlePlayers = @IdlePlayers = new Meteor.Collection "players", connection: IdleMeteor
 
 if Meteor.isServer
   Meteor.startup ->
@@ -13,4 +17,4 @@ if Meteor.isClient
     @route "home", path: "/"
     @route "log", path: "/log"
     @route "idle", path: "/idle"
-    #@route "idle.player", path: "/idle/:name", data: => @Players.findOne @params.name
+    @route "idle.player", path: "/idle/:name", data: -> IdlePlayers.findOne {name:@params.name}

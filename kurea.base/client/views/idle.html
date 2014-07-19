@@ -1,3 +1,10 @@
 <template name="idle">
     I am a idle
+    {{#each players}}
+        <a href="{{pathFor 'idle.player' name=name}}">{{name}}</a>
+    {{/each}}
+</template>
+
+<template name="idle.player">
+    I am {{name}}
 </template>
