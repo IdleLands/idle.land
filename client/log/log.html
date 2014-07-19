@@ -1,6 +1,30 @@
 <template name="log">
     <h2>I'm a log!</h2>
+    <div class="row">
+        <div class="col-md-2 text-right lead">Server</div>
+        <div class="col-md-4">
+            <select id="server-select" class="select2 form-control" data-placeholder="Select a server...">
+                <option></option>
+                {{#each servers}}
+                    <option>{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-md-2 text-right lead">Channel</div>
+        <div class="col-md-4">
+            <select id="channel-select" class="select2 form-control" data-placeholder="Select a server first...">
+                <option></option>
+                {{#each channels}}
+                    <option>{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
     {{#each messages}}
-        <span>{{message}}</span>
+        <div class="row">
+            <div class="col-md-2">{{timestamp}}</div>
+            <div class="col-md-2">{{sender}}</div>
+            <div class="col-md-8">{{message}}</div>
+        </div>
     {{/each}}
 </template>

@@ -1,6 +1,7 @@
 
 @Messages = new Meteor.Collection "Log_messages"
 
+
 if Meteor.isServer
   Meteor.startup ->
 

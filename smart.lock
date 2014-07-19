@@ -3,7 +3,10 @@
   "dependencies": {
     "basePackages": {
       "bootstrap-3": {},
-      "iron-router": {}
+      "iron-router": {},
+      "select2": {},
+      "lodash": {},
+      "select2-bootstrap3-css": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -15,6 +18,21 @@
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.7.1",
         "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
+      },
+      "select2": {
+        "git": "https://github.com/nate-strauser/meteor-select2.git",
+        "tag": "v3.4.5",
+        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
+      },
+      "lodash": {
+        "git": "https://github.com/alethes/meteor-lodash.git",
+        "tag": "v0.7.1",
+        "commit": "57bbeb3e21c31b64641f9885bb2f390b84f8b925"
+      },
+      "select2-bootstrap3-css": {
+        "git": "https://github.com/esperadomedia/meteor-select2-bootstrap3-css.git",
+        "tag": "v0.0.5",
+        "commit": "ac0c74d4b110c4c5149f17bb33c3e9bb4f77eb88"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
