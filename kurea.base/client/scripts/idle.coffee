@@ -12,9 +12,13 @@ if Meteor.isClient
       .find {}, {sort: {'level.__current': -1}}
 
   Template['idle.player'].helpers
-    stat: (name, val, width) ->
+    stat: (name, val, valP, width) ->
       Template.__stat
 
   Template.__stat.rendered = ->
-    item = @$('.stat-value')
-    item.addClass statClass parseInt($(item).text())
+    @$('.stat-value').each ->
+      me = $(this)
+      me.addClass statClass parseInt(me.text())
+
+      if me.text() is '%'
+        me.text('0%')
