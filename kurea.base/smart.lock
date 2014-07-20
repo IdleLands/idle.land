@@ -6,7 +6,9 @@
       "iron-router": {},
       "select2": {},
       "lodash": {},
-      "select2-bootstrap3-css": {}
+      "select2-bootstrap3-css": {},
+      "font-awesome": {},
+      "jq-knob": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -33,6 +35,16 @@
         "git": "https://github.com/esperadomedia/meteor-select2-bootstrap3-css.git",
         "tag": "v0.0.5",
         "commit": "ac0c74d4b110c4c5149f17bb33c3e9bb4f77eb88"
+      },
+      "font-awesome": {
+        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
+        "tag": "v4.1.0",
+        "commit": "ce6b1e92715d1938babc5d69c655c17e387f5926"
+      },
+      "jq-knob": {
+        "git": "https://github.com/strikeout/meteor-jq-knob.git",
+        "tag": "v0.0.1",
+        "commit": "41e5422d14b735d9fe6fd11d6bae11f1873f785d"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

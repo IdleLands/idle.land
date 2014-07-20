@@ -22,11 +22,9 @@ if Meteor.isClient
       return if not player
       player.personalityString = if player.personalityStrings.length > 0 then player.personalityStrings.join '' else "No personalities selected"
       player.equipment = _.sortBy player.equipment, (item) -> item.type
+      Session.set "player", player
       player
 
   UI.registerHelper 'partial', (templateName, options) ->
     console.log new Spacebars.SafeString Template[templateName]
-    console.log templateName
-    console.log options
-    console.log Template[templateName]
     new Spacebars.SafeString Template[templateName](options.hash)

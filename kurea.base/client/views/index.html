@@ -6,28 +6,28 @@
 </body>
 
 <template name="master">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{{pathFor 'home'}}">Kurea</a>
+    <header class="header skin-blue">
+        <a class="logo" href="{{pathFor 'home'}}">Kurea</a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Apps <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{pathFor 'log'}}">Log Viewer</a></li>
+                                <li><a href="{{pathFor 'idle'}}">Idle Lands</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown">Apps <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{pathFor 'log'}}">Log Viewer</a></li>
-                            <li><a href="{{pathFor 'idle'}}">Idle Lands</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div id="content">
-        <div class="container">
+        </nav>
+    </header>
+    <div class="wrapper">
+        <aside class="right-side">
             {{> yield}}
-        </div>
+        </aside>
     </div>
 </template>
 

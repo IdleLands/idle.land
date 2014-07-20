@@ -1,0 +1,15 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "jq-knob": {}
+    },
+    "packages": {
+      "jq-knob": {
+        "git": "https://github.com/strikeout/meteor-jq-knob.git",
+        "tag": "v0.0.1",
+        "commit": "41e5422d14b735d9fe6fd11d6bae11f1873f785d"
+      }
+    }
+  }
+}

@@ -1,10 +1,25 @@
 
-
-
 statClass = (val) ->
   ret = "text-danger" if val < 0
   ret = "text-success" if val > 0
   ret
+
+renderKnob = ->
+  setTimeout ->
+    $(".knob").knob
+      min: 0
+      thickness: 0.1
+      height: 90
+      width: 150
+      angleArc: 180
+      angleOffset: -90
+      displayPrevious: true
+      fgColor: "#004224"
+      bgColor: "#00a65a"
+      skin: "tron"
+      stepsize: 0.1
+      readOnly: true
+  , 1000
 
 if Meteor.isClient
   Template.idle.players = =>
@@ -15,6 +30,18 @@ if Meteor.isClient
     stat: (name, val, valP, width) ->
       Template.__stat
 
+    knob: (stat) ->
+      renderKnob()
+      Session.set 'lastUpdate', new Date()
+      Template.__knob
+
+  Template.__knob.rerendered = ->
+    Session.get 'lastUpdate'
+    renderKnob()
+
+  Template.__knob.rendered = ->
+    renderKnob()
+
   Template.__stat.rendered = ->
     @$('.stat-value').each ->
       me = $(this)
@@ -22,3 +49,9 @@ if Meteor.isClient
 
       if me.text() is '%'
         me.text('0%')
+
+  Deps.autorun ->
+    player = Session.get 'player'
+    return if not player or not $("#xpknob")[0]
+    $("#xpknob").empty()
+    UI.insert (UI.renderWithData Template.__knob, player.xp ), $('#xpknob')[0]

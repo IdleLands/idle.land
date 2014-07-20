@@ -4,6 +4,8 @@
     "iron-router": {},
     "select2": {},
     "lodash": {},
-    "select2-bootstrap3-css": {}
+    "select2-bootstrap3-css": {},
+    "font-awesome": {},
+    "jq-knob": {}
   }
 }
