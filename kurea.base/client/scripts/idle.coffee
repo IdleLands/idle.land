@@ -35,6 +35,21 @@ if Meteor.isClient
       Session.set 'lastUpdate', new Date()
       Template.__knob
 
+  Template['idle.player'].totalStats = ->
+    player = Session.get 'player'
+    return if not player
+
+    statTotals = {}
+    _.each player.equipment, (item) ->
+      _.each ['str', 'dex', 'int', 'wis', 'agi', 'con', 'fire', 'ice', 'thunder', 'earth', 'water'], (stat) ->
+        statPerc = "#{stat}Percent"
+        statTotals[stat] = 0 if not (stat of statTotals)
+        statTotals[statPerc] = 0 if not (statPerc of statTotals)
+        statTotals[stat] += item[stat] if (stat of item)
+        statTotals[statPerc] += item[statPerc] if (statPerc of item)
+
+    statTotals
+
   Template.__knob.rerendered = ->
     Session.get 'lastUpdate'
     renderKnob()
