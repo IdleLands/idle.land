@@ -1,5 +1,5 @@
 
-@Messages = new Meteor.Collection "Log_messages"
+#@Messages = new Meteor.Collection "Log_messages"
 
 IdleMeteor = DDP.connect "http://localhost:10023"
 IdleMeteor.subscribe "players"
@@ -15,7 +15,7 @@ if Meteor.isClient
 
   Router.map ->
     @route "home", path: "/"
-    @route "log", path: "/log"
+    #@route "log", path: "/log"
     @route "idle", path: "/idle"
     @route "idle.player", path: "/idle/:name", data: ->
       player = IdlePlayers.findOne {name:@params.name}
@@ -24,7 +24,3 @@ if Meteor.isClient
       player.equipment = _.sortBy player.equipment, (item) -> item.type
       Session.set "player", player
       player
-
-  UI.registerHelper 'partial', (templateName, options) ->
-    console.log new Spacebars.SafeString Template[templateName]
-    new Spacebars.SafeString Template[templateName](options.hash)
