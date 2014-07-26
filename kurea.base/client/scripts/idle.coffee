@@ -4,22 +4,30 @@ statClass = (val) ->
   ret = "text-success" if val > 0
   ret
 
+globalGauge = null
+
 renderKnob = ->
-  setTimeout ->
-    $(".knob").knob
-      min: 0
-      thickness: 0.1
-      height: 90
-      width: 150
-      angleArc: 180
-      angleOffset: -90
-      displayPrevious: true
-      fgColor: "#004224"
-      bgColor: "#00a65a"
-      skin: "tron"
-      stepsize: 0.1
-      readOnly: true
-  , 1000
+  xpEl = document.getElementById "xpknob"
+  player = Session.get 'player'
+  if not globalGauge
+    opts =
+      lines: 12
+      angle: 0
+      lineWidth: 0.07
+      pointer:
+        length: 0.9
+        strokeWidth: 0.035
+        color: '#000000'
+      limitMax: 'false'
+      colorStart: '#66CD00'
+      colorStop: '#3B5323'
+      strokeColor: '#EEEEEE'
+      generateGradient: true
+
+    globalGauge = new Donut(xpEl).setOptions opts
+
+  globalGauge.maxValue = player.xp.maximum
+  globalGauge.set player.xp.__current
 
 if Meteor.isClient
   Template.idle.players = =>
@@ -50,11 +58,7 @@ if Meteor.isClient
 
     statTotals
 
-  Template.__knob.rerendered = ->
-    Session.get 'lastUpdate'
-    renderKnob()
-
-  Template.__knob.rendered = ->
+  Template['idle.player'].rendered = ->
     renderKnob()
 
   Template.__stat.rendered = ->
@@ -68,5 +72,4 @@ if Meteor.isClient
   Deps.autorun ->
     player = Session.get 'player'
     return if not player or not $("#xpknob")[0]
-    $("#xpknob").empty()
-    UI.insert (UI.renderWithData Template.__knob, player.xp ), $('#xpknob')[0]
+    renderKnob()
