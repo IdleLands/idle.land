@@ -85,6 +85,8 @@ if Meteor.isClient
 
   Template['idle.player'].rendered = ->
     renderKnob()
+    $(".content-inner, body, html").scrollTop 0
+    $(window).scrollTop 0
 
   Template.__stat.rendered = ->
     @$('.stat-value').each ->
@@ -92,9 +94,4 @@ if Meteor.isClient
       me.addClass statClass parseInt(me.text())
 
       if me.text() is '%'
-        me.text('0%')
-
-  Deps.autorun ->
-    Deps.afterFlush ->
-      $(".content-inner").scrollTop(0)
-      $(window).scrollTop(0)
+        me.text '0%'
