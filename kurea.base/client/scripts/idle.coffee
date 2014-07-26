@@ -5,6 +5,24 @@ statClass = (val) ->
   ret
 
 globalGauge = null
+currentLevel = null
+
+checkLevel = ->
+  player = Session.get 'player'
+  if not currentLevel
+    currentLevel = player.level.__current
+
+  nowLevel = player.level.__current
+
+  if nowLevel > currentLevel
+    currentLevel = nowLevel
+
+    new PNotify
+      title: "Level Up!"
+      text: "#{player.name} is now level #{currentLevel}."
+      desktop:
+        desktop: yes
+
 
 renderKnob = ->
   xpEl = document.getElementById "xpknob"
@@ -29,7 +47,10 @@ renderKnob = ->
   globalGauge.maxValue = player.xp.maximum
   globalGauge.set player.xp.__current
 
+  do checkLevel
+
 if Meteor.isClient
+  do PNotify.desktop.permission
   Template.idle.players = =>
     @IdlePlayers
       .find {}, {sort: {'level.__current': -1}}

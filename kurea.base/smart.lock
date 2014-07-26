@@ -7,7 +7,8 @@
       "select2": {},
       "lodash": {},
       "select2-bootstrap3-css": {},
-      "font-awesome": {}
+      "font-awesome": {},
+      "pnotify": {}
     },
     "packages": {
       "bootstrap-3": {
@@ -39,6 +40,11 @@
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
         "tag": "v4.1.0",
         "commit": "ce6b1e92715d1938babc5d69c655c17e387f5926"
+      },
+      "pnotify": {
+        "git": "https://github.com/kidovate/meteor-pnotify.git",
+        "tag": "v2.0.6",
+        "commit": "cbd0bb220d03b20b247e4a6a7bdfc3d2c8064216"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
