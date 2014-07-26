@@ -95,6 +95,6 @@ if Meteor.isClient
         me.text('0%')
 
   Deps.autorun ->
-    player = Session.get 'player'
-    return if not player or not $("#xpknob")[0]
-    renderKnob()
+    Deps.afterFlush ->
+      $(".content-inner").scrollTop(0)
+      $(window).scrollTop(0)
