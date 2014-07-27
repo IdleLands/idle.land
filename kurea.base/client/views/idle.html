@@ -6,6 +6,16 @@
         </ol>
     </section>
     <section class="content">
+        <div class="filters form-inline">
+            <span class="h3">Filters: </span>
+            <input class="form-control" placeholder="Search by name..."/>
+            <select class="form-control">
+                {{#each stats}}
+                    <option value="{{value}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <hr>
         {{#each players}}
         <div class="col-md-3 col-sm-3 col-xs-6">
             <div class="small-box bg-blue">

@@ -23,4 +23,5 @@ if Meteor.isClient
       player.personalityString = if player.personalityStrings?.length > 0 then player.personalityStrings.join '' else "No personalities selected"
       player.equipment = _.sortBy player.equipment, (item) -> item.type
       Session.set "player", player
+      player.statsArray = _.sortBy (_.keys player.statistics or []), (v) -> v
       player

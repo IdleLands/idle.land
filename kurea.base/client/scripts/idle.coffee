@@ -56,12 +56,30 @@ if Meteor.isClient
   currentLevel = null
 
   Template.idle.players = =>
+    lastMonth = new Date
+    lastMonth.setDate lastMonth.getDate() - 30
+
     @IdlePlayers
-      .find {}, {sort: {'level.__current': -1}}
+      .find {lastLogin: {$gt: lastMonth}}, {sort: {'level.__current': -1, 'name': 1}}
+
+  Template.idle.stats = =>
+    [
+      name: "Level", value: "level.__current"
+      name: "STR", value: "int"
+      name: "DEX", value: "dex"
+      name: "CON", value: "con"
+      name: "AGI", value: "agi"
+      name: "INT", value: "int"
+      name: "WIS", value: "wis"
+    ]
 
   Template['idle.player'].helpers
     stat: (name, val, valP, width) ->
       Template.__stat
+
+    statisticsObj: (key) ->
+      val = Session.get('player')?.statistics[key] or 0
+      if _.isObject val then JSON.stringify val else val
 
     knob: (stat) ->
       renderKnob()
@@ -76,10 +94,20 @@ if Meteor.isClient
     _.each player.equipment, (item) ->
       _.each ['str', 'dex', 'int', 'wis', 'agi', 'con', 'fire', 'ice', 'thunder', 'earth', 'water'], (stat) ->
         statPerc = "#{stat}Percent"
+        statTt = "#{stat}Tooltip"
+        StatPercTt = "#{statPerc}Tooltip"
+
         statTotals[stat] = 0 if not (stat of statTotals)
         statTotals[statPerc] = 0 if not (statPerc of statTotals)
+        statTotals[statTt] = [] if not (statTt of statTotals)
+        statTotals[StatPercTt] = [] if not (StatPercTt of statTotals)
+
         statTotals[stat] += item[stat] if (stat of item)
         statTotals[statPerc] += item[statPerc] if (statPerc of item)
+        statTotals[statTt].push name: item.name, value: item[stat] if (stat of item) and item[stat] isnt 0
+        statTotals[StatPercTt].push name: item.name, value: item[stat] if (statPerc of item) and item[statPerc] isnt 0
+
+    Session.set "#{player.name}_stats", statTotals
 
     statTotals
 
@@ -89,9 +117,40 @@ if Meteor.isClient
     $(window).scrollTop 0
 
   Template.__stat.rendered = ->
-    @$('.stat-value').each ->
+    player = Session.get "player"
+    statTotals = Session.get "#{player.name}_stats"
+
+    @$('.stat-value, .stat-value-percent').each ->
       me = $(this)
       me.addClass statClass parseInt(me.text())
 
       if me.text() is '%'
         me.text '0%'
+
+    @$('.stat-value').popover 'destroy'
+    if this.data.val isnt 0
+
+      toolTipData = statTotals["#{this.data.name}Tooltip"]
+        ?.map (item) -> "<tr><td>#{item.name}</td><td>#{item.value}</td></tr>"
+        .join ""
+
+      @$('.stat-value').popover
+        html: true
+        content: "<table class='table table-striped table-condensed'>#{toolTipData}</table>"
+        placement: 'bottom'
+        trigger: 'hover'
+        container: 'body'
+
+    @$('.stat-value-percent').popover 'destroy'
+    if this.data.valP isnt 0
+
+      toolTipData = statTotals["#{this.data.name}PercentTooltip"]
+        ?.map (item) -> "<tr><td>#{item.name}</td><td>#{item.value}</td></tr>"
+        .join ""
+
+      @$('.stat-value-percent').popover
+        html: true
+        content: "<table class='table table-striped table-condensed'>#{toolTipData}</table>"
+        placement: 'bottom'
+        trigger: 'hover'
+        container: 'body'
