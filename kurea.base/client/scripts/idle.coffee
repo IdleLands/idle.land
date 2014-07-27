@@ -77,7 +77,13 @@ if Meteor.isClient
 
     statisticsObj: (key) ->
       val = Session.get('player')?.statistics[key] or 0
-      if _.isObject val then JSON.stringify val else val
+      buildHtmlFromObject = (obj) ->
+        _.sortBy (_.keys obj), (key) ->
+          -obj[key]
+        .map (key) ->
+          "<li>#{key} (#{obj[key]})</li>"
+        .join ""
+      if _.isObject val then "<ul class='kills'>#{buildHtmlFromObject val}</ul>" else val
 
     knob: (stat) ->
       renderKnob()
