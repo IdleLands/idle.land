@@ -1,13 +1,5 @@
 
 #@Messages = new Meteor.Collection "Log_messages"
-if process?.env.ROOT_URL.indexOf('2543') isnt -1
-  IdleMeteor = DDP.connect "http://localhost:10023"
-else
-  IdleMeteor = DDP.connect "http://kurea.link:10023"
-
-IdleMeteor.subscribe "players"
-#TODO Fallback
-IdlePlayers = @IdlePlayers = new Meteor.Collection "players", connection: IdleMeteor
 
 if Meteor.isServer
   Meteor.startup ->
