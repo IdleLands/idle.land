@@ -8,12 +8,10 @@
     <section class="content">
         <div class="filters form-inline">
             <span class="h3">Filters: </span>
-            <input class="form-control" placeholder="Search by name..."/>
-            <select class="form-control">
-                {{#each stats}}
-                    <option value="{{value}}">{{name}}</option>
-                {{/each}}
-            </select>
+            <input id="name-input" class="form-control" placeholder="Search by name..."/>
+            <!--<select class="form-control">
+                <option value=""></option>
+            </select>-->
         </div>
         <hr>
         {{#each players}}

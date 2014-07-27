@@ -59,19 +59,17 @@ if Meteor.isClient
     lastMonth = new Date
     lastMonth.setDate lastMonth.getDate() - 30
 
-    @IdlePlayers
-      .find {lastLogin: {$gt: lastMonth}}, {sort: {'level.__current': -1, 'name': 1}}
+    reg = (Session.get "nameFilter") or ""
 
-  Template.idle.stats = =>
-    [
-      name: "Level", value: "level.__current"
-      name: "STR", value: "int"
-      name: "DEX", value: "dex"
-      name: "CON", value: "con"
-      name: "AGI", value: "agi"
-      name: "INT", value: "int"
-      name: "WIS", value: "wis"
-    ]
+    @IdlePlayers
+      .find {lastLogin: {$gt: lastMonth}, name: {$regex: reg}}, {sort: {'level.__current': -1, 'name': 1}}
+
+  Template.idle.rendered = ->
+    $("#name-input").val Session.get "nameFilter"
+
+  Template.idle.events
+    'keyup #name-input': ->
+      Session.set "nameFilter", $("#name-input").val()
 
   Template['idle.player'].helpers
     stat: (name, val, valP, width) ->
