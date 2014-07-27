@@ -83,7 +83,7 @@ if Meteor.isClient
         .map (key) ->
           "<li>#{key} (#{obj[key]})</li>"
         .join ""
-      if _.isObject val then "<ul class='kills'>#{buildHtmlFromObject val}</ul>" else val
+      if _.isObject val then "<ul class='kills no-margin'>#{buildHtmlFromObject val}</ul>" else val
 
     knob: (stat) ->
       renderKnob()
