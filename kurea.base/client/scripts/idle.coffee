@@ -90,6 +90,9 @@ if Meteor.isClient
       Session.set 'lastUpdate', new Date()
       Template.__knob
 
+    isntZero: (val) ->
+      val isnt 0
+
   Template['idle.player'].totalStats = ->
     player = Session.get 'player'
     return if not player

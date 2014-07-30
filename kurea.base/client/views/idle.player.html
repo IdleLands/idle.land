@@ -105,10 +105,10 @@
                     <div class="col-md-12">
                         <div class="box box-info">
                             <div class="box-header">
-                                {{#if enchantLevel != 0}}
-                                <h3 class="box-title">+{{enchantLevel}} {{name}}</h3>
+                                {{#if isntZero enchantLevel}}
+                                    <h3 class="box-title">+{{enchantLevel}} {{name}}</h3>
                                 {{else}}
-                                <h3 class="box-title">{{name}}</h3>
+                                    <h3 class="box-title">{{name}}</h3>
                                 {{/if}}
                                 <div class="box-tools pull-right"><div class="label bg-aqua">{{type}}</div></div>
                             </div>
