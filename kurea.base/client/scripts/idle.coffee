@@ -5,7 +5,7 @@ statClass = (val) ->
   ret
 
 global = @
-global.globalGauges = {}
+globalGauges = {}
 globalLevel = {}
 
 checkLevel = ->
@@ -26,14 +26,13 @@ checkLevel = ->
         desktop: yes
 
 renderKnob = ->
-  return
   xpEl = document.getElementsByTagName("canvas")[0]
   player = Session.get 'player'
   return if not player
 
   #console.log lastPlayer, player.name, xpEl, globalGauge
 
-  if not (player.name of global.globalGauges)
+  if not globalGauges[player.name] or global.refresh
     opts =
       lines: 12
       angle: 0
@@ -48,10 +47,10 @@ renderKnob = ->
       strokeColor: '#EEEEEE'
       generateGradient: true
 
-    global.globalGauges[player.name] = new Donut(xpEl).setOptions opts
+    globalGauges[player.name] = new Donut(xpEl).setOptions opts
 
-  global.globalGauges[player.name].maxValue = player.xp.maximum
-  global.globalGauges[player.name].set player.xp.__current
+  globalGauges[player.name].maxValue = player.xp.maximum
+  globalGauges[player.name].set player.xp.__current
 
   do checkLevel
 
@@ -130,18 +129,13 @@ if Meteor.isClient
 
 
   Template['idle.player'].rendered = ->
-    player = Session.get "player"
-    #console.log "start", window.AnimationUpdater.elements
-    #object = global.globalGauges[player.name]
-    #window.AnimationUpdater.elements = _.without window.AnimationUpdater.elements, object
-    #delete object
-    #console.log "end",window.AnimationUpdater.elements
 
     $(".content-inner, body, html").scrollTop 0
     $(window).scrollTop 0
 
-    Deps.autorun ->
-      #renderKnob()
+    renderKnob()
+
+    setInterval renderKnob, 10000
 
   Template.__stat.rendered = ->
     player = Session.get "player"

@@ -33,4 +33,5 @@ if Meteor.isClient
 
       Session.set "player", player
       player.statsArray = _.sortBy (_.keys player.statistics or []), (v) -> v
+      global.refresh = true
       player
