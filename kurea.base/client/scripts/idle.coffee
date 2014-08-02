@@ -141,31 +141,33 @@ if Meteor.isClient
 
       if me.text() is '%'
         me.text '0%'
+        
+    if @data.tooltip
 
-    @$('.stat-value').popover 'destroy'
-    if this.data.val isnt 0
+      @$('.stat-value').popover 'destroy'
+      if this.data.val isnt 0
 
-      toolTipData = statTotals["#{this.data.name}Tooltip"]
-        ?.map (item) -> "<tr><td>#{item.name}</td><td>#{item.value}</td></tr>"
-        .join ""
+        toolTipData = statTotals["#{this.data.name}Tooltip"]
+          ?.map (item) -> "<tr><td>#{item.name}</td><td>#{item.value}</td></tr>"
+          .join ""
 
-      @$('.stat-value').popover
-        html: true
-        content: "<table class='table table-striped table-condensed'>#{toolTipData}</table>"
-        placement: 'bottom'
-        trigger: 'hover'
-        container: 'body'
+        @$('.stat-value').popover
+          html: true
+          content: "<table class='table table-striped table-condensed'>#{toolTipData}</table>"
+          placement: 'bottom'
+          trigger: 'hover'
+          container: 'body'
 
-    @$('.stat-value-percent').popover 'destroy'
-    if this.data.valP isnt 0
+      @$('.stat-value-percent').popover 'destroy'
+      if this.data.valP isnt 0
 
-      toolTipData = statTotals["#{this.data.name}PercentTooltip"]
-        ?.map (item) -> "<tr><td>#{item.name}</td><td>#{item.value}</td></tr>"
-        .join ""
+        toolTipData = statTotals["#{this.data.name}PercentTooltip"]
+          ?.map (item) -> "<tr><td>#{item.name}</td><td>#{item.value}</td></tr>"
+          .join ""
 
-      @$('.stat-value-percent').popover
-        html: true
-        content: "<table class='table table-striped table-condensed'>#{toolTipData}</table>"
-        placement: 'bottom'
-        trigger: 'hover'
-        container: 'body'
+        @$('.stat-value-percent').popover
+          html: true
+          content: "<table class='table table-striped table-condensed'>#{toolTipData}</table>"
+          placement: 'bottom'
+          trigger: 'hover'
+          container: 'body'

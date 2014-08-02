@@ -228,14 +228,8 @@
 <template name="__stat">
     <div class="{{width}} text-right">{{name}}</div>
     <div class="{{width}}">
-        {{#if tooltip}}
-        <span class="stat-value" title="{{tooltipVal}}">{{val}}</span>
-        <br>
-        <span class="stat-value-percent" title="{{tooltipPercVal}}">{{valP}}%</span>
-        {{else}}
         <span class="stat-value">{{val}}</span>
         <br>
         <span class="stat-value-percent">{{valP}}%</span>
-        {{/if}}
     </div>
 </template>
