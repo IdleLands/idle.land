@@ -78,13 +78,17 @@ if Meteor.isClient
 
     statisticsObj: (key) ->
       val = Session.get('player')?.statistics[key] or 0
-      buildHtmlFromObject = (obj) ->
+
+      buildHtmlFromObject = (obj, playerLink = no) ->
         _.sortBy (_.keys obj), (key) ->
           -obj[key]
         .map (key) ->
-          "<li>#{key} (#{obj[key]})</li>"
+          embedKey =  if playerLink then "<a href='#{key}'>#{key}</a>" else key
+          "<li>#{embedKey} (#{obj[key]})</li>"
         .join ""
-      if _.isObject val then "<ul class='kills no-margin'>#{buildHtmlFromObject val}</ul>" else val
+
+      return "<ul class='kills no-margin'>#{buildHtmlFromObject val, true}</ul>" if (_.isObject val) and key is 'calculated kills'
+      val
 
     knob: (stat) ->
       renderKnob()
