@@ -113,7 +113,7 @@ if Meteor.isClient
         statTotals[stat] += item[stat] if (stat of item)
         statTotals[statPerc] += item[statPerc] if (statPerc of item)
         statTotals[statTt].push name: item.name, value: item[stat] if (stat of item) and item[stat] isnt 0
-        statTotals[StatPercTt].push name: item.name, value: item[stat] if (statPerc of item) and item[statPerc] isnt 0
+        statTotals[StatPercTt].push name: item.name, value: item[statPerc] if (statPerc of item) and item[statPerc] isnt 0
 
     Session.set "#{player.name}_stats", statTotals
 
@@ -141,7 +141,7 @@ if Meteor.isClient
 
       if me.text() is '%'
         me.text '0%'
-        
+
     if @data.tooltip
 
       @$('.stat-value').popover 'destroy'
