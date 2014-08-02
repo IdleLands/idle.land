@@ -291,7 +291,8 @@ class Gauge extends BaseGauge
     @percentColors = null
     if typeof G_vmlCanvasManager != 'undefined'
       @canvas = window.G_vmlCanvasManager.initElement(@canvas)
-    @ctx = @canvas.getContext('2d')
+    try
+      @ctx = @canvas.getContext('2d')
     @gp = [new GaugePointer(@)]
     @setOptions()
     @render()
