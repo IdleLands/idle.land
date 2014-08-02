@@ -4,9 +4,8 @@ statClass = (val) ->
   ret = "text-success" if val > 0
   ret
 
-
 global = @
-globalGauge = {}
+global.globalGauges = {}
 globalLevel = {}
 
 checkLevel = ->
@@ -26,11 +25,15 @@ checkLevel = ->
       desktop:
         desktop: yes
 
-renderKnob = =>
-  xpEl = document.getElementById "xpknob"
+renderKnob = ->
+  return
+  xpEl = document.getElementsByTagName("canvas")[0]
   player = Session.get 'player'
   return if not player
-  if not global.globalGauge
+
+  #console.log lastPlayer, player.name, xpEl, globalGauge
+
+  if not (player.name of global.globalGauges)
     opts =
       lines: 12
       angle: 0
@@ -45,10 +48,10 @@ renderKnob = =>
       strokeColor: '#EEEEEE'
       generateGradient: true
 
-    global.globalGauge = new Donut(xpEl).setOptions opts
+    global.globalGauges[player.name] = new Donut(xpEl).setOptions opts
 
-  global.globalGauge.maxValue = player.xp.maximum
-  global.globalGauge.set player.xp.__current
+  global.globalGauges[player.name].maxValue = player.xp.maximum
+  global.globalGauges[player.name].set player.xp.__current
 
   do checkLevel
 
@@ -90,11 +93,6 @@ if Meteor.isClient
       return "<ul class='kills no-margin'>#{buildHtmlFromObject val, true}</ul>" if (_.isObject val) and key is 'calculated kills'
       val
 
-    knob: (stat) ->
-      renderKnob()
-      Session.set 'lastUpdate', new Date()
-      Template.__knob
-
     isntZero: (val) ->
       val isnt 0
 
@@ -130,10 +128,20 @@ if Meteor.isClient
     return [{message:"No recent events :("}] if events?.length is 0
     events
 
+
   Template['idle.player'].rendered = ->
-    renderKnob()
+    player = Session.get "player"
+    #console.log "start", window.AnimationUpdater.elements
+    #object = global.globalGauges[player.name]
+    #window.AnimationUpdater.elements = _.without window.AnimationUpdater.elements, object
+    #delete object
+    #console.log "end",window.AnimationUpdater.elements
+
     $(".content-inner, body, html").scrollTop 0
     $(window).scrollTop 0
+
+    Deps.autorun ->
+      #renderKnob()
 
   Template.__stat.rendered = ->
     player = Session.get "player"

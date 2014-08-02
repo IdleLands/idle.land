@@ -20,12 +20,7 @@
                     <h4>Gold: {{ gold.__current }}</h4>
                 </div>
                 <div class="pull-left knobs" id="xp-container">
-                    <canvas id="xpknob" class="pull-left"></canvas>
-                    <div id="xpval">
-                        <b>Experience</b>
-                        <br>
-                        {{xp.__current}}/{{xp.maximum}}
-                    </div>
+                    {{ >__xp }}
                 </div>
                 <div class="clearfix pull-up" style="clear:both"></div>
             </div>
@@ -131,7 +126,7 @@
                                     {{> stat name='ice' val=ice valP=icePercent width='col-md-1 col-xs-1' tooltip=false}}
                                 </div>
                                 <hr>
-                                no special stats
+                                {{ propString }}
                             </div>
                         </div>
                     </div>
@@ -231,5 +226,14 @@
         <span class="stat-value">{{val}}</span>
         <br>
         <span class="stat-value-percent">{{valP}}%</span>
+    </div>
+</template>
+
+<template name="__xp">
+    <canvas class="pull-left"></canvas>
+    <div class="xpval">
+        <b>Experience</b>
+        <br>
+        {{xp.__current}}/{{xp.maximum}}
     </div>
 </template>
