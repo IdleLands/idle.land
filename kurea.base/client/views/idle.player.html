@@ -79,21 +79,21 @@
                             <div class="box-body">
                                 {{#with totalStats}}
                                 <div class="row">
-                                    {{> stat name='str' val=str valP=strPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='con' val=con valP=conPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='dex' val=dex valP=dexPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='int' val=int valP=intPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='wis' val=wis valP=wisPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='agi' val=agi valP=agiPercent width='col-md-1 col-xs-1'}}
+                                    {{> stat name='str' val=str valP=strPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='con' val=con valP=conPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='dex' val=dex valP=dexPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='int' val=int valP=intPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='wis' val=wis valP=wisPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='agi' val=agi valP=agiPercent width='col-md-1 col-xs-1' tooltip=true}}
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-1"></div>
-                                    {{> stat name='fire' val=fire valP=firePercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='water' val=water valP=waterPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='thunder' val=thunder valP=thunderPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='earth' val=earth valP=earthPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='ice' val=ice valP=icePercent width='col-md-1 col-xs-1'}}
+                                    {{> stat name='fire' val=fire valP=firePercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='water' val=water valP=waterPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='thunder' val=thunder valP=thunderPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='earth' val=earth valP=earthPercent width='col-md-1 col-xs-1' tooltip=true}}
+                                    {{> stat name='ice' val=ice valP=icePercent width='col-md-1 col-xs-1' tooltip=true}}
                                 </div>
                                 {{/with}}
                             </div>
@@ -114,21 +114,21 @@
                             </div>
                             <div class="box-body">
                                 <div class="row">
-                                    {{> stat name='str' val=str valP=strPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='con' val=con valP=conPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='dex' val=dex valP=dexPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='int' val=int valP=intPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='wis' val=wis valP=wisPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='agi' val=agi valP=agiPercent width='col-md-1 col-xs-1'}}
+                                    {{> stat name='str' val=str valP=strPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='con' val=con valP=conPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='dex' val=dex valP=dexPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='int' val=int valP=intPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='wis' val=wis valP=wisPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='agi' val=agi valP=agiPercent width='col-md-1 col-xs-1' tooltip=false}}
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-1"></div>
-                                    {{> stat name='fire' val=fire valP=firePercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='water' val=water valP=waterPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='thunder' val=thunder valP=thunderPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='earth' val=earth valP=earthPercent width='col-md-1 col-xs-1'}}
-                                    {{> stat name='ice' val=ice valP=icePercent width='col-md-1 col-xs-1'}}
+                                    {{> stat name='fire' val=fire valP=firePercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='water' val=water valP=waterPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='thunder' val=thunder valP=thunderPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='earth' val=earth valP=earthPercent width='col-md-1 col-xs-1' tooltip=false}}
+                                    {{> stat name='ice' val=ice valP=icePercent width='col-md-1 col-xs-1' tooltip=false}}
                                 </div>
                                 <hr>
                                 no special stats
@@ -142,45 +142,80 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Personalities</div>
-                            <div class="panel-body">{{ personalityString }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">{{map}} - {{x}},{{y}}</div>
-                            <div class="panel-body">Map image will go here</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Player Statistics</div>
-                            <div class="panel-body no-padding">
-                                <table class="table table-striped table-condensed no-margin">
-                                    <thead>
-                                    <tr>
-                                        <td>Event</td>
-                                        <td>Occurrence</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {{#each statsArray}}
-                                        <tr>
-                                            <td>
-                                                {{this}}
-                                            </td>
-                                            <td>
-                                                {{{statisticsObj this}}}
-                                            </td>
-                                        </tr>
-                                    {{/each}}
-                                    </tbody>
-                                </table>
+                        <div class="box-group" id="accordion">
+                            <div class="panel box box-danger">
+                                <div class="box-header">
+                                    <h3 class="box-title">
+                                        <a data-toggle="collapse" href="#personality">Personalities</a>
+                                    </h3>
+                                </div>
+                                <div id="personality" class="panel-collapse in">
+                                    <div class="box-body">
+                                        {{personalityString}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel box box-warning">
+                                <div class="box-header">
+                                    <h3 class="box-title">
+                                        <a data-toggle="collapse" href="#events">Recent Events</a>
+                                    </h3>
+                                </div>
+                                <div id="events" class="panel-collapse in">
+                                    <div class="box-body no-padding">
+                                        <table class="table table-striped table-condensed no-margin">
+                                            <tbody>
+                                            {{#each recentEvents}}
+                                            <tr>
+                                                <td>
+                                                    {{message}}
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel box box-primary">
+                                <div class="box-header">
+                                    <h3 class="box-title">
+                                        <a data-toggle="collapse" href="#map">{{map}} | {{x}},{{y}}</a>
+                                    </h3>
+                                </div>
+                                <div id="map" class="panel-collapse in">
+                                    <div class="box-body">
+                                        Map will go here.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel box box-success">
+                                <div class="box-header">
+                                    <h3 class="box-title">
+                                        <a data-toggle="collapse" href="#stats">Player Statistics</a>
+                                    </h3>
+                                </div>
+                                <div id="stats" class="panel-collapse in">
+                                    <div class="box-body no-padding">
+                                        <table class="table table-striped table-condensed no-margin">
+                                            <tbody>
+                                            {{#each statsArray}}
+                                            <tr>
+                                                <td>
+                                                    {{this}}
+                                                </td>
+                                                <td>
+                                                    {{{statisticsObj this}}}
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,8 +228,14 @@
 <template name="__stat">
     <div class="{{width}} text-right">{{name}}</div>
     <div class="{{width}}">
+        {{#if tooltip}}
         <span class="stat-value" title="{{tooltipVal}}">{{val}}</span>
         <br>
         <span class="stat-value-percent" title="{{tooltipPercVal}}">{{valP}}%</span>
+        {{else}}
+        <span class="stat-value">{{val}}</span>
+        <br>
+        <span class="stat-value-percent">{{valP}}%</span>
+        {{/if}}
     </div>
 </template>

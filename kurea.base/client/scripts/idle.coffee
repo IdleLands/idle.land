@@ -4,6 +4,8 @@ statClass = (val) ->
   ret = "text-success" if val > 0
   ret
 
+
+global = @
 globalGauge = {}
 globalLevel = {}
 
@@ -24,12 +26,11 @@ checkLevel = ->
       desktop:
         desktop: yes
 
-
-renderKnob = ->
+renderKnob = =>
   xpEl = document.getElementById "xpknob"
   player = Session.get 'player'
   return if not player
-  if not globalGauge[player.name]
+  if not global.globalGauge
     opts =
       lines: 12
       angle: 0
@@ -44,10 +45,10 @@ renderKnob = ->
       strokeColor: '#EEEEEE'
       generateGradient: true
 
-    globalGauge[player.name] = new Donut(xpEl).setOptions opts
+    global.globalGauge = new Donut(xpEl).setOptions opts
 
-  globalGauge[player.name].maxValue = player.xp.maximum
-  globalGauge[player.name].set player.xp.__current
+  global.globalGauge.maxValue = player.xp.maximum
+  global.globalGauge.set player.xp.__current
 
   do checkLevel
 
@@ -72,7 +73,7 @@ if Meteor.isClient
       Session.set "nameFilter", $("#name-input").val()
 
   Template['idle.player'].helpers
-    stat: (name, val, valP, width) ->
+    stat: (name, val, valP, width, tooltip) ->
       Template.__stat
 
     statisticsObj: (key) ->
@@ -117,6 +118,13 @@ if Meteor.isClient
     Session.set "#{player.name}_stats", statTotals
 
     statTotals
+
+  Template['idle.player'].recentEvents = ->
+    player = Session.get "player"
+    events = (IdlePlayerEvents.find {player: player?.name}, {limit: 7, sort: {createdAt:-1}}).fetch()
+
+    return [{message:"No recent events :("}] if events?.length is 0
+    events
 
   Template['idle.player'].rendered = ->
     renderKnob()
