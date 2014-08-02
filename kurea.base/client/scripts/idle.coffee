@@ -30,9 +30,8 @@ renderKnob = ->
   player = Session.get 'player'
   return if not player
 
-  #console.log lastPlayer, player.name, xpEl, globalGauge
-
   if not globalGauges[player.name] or global.refresh
+    global.refresh = false
     opts =
       lines: 12
       angle: 0
