@@ -182,7 +182,7 @@
                                 </div>
                                 <div id="map" class="panel-collapse in">
                                     <div class="box-body">
-                                        Map will go here.
+                                        {{> drawnMap}}
                                     </div>
                                 </div>
                             </div>
@@ -235,5 +235,11 @@
         <b>Experience</b>
         <br>
         {{xp.__current}}/{{xp.maximum}}
+    </div>
+</template>
+
+<template name="drawnMap">
+    <div class="drawMapHere">
+        {{drawnMap}}
     </div>
 </template>
