@@ -178,7 +178,7 @@
                     data-html="true"
                     data-placement="bottom"
                     data-trigger="[[equipment.name === 'Stat Totals' ? 'hover' : 'manual']]"
-                    bs-popover="getPopoverFor(item, stat.name)"
+                    bs-popover="getPopoverFor(item, stat.name+'Percent')"
                     ng-class="{
                         'text-danger': equipment[stat.name+'Percent'] < 0,
                         'text-success': equipment[stat.name+'Percent'] > 0,
