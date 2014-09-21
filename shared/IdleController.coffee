@@ -141,7 +141,7 @@ if Meteor.isClient
 
       $scope.classToColor = (itemClass) ->
         switch itemClass
-          when 'newbie'           then return 'bg-maroon'
+          when 'newbie', 'Newbie' then return 'bg-maroon'
           when 'Normal', 'basic'  then return 'bg-gray'
           when 'pro'              then return 'bg-purple'
           when 'idle'             then return 'bg-rainbow'
