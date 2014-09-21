@@ -137,7 +137,8 @@ if Meteor.isClient
       $scope.extendedEquipmentStatArray = $scope.equipmentStatArray.concat {name: 'sentimentality'},
         {name: 'piety'},
         {name: 'enchantLevel'},
-        {name: '_calcScore'}
+        {name: '_calcScore'},
+        {name: '_baseScore'}
 
       $scope.getPopoverFor = (player, stat) ->
         string = "<table class='table table-striped table-condensed'>"
@@ -223,10 +224,18 @@ if Meteor.isClient
           .join ""
 
         return "<ul class='kills no-margin'>#{buildHtmlFromObject val, true}</ul>" if (_.isObject val) and key is 'calculated kills'
-        val
+        parseInt val
 
       $scope.getStats = (player) ->
         _.sortBy (_.keys player.statistics or []), (v) -> v
+
+      $scope.itemItemScore = (item) ->
+        return null if not item._baseScore or not item._calcScore
+        parseInt (item._calcScore / item._baseScore) * 100
+
+      $scope.playerItemScore = (player, item) ->
+        return null if not item._calcScore or not player._baseStats.itemFindRange
+        parseInt (item._calcScore / player._baseStats.itemFindRange) * 100
 
       gauge = null
       $scope.updateXp = (player) ->

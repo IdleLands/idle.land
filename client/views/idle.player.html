@@ -132,8 +132,28 @@
                 </div>
             </div>
             <div class="row" ng-if="equipment.foundAt">
-                <div class="col-xs-12 margin-left-15">
+                <div class="col-xs-4 margin-left-15 subnote">
                     Found <span am-time-ago="equipment.foundAt" data-title="[[equipment.foundAt]]" bs-tooltip></span>
+                </div>
+                <div class="col-xs-3 subnote">
+                    <span
+                     bs-tooltip
+                     data-title="PR, or Player Relativity, is how high the items score is in comparison to the players maximum item finding range. A higher percentage means the item is in better shape, and does not need to be replaced very soon, and a score >100% means that the item was blessed beyond the players item find range, which is good."
+                     ng-class="{
+                        'text-danger': playerItemScore(item, equipment) < 50,
+                        'text-warning': playerItemScore(item, equipment) < 70,
+                        'text-success': playerItemScore(item, equipment) >= 70}">
+                    PR [[playerItemScore(item, equipment)]]%</span>
+                </div>
+                <div class="col-xs-3 subnote">
+                    <span
+                     bs-tooltip
+                     data-title="IR, or Item Relativity, is how high the items score is in comparison to when it was first found. A higher percentage means it has gone through a lot of changes since it was first found. Note: high percentages are not uncommon."
+                     ng-class="{
+                        'text-danger': itemItemScore(equipment) < 50,
+                        'text-warning': itemItemScore(equipment) < 70,
+                        'text-success': itemItemScore(equipment) >= 70}">
+                    IR [[itemItemScore(equipment)]]%</span>
                 </div>
             </div>
         </div>
@@ -227,7 +247,7 @@
                     <td ng-if="isHtmlStat(stat)" ng-bind-html="$sce.trustAsHtml(statsObj(item, stat))">
                     </td>
                     <td ng-if="!isHtmlStat(stat)">
-                        [[ _.str.numberFormat(parseInt(statsObj(item, stat))) ]]
+                        [[ _.str.numberFormat(statsObj(item, stat)) ]]
                     </td>
                 </tr>
             </table>
