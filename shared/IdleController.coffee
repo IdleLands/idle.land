@@ -55,7 +55,6 @@ if Meteor.isClient
     $scope.$watch 'editing', (newVal, oldVal) ->
       return if newVal is oldVal
       $scope.editing.statName = _.findWhere($scope.filterableStats, {key: $scope.editing.stat})?.name
-      console.log 'editing', $scope.editing
       Filters.setFilters newVal
     , yes
   ]
@@ -74,7 +73,6 @@ if Meteor.isClient
     $scope.$watch '_filters.getFilters()', (newVal, oldVal) ->
       return if newVal is oldVal
       $scope.filters = newVal
-      console.log 'filters', $scope.filters
     , yes
 
     $scope.decompose = (player, key) ->
