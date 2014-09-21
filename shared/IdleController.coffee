@@ -76,8 +76,10 @@ if Meteor.isClient
     , yes
 
     $scope.decompose = (player, key) ->
-      _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
-
+      try
+        _.reduce (key.split "."), ((prev, cur) -> prev?[cur]), player
+      catch e
+        0
   ]
 
   ngMeteor.controller 'IdlePlayer', [
