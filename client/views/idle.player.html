@@ -23,6 +23,7 @@
     <div class="row">
         <div class="col-md-4">
             <h1>[[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
+            <h4 ng-if="getPlayerTagline(item)"><small>[[getPlayerTagline(item)]]</small></h4>
             <h4 ng-if="item.partyName">Member of [[item.partyName]]</h4>
             <h4 ng-if="!item.partyName">No party</h4>
             <h4>Gold: [[item.gold.__current]]</h4>

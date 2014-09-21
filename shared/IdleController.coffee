@@ -110,6 +110,9 @@ if Meteor.isClient
         a.href = url
         a.click()
 
+      $scope.getPlayerTagline = (player) ->
+        player.messages?.web
+
       $scope.setPlayerInSession = (player) ->
         Session.set 'player', player
 
