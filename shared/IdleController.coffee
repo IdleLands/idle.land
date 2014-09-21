@@ -21,40 +21,42 @@ if Meteor.isClient
 
   ngMeteor.service 'IdleFilterData', ->
     filters = {}
+    filterData =
+      stats: [
+        {name: 'Level', key: 'level.__current'}
+        {name: 'Luck',  key: '_baseStats.luck'}
+        {name: 'STR',   key: '_baseStats.str'}
+        {name: 'DEX',   key: '_baseStats.dex'}
+        {name: 'AGI',   key: '_baseStats.agi'}
+        {name: 'CON',   key: '_baseStats.con'}
+        {name: 'INT',   key: '_baseStats.int'}
+        {name: 'WIS',   key: '_baseStats.wis'}
+        {name: 'HP',    key: 'hp.maximum'}
+        {name: 'MP',    key: 'mp.maximum'}
+      ]
+      classes: []
+      maps: []
+
+    loadFiltersFromPlayers: (players) ->
+      _.each players, (player) ->
+        filterData.maps.push player.map
+        filterData.classes.push player.professionName
+
+      filterData.maps = (_.uniq filterData.maps).sort()
+      filterData.classes = (_.uniq filterData.classes).sort()
 
     getFilters: -> filters
     setFilters: (newFilters) -> filters = newFilters
+    getFilterData: -> filterData
 
   ngMeteor.controller 'IdleFilter', ['$scope', 'IdleFilterData', ($scope, Filters) ->
-    $scope.editing = statName: 'Level', stat: 'level.__current', name: '', profession: ''
+    $scope.editing = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
 
-    $scope.filterableStats = [
-      {name: 'Level', key: 'level.__current'}
-      {name: 'Luck',  key: '_baseStats.luck'}
-      {name: 'INT',   key: '_baseStats.int'}
-      {name: 'STR',   key: '_baseStats.str'}
-      {name: 'DEX',   key: '_baseStats.dex'}
-      {name: 'CON',   key: '_baseStats.con'}
-      {name: 'AGI',   key: '_baseStats.agi'}
-      {name: 'WIS',   key: '_baseStats.wis'}
-      {name: 'HP',    key: 'hp.maximum'}
-      {name: 'MP',    key: 'mp.maximum'}
-    ]
-
-    $scope.filterableClasses = [
-      'Generalist'
-      'Mage'
-      'Fighter'
-      'Rogue'
-      'Cleric'
-      'Barbarian'
-      'Bard'
-      'Jester'
-    ].sort()
+    $scope._filterData = Filters.getFilterData()
 
     $scope.$watch 'editing', (newVal, oldVal) ->
       return if newVal is oldVal
-      $scope.editing.statName = _.findWhere($scope.filterableStats, {key: $scope.editing.stat})?.name
+      $scope.editing.statName = _.findWhere($scope._filterData.stats, {key: $scope.editing.stat})?.name
       Filters.setFilters newVal
     , yes
   ]
@@ -62,7 +64,7 @@ if Meteor.isClient
   ngMeteor.controller 'Idle', ['$scope', '$collection', 'IdleFilterData', ($scope, $collection, Filters) =>
 
     $scope._filters = Filters
-    $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: ''
+    $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
 
     $collection IdlePlayers, {}, sort: 'level.__current': -1
     .bind $scope, 'players'
@@ -70,14 +72,18 @@ if Meteor.isClient
     $scope.filteredPlayers = ->
       $scope.players
 
+    $scope.decompose = (player, key) ->
+      try
+        _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+
     $scope.$watch '_filters.getFilters()', (newVal, oldVal) ->
       return if newVal is oldVal
       $scope.filters = newVal
     , yes
 
-    $scope.decompose = (player, key) ->
-      try
-        _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+    $scope.$watch 'players', (newVal, oldVal) ->
+      return if newVal is oldVal or newVal.length is 0
+      $scope._filters.loadFiltersFromPlayers newVal
   ]
 
   ngMeteor.controller 'IdlePlayer', [

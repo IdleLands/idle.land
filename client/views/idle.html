@@ -7,11 +7,12 @@
     </section>
     <section>
         <div class="col-md-3 col-sm-3 col-xs-6"
-             ng-repeat="player in filteredPlayers() | filter:{name:filters.name, professionName: filters.profession} | orderBy:filters.stat:true"
+             ng-repeat="player in filteredPlayers() | filter:{name:filters.name, professionName: filters.profession, map: filters.map} | orderBy:filters.stat:true"
              ng-if="decompose(player, filters.stat)">
             <div class="small-box bg-blue">
                 <div class="inner">
                     <h3>[[filters.statName]] [[decompose(player, filters.stat)]]</h3>
+                    <p>[[player.map]]</p>
                     <p>[[player.professionName]]</p>
                 </div>
                 <a ui-sref="idleplayer({playerName: player.name})" class="small-box-footer">
@@ -35,17 +36,26 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <h4 class="text-center filter-header">Class</h4>
-                <select class="form-control" ng-model="editing.profession" placeholder="Select a class...">
-                    <option selected="selected" value="">(any)</option>
-                    <option ng-repeat="profession in filterableClasses">[[profession]]</option>
+                <h4 class="text-center filter-header">Stat</h4>
+                <select class="form-control" ng-model="editing.stat" ng-options="stat.key as stat.name for stat in _filterData.stats">
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <h4 class="text-center filter-header">Stat</h4>
-                <select class="form-control" ng-model="editing.stat" ng-options="stat.key as stat.name for stat in filterableStats">
+                <h4 class="text-center filter-header">Class</h4>
+                <select class="form-control" ng-model="editing.profession" placeholder="Select a class...">
+                    <option selected="selected" value="">(any)</option>
+                    <option ng-repeat="profession in _filterData.classes">[[profession]]</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center filter-header">Map</h4>
+                <select class="form-control" ng-model="editing.map" placeholder="Select a map...">
+                    <option selected="selected" value="">(any)</option>
+                    <option ng-repeat="map in _filterData.maps">[[map]]</option>
                 </select>
             </div>
         </div>
