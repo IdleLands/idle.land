@@ -54,6 +54,7 @@ if Meteor.isClient
 
     $scope.$watch 'editing', (newVal, oldVal) ->
       return if newVal is oldVal
+      console.log $scope.editing.stat
       $scope.editing.statName = _.findWhere($scope.filterableStats, {key: $scope.editing.stat})?.name
       Filters.setFilters newVal
     , yes
@@ -62,7 +63,7 @@ if Meteor.isClient
   ngMeteor.controller 'Idle', ['$scope', '$collection', 'IdleFilterData', ($scope, $collection, Filters) =>
 
     $scope._filters = Filters
-    $scope.filters = {stat: "level.__current", statName: "Level", name: "", }
+    $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: ''
 
     $collection IdlePlayers, {}, sort: 'level.__current': -1
     .bind $scope, 'players'
@@ -78,8 +79,6 @@ if Meteor.isClient
     $scope.decompose = (player, key) ->
       try
         _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
-      catch e
-        return 0
   ]
 
   ngMeteor.controller 'IdlePlayer', [
