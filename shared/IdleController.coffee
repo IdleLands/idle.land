@@ -26,22 +26,35 @@ if Meteor.isClient
     setFilters: (newFilters) -> filters = newFilters
 
   ngMeteor.controller 'IdleFilter', ['$scope', 'IdleFilterData', ($scope, Filters) ->
-    $scope.editing = stat: 'level'
+    $scope.editing = statName: 'Level', stat: 'level.__current', name: '', profession: ''
 
     $scope.filterableStats = [
-      {name: 'Level', key: 'level', selected: yes}
-      {name: 'INT',   key: 'int'}
-      {name: 'STR',   key: 'str'}
-      {name: 'DEX',   key: 'dex'}
-      {name: 'CON',   key: 'con'}
-      {name: 'AGI',   key: 'agi'}
-      {name: 'WIS',   key: 'wis'}
-      {name: 'HP',    key: 'hp'}
-      {name: 'MP',    key: 'mp'}
+      {name: 'Level', key: 'level.__current'}
+      {name: 'Luck',  key: '_baseStats.luck'}
+      {name: 'INT',   key: '_baseStats.int'}
+      {name: 'STR',   key: '_baseStats.str'}
+      {name: 'DEX',   key: '_baseStats.dex'}
+      {name: 'CON',   key: '_baseStats.con'}
+      {name: 'AGI',   key: '_baseStats.agi'}
+      {name: 'WIS',   key: '_baseStats.wis'}
+      {name: 'HP',    key: 'hp.maximum'}
+      {name: 'MP',    key: 'mp.maximum'}
     ]
+
+    $scope.filterableClasses = [
+      'Generalist'
+      'Mage'
+      'Fighter'
+      'Rogue'
+      'Cleric'
+      'Barbarian'
+      'Bard'
+      'Jester'
+    ].sort()
 
     $scope.$watch 'editing', (newVal, oldVal) ->
       return if newVal is oldVal
+      $scope.editing.statName = _.findWhere($scope.filterableStats, {key: $scope.editing.stat}).name
       Filters.setFilters newVal
     , yes
   ]
@@ -49,7 +62,7 @@ if Meteor.isClient
   ngMeteor.controller 'Idle', ['$scope', '$collection', 'IdleFilterData', ($scope, $collection, Filters) =>
 
     $scope._filters = Filters
-    $scope.filters = {}
+    $scope.filters = {stat: "level.__current", statName: "Level"}
 
     $collection IdlePlayers, {}, sort: 'level.__current': -1
     .bind $scope, 'players'
@@ -60,8 +73,11 @@ if Meteor.isClient
     $scope.$watch '_filters.getFilters()', (newVal, oldVal) ->
       return if newVal is oldVal
       $scope.filters = newVal
-      console.log 'changed',newVal
     , yes
+
+    $scope.decompose = (player, key) ->
+      _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+
   ]
 
   ngMeteor.controller 'IdlePlayer', [

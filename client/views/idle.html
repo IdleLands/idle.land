@@ -6,10 +6,10 @@
         </ol>
     </section>
     <section>
-        <div class="col-md-3 col-sm-3 col-xs-6" ng-repeat="player in filteredPlayers()">
+        <div class="col-md-3 col-sm-3 col-xs-6" ng-repeat="player in filteredPlayers() | filter:{name:filters.name, professionName: filters.profession} | orderBy:filters.stat:true">
             <div class="small-box bg-blue">
                 <div class="inner">
-                    <h3>Level [[player.level.__current]]</h3>
+                    <h3>[[filters.statName]] [[decompose(player, filters.stat)]]</h3>
                     <p>[[player.professionName]]</p>
                 </div>
                 <a ui-sref="idleplayer({playerName: player.name})" class="small-box-footer">
@@ -26,14 +26,25 @@
     </section>
     <div class="filters">
         <div class="row">
+            <h4 class="text-center filter-header">Name</h4>
             <div class="col-xs-12">
                 <input class="form-control" ng-model="editing.name" placeholder="Search by name..."/>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <select class="form-control" ng-model="editing.stat" placeholder="Select a stat...">
-                    <option ng-repeat="stat in filterableStats" ng-value="stat.key" ng-selected="stat.selected">[[stat.name]]</option>
+                <h4 class="text-center filter-header">Class</h4>
+                <select class="form-control" ng-model="editing.profession" placeholder="Select a class...">
+                    <option selected="selected" value="">(any)</option>
+                    <option ng-repeat="profession in filterableClasses">[[profession]]</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center filter-header">Stat</h4>
+                <select class="form-control" ng-model="editing.stat" ng-init="editing.stat='Level'">
+                    <option ng-repeat="stat in filterableStats" ng-value="stat.key">[[stat.name]]</option>
                 </select>
             </div>
         </div>
