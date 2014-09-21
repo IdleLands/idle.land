@@ -121,11 +121,20 @@
 <template name="idleplayerequipment">
     <div class="stat-box box box-primary">
         <div class="box-header">
-            <h3 class="box-title">[[equipment.name]]</h3>
-            <div class="box-tools pull-right">
-                <div class="label [[equipment.bgClassColor]] class-label pull-right" ng-if="equipment.itemClass">[[equipment.itemClass]]</div>
-                <br ng-if="equipment.itemClass">
-                <div class="label [[equipment.bgColor]] type-label pull-right">[[equipment.type]]</div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="box-title">[[equipment.name]]</h3>
+                    <div class="box-tools pull-right">
+                        <div class="label [[equipment.bgClassColor]] class-label pull-right" ng-if="equipment.itemClass">[[equipment.itemClass]]</div>
+                        <br ng-if="equipment.itemClass">
+                        <div class="label [[equipment.bgColor]] type-label pull-right">[[equipment.type]]</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="equipment.foundAt">
+                <div class="col-xs-12 margin-left-15">
+                    Found <span am-time-ago="equipment.foundAt" data-title="[[equipment.foundAt]]" bs-tooltip></span>
+                </div>
             </div>
         </div>
         <div class="box-body">

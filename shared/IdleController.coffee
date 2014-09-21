@@ -29,8 +29,15 @@ if Meteor.isClient
     $scope.editing = stat: 'level'
 
     $scope.filterableStats = [
-       name: 'Level', key: 'level', selected: yes
-      ,name: 'INT', key: 'int'
+      {name: 'Level', key: 'level', selected: yes}
+      {name: 'INT',   key: 'int'}
+      {name: 'STR',   key: 'str'}
+      {name: 'DEX',   key: 'dex'}
+      {name: 'CON',   key: 'con'}
+      {name: 'AGI',   key: 'agi'}
+      {name: 'WIS',   key: 'wis'}
+      {name: 'HP',    key: 'hp'}
+      {name: 'MP',    key: 'mp'}
     ]
 
     $scope.$watch 'editing', (newVal, oldVal) ->
