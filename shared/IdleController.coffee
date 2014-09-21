@@ -54,7 +54,6 @@ if Meteor.isClient
 
     $scope.$watch 'editing', (newVal, oldVal) ->
       return if newVal is oldVal
-      console.log $scope.editing.stat
       $scope.editing.statName = _.findWhere($scope.filterableStats, {key: $scope.editing.stat})?.name
       Filters.setFilters newVal
     , yes
