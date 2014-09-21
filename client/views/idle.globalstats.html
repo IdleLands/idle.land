@@ -1,0 +1,201 @@
+<template name="idleglobalstats">
+    <section class="content-header">
+        <h1>IdleLands<small>Global Statistics</small></h1>
+        <ol class="breadcrumb">
+            <li class="active"><span class="fa fa-group"></span> <a href="#" ui-sref="idle">Player List</a></li>
+        </ol>
+    </section>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalstatsbase }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalstatslevels }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalstatsleaderboard }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalstatstotals }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {{> idleglobalstatspopclasses }}
+        </div>
+        <div class="col-md-6">
+            {{> idleglobalstatspopmaps }}
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatsbase">
+    <div class="box box-warning">
+        <div class="box-header">
+            <h4 class="text-center">Top Stats</h4>
+         </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Player</th>
+                    <th class="text-center">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="stat in filters.stats">
+                    <th class="text-right width-10">[[stat.name]]</th>
+                    <td><a ui-sref="idleplayer({playerName:getMaxOfStat(stat.key).head.name})">[[getMaxOfStat(stat.key).head.name]]</a></td>
+                    <td
+                            class="text-center"
+                            bs-tooltip
+                            data-html="true"
+                            data-container="body"
+                            data-title="[[remainderToString(getMaxOfStat(stat.key).runnerups)]]">
+                        <span class="stat-total">[[_.str.numberFormat(getMaxOfStat(stat.key).head._stat)]]</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatslevels">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">So Close...</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Level</th>
+                    <th>XP%</th>
+                    <th>XP</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="player in getOrderedByXpPercent()" ng-if="$index < 10">
+                    <td><a ui-sref="idleplayer({playerName:player.name})">[[player.name]]</a></td>
+                    <td>[[player.level.__current]]</td>
+                    <td>[[(player.xp.__current/player.xp.maximum*100).toFixed(3)]]%</td>
+                    <td>[[player.xp.__current]]/[[player.xp.maximum]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatsleaderboard">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="text-center">Leaderboard</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Player</th>
+                    <th>Count</th>
+                    <th>Contribution</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="stat in statisticsToShow">
+                    <th class="text-right">[[stat.name]]</th>
+                    <td><a ui-sref="idleplayer({playerName:maxFromStatistics(stat.key).head.name})">[[maxFromStatistics(stat.key).head.name]]</a></td>
+                    <td
+                        class="text-center"
+                        bs-tooltip
+                        data-html="true"
+                        data-container="body"
+                        data-title="[[remainderToString(maxFromStatistics(stat.key).runnerups)]]">
+                        <span class="stat-total">[[_.str.numberFormat(maxFromStatistics(stat.key).head._stat)]]</span></td>
+                    <td>[[getPercentContribution(stat.key)]]%</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatstotals">
+    <div class="box box-danger">
+        <div class="box-header">
+            <h4 class="text-center">Totally Totals</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="stat in statisticsToShow">
+                    <th class="text-right">[[stat.name]]</th>
+                    <td>[[_.str.numberFormat(totalFromStatistics(stat.key))]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatspopclasses">
+    <div class="box box-info">
+        <div class="box-header">
+            <h4 class="text-center">Popular Classes</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="(key, value) in filters.cache.profession">
+                    <td>[[key]]</td>
+                    <td>[[value]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatspopmaps">
+    <div class="box box-info">
+        <div class="box-header">
+            <h4 class="text-center">Popular Maps</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Map</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="(key, value) in filters.cache.map">
+                    <td>[[key]]</td>
+                    <td>[[value]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>

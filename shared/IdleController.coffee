@@ -22,6 +22,9 @@ if Meteor.isClient
   ngMeteor.service 'IdleFilterData', ->
     filters = {}
     filterData =
+      cache:
+        map: {}
+        profession: {}
       stats: [
         {name: 'Level', key: 'level.__current'}
         {name: 'Luck',  key: '_baseStats.luck'}
@@ -33,14 +36,24 @@ if Meteor.isClient
         {name: 'WIS',   key: '_baseStats.wis'}
         {name: 'HP',    key: 'hp.maximum'}
         {name: 'MP',    key: 'mp.maximum'}
+        {name: 'Gold',  key: 'gold.__current'}
       ]
       classes: []
       maps: []
 
     loadFiltersFromPlayers: (players) ->
+      filterData.cache.map = {}
+      filterData.cache.profession = {}
+
       _.each players, (player) ->
+        filterData.cache.map[player.map] = 0 if not (player.map of filterData.cache.map)
+        filterData.cache.profession[player.professionName] = 0 if not (player.professionName of filterData.cache.profession)
+
         filterData.maps.push player.map
         filterData.classes.push player.professionName
+
+        filterData.cache.map[player.map]++
+        filterData.cache.profession[player.professionName]++
 
       filterData.maps = (_.uniq filterData.maps).sort()
       filterData.classes = (_.uniq filterData.classes).sort()
@@ -294,4 +307,119 @@ if Meteor.isClient
         gauge.maxValue = player.xp.maximum
         gauge.set player.xp.__current
         null
+  ]
+
+  ngMeteor.controller 'IdleGlobalStats', [
+    '$scope', '$collection', 'IdleFilterData',
+    ($scope, $collection, Filters) ->
+      $scope._ = window._
+      $collection IdlePlayers
+      .bind $scope, 'players'
+
+      $scope._filters = Filters
+      $scope.filters = {}
+
+      $scope.statisticsToShow = _.sortBy [
+        {name: 'Damage Dealt', key: 'calculated total damage given'}
+        {name: 'Damage Taken', key: 'calculated damage received'}
+        {name: 'Healing Received', key: 'calculated heal received'}
+        {name: 'Healing Given', key: 'calculated total heals given'}
+        {name: 'Steps Taken', key: 'explore walk'}
+        {name: 'Fled From Combat', key: 'combat self flee'}
+        {name: 'Events Experienced', key: 'event'}
+        {name: 'Cataclysms Experienced', key: 'event cataclysms'}
+        {name: 'Times Fallen', key: 'explore transfer fall'}
+        {name: 'Times Ascended', key: 'explore transfer ascend'}
+        {name: 'Times Descended', key: 'explore transfer descend'}
+        {name: 'Walls Walked Into', key: 'explore hit wall'}
+        {name: 'Items Sold', key: 'event sellItem'}
+        {name: 'Monster Battles', key: 'event monsterbattle'}
+        {name: 'Items Equipped', key: 'event findItem'}
+        {name: 'Switcheroos', key: 'event flipStat'}
+        {name: 'Enchantments', key: 'event enchant'}
+        {name: 'Class Changes', key: 'player profession change'}
+        {name: 'Times Gained XP', key: 'player xp gain'}
+        {name: 'Player Kills', key: 'combat self kill'}
+        {name: 'Player Deaths', key: 'combat self killed'}
+        {name: 'Attacks Made', key: 'combat self attack'}
+        {name: 'Attacks Deflected', key: 'combat self deflect'}
+        {name: 'Attacks Dodged', key: 'combat self dodge'}
+        {name: 'Personalities', key: '__personalities'}
+      ], (stat) -> stat.name
+
+      $scope.getMaxOfStat = (stat) ->
+        #basePlayers = $.extend yes, [], $scope.players
+        list = _.filter $scope.players, (player) -> _.isNumber $scope.decompose player, stat
+        sorted = (_.sortBy list, (player) -> player._stat = $scope.decompose player, stat).reverse()
+
+        head: sorted[0]
+        runnerups: sorted[1..3]
+        tail: sorted[-1]
+        tailerups: sorted[-2..-4]
+        all: sorted
+
+      $scope.setMaxOnAllStats = ->
+        _.each $scope.filters.stats, (stat) =>
+          stat.max = @getMaxOfStat stat.key
+
+      $scope.getOrderedByXpPercent = ->
+        list = _.sortBy $scope.players, (player) -> player.xp.__current / player.xp.maximum
+        list.reverse()[0...10]
+
+      $scope.remainderToString = (runnerups) ->
+        "Notable Mentions<br><br>" +
+          _.map runnerups, (player) ->
+            "#{player.name} (#{_.str.numberFormat player._stat})"
+          .join '<br>'
+
+      $scope.getPercentContribution = (key) ->
+        my = @maxFromStatistics(key).head?._stat
+        total = @totalFromStatistics key
+        val = (my/total*100).toFixed 3
+        if _.isNaN (my/total) then 0 else val
+
+      $scope.getStatFor = (player, key) ->
+        if key is "__personality" then player.personalityStrings?.length else player.statistics?[key]
+
+      $scope.totalFromStatistics = (key) ->
+        (_.reduce $scope.players, ((prev, player) => prev+((@getStatFor player, key) or 0)), 0) or 0
+
+      $scope.maxFromStatistics = (key) ->
+        sorted = (_.sortBy $scope.players, (player) => player._stat = (@getStatFor player, key) or 0).reverse()
+
+        head: sorted[0]
+        runnerups: sorted[1..3]
+        tail: sorted[-1]
+        tailerups: sorted[-2..-4]
+        all: sorted
+
+      $scope.getListBy = (type) ->
+        console.log 'fired'
+        #keys = _.keys obj
+        #mapped = _.map keys, (key) -> key: key, value: obj[key].length
+        #sorted = _.sortBy keys, (key) -> obj[key].length
+        #sorted.reverse()
+        #return []
+        return if not ('cache' of $scope.filters)
+        list = ($.extend yes, {}, $scope.filters.cache[type])
+        return _.map list, (value, key) -> key: key, value: key
+        obj = $scope.filters.cache[type]
+        _.chain(_.keys obj)
+          .map (key) -> key: key, value: obj[key]
+          .sortBy (newObj) -> newObj.value
+          .value()
+          .reverse()
+
+      $scope.decompose = (player, key) ->
+        try
+          _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+
+      $scope.$watch 'players', (newVal, oldVal) ->
+        return if newVal.length is 0 or newVal is oldVal
+        $scope._filters.loadFiltersFromPlayers newVal
+
+      $scope.$watch '_filters.getFilterData()', (newVal, oldVal) ->
+        return if newVal is oldVal
+        $scope.filters = newVal
+      , yes
   ]
