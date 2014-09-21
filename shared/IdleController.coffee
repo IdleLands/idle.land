@@ -134,10 +134,14 @@ if Meteor.isClient
 
       $scope.getPopoverFor = (player, stat) ->
         string = "<table class='table table-striped table-condensed'>"
+        items = 0
         _.each player.equipment, (item) ->
           return if item[stat] is 0
+          items++
           itemClass = if item[stat] < 0 then 'text-danger' else 'text-success'
           string += "<tr><td>#{item.name}</td><td class='#{itemClass}'>#{item[stat]}</td>"
+
+        string += "<tr><td>No items are adding to this stat!</td></tr>" if items is 0
 
         string + "</table>"
 
@@ -188,6 +192,7 @@ if Meteor.isClient
             map.createFromObjects "Interactables", 12, "interactables", 11
             map.createFromObjects "Interactables", 13, "interactables", 12
             map.createFromObjects "Interactables", 14, "interactables", 13
+            map.createFromObjects "Interactables", 18, "interactables", 17
 
             sprite = @game.add.sprite player.x*16, player.y*16, 'interactables', 12
             @game.camera.follow sprite
