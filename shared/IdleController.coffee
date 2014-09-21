@@ -139,7 +139,7 @@ if Meteor.isClient
         {name: 'water', fa: 'fa-cloud'}
         {name: 'thunder', fa: 'fa-bolt'}
         {name: 'earth', fa: 'fa-leaf'}
-        {name: 'ice', fa: 'fa-cubes'}
+        {name: 'ice', fa: 'icon-snow'}
         {name: 'luck', fa: 'fa-moon-o'}
       ]
 
