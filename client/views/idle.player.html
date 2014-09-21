@@ -1,0 +1,225 @@
+
+<template name="idleplayer">
+    <section class="content-header" ng-repeat="item in player">
+        <h1>IdleLands<small>Players</small></h1>
+        <ol class="breadcrumb">
+            <li>
+                <span class="fa fa-group"></span> <a href="#" ui-sref="idle">Player List</a>
+            </li>
+            <li class="active">[[item.name]]</li>
+        </ol>
+    </section>
+
+    <div ng-repeat="item in player">
+        <div ng-init="setPlayerInSession(item)"></div>
+        {{> idleplayerheader }}
+        {{> idleplayerbody }}
+    </div>
+
+</template>
+
+<template name="idleplayerheader">
+    <div class="row">
+        <div class="col-md-4">
+            <h1>[[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
+            <h4 ng-if="item.partyName">Member of [[item.partyName]]</h4>
+            <h4 ng-if="!item.partyName">No party</h4>
+            <h4>Gold: [[item.gold.__current]]</h4>
+        </div>
+        <div class="col-md-8">
+            [[updateXp(item)]]
+            <div id="xp-container">
+                <canvas id="xpGauge" class="pull-left"></canvas>
+                <div class="xpval">
+                    <b>Experience</b>
+                    <br>
+                    <span>[[item.xp.__current]]/[[item.xp.maximum]]</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="idleplayerbody">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                {{> idleplayerstats }}
+            </div>
+            <div class="row" ng-init="allEquipment = getEquipmentAndTotals(item)">
+                <div class="col-md-12" ng-repeat="equipment in allEquipment">
+                    {{> idleplayerequipment }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                {{> idleplayermap }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                {{> idleplayerpersonalities }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                {{> idleplayerstatistics }}
+            </div>
+        </div>
+        <!--<div class="col-md-6">
+            <div class="row">
+                {{> idleplayerevents }}
+            </div>
+        </div>-->
+    </div>
+</template>
+
+<template name="idleplayerstats">
+    <div ng-class="{'col-md-4': item.special.name, 'col-md-6': !item.special.name}">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>[[item.hp.maximum]]</h3>
+                <p>&nbsp;</p>
+            </div>
+            <div class="icon">
+                <span class="fa fa-heart"></span>
+            </div>
+            <a class="small-box-footer">Maximum HP</a>
+        </div>
+    </div>
+    <div ng-class="{'col-md-4': item.special.name, 'col-md-6': !item.special.name}">
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>[[item.mp.maximum]]</h3>
+                <p>&nbsp;</p>
+            </div>
+            <div class="icon">
+                <span class="fa fa-magic"></span>
+            </div>
+            <a class="small-box-footer">Maximum MP</a>
+        </div>
+    </div>
+    <div class="col-md-4" ng-if="item.special.name">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>[[item.special.__current]]</h3>
+                <p>/ [[item.special.maximum]]</p>
+            </div>
+            <div class="icon">
+                <span class="fa fa-asterisk"></span>
+            </div>
+            <a class="small-box-footer">[[item.special.name]]</a>
+        </div>
+    </div>
+</template>
+
+<template name="popovertest">
+    testtest<b>test</b>
+</template>
+
+<template name="idleplayerequipment">
+    <div class="stat-box box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">[[equipment.name]]</h3>
+            <div class="box-tools pull-right">
+                <div class="label [[equipment.bgClassColor]] class-label pull-right" ng-if="equipment.itemClass">[[equipment.itemClass]]</div>
+                <br ng-if="equipment.itemClass">
+                <div class="label [[equipment.bgColor]] type-label pull-right">[[equipment.type]]</div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2" ng-repeat="stat in equipmentStatArray">
+                    <span class="fa fa-fw [[stat.fa]]" data-title="[[stat.name]]" bs-tooltip></span>
+                    <span
+                    data-html="true"
+                    data-placement="bottom"
+                    data-trigger="[[equipment.name === 'Stat Totals' ? 'hover' : 'manual']]"
+                    bs-popover="getPopoverFor(item, stat.name)"
+                    ng-class="{
+                        'text-danger': equipment[stat.name] < 0,
+                        'text-success': equipment[stat.name] > 0,
+                        'stat-total': equipment.name === 'Stat Totals'}
+                    ">[[ equipment[stat.name] ]]</span>
+                    /
+                    <span
+                    data-html="true"
+                    bs-popover="getPopoverFor(item, stat.name)"
+                    ng-class="{
+                        'text-danger': equipment[stat.name+'Percent'] < 0,
+                        'text-success': equipment[stat.name+'Percent'] > 0,
+                        'stat-total': equipment.name === 'Stat Totals'}
+                    ">[[ equipment[stat.name+'Percent'] ]]%</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    [[getExtraStats(equipment)]]
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="idleplayermap">
+    <div class="panel box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">[[item.map]] | [[item.x]], [[item.y]]</h3>
+        </div>
+        <div class="box-body">
+            [[drawMap(item)]]
+            <div id="map"></div>
+        </div>
+    </div>
+</template>
+
+<template name="idleplayerpersonalities">
+    <div class="panel box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">Personalities</h3>
+        </div>
+        <div class="box-body">
+            [[getPersonalityString(item)]]
+        </div>
+    </div>
+</template>
+
+<template name="idleplayerevents">
+    <div class="panel box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Recent Events</h3>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped table-condensed no-margin">
+                <tr ng-repeat="event in playerEvents">
+                    <td>
+                        [[event]]
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleplayerstatistics">
+    <div class="panel box box-success">
+        <div class="box-header">
+            <h3 class="box-title">Player Statistics</h3>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped table-condensed no-margin">
+                <tr ng-repeat="stat in getStats(item)">
+                    <td>
+                        [[stat]]
+                    </td>
+                    <td ng-if="isHtmlStat(stat)" ng-bind-html="$sce.trustAsHtml(statsObj(item, stat))">
+                    </td>
+                    <td ng-if="!isHtmlStat(stat)">
+                        [[ _.str.numberFormat(parseInt(statsObj(item, stat))) ]]
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>

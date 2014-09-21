@@ -1,0 +1,47 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurea Web Interface</title>
+</head>
+<body>
+    <header class="header skin-blue" ng-controller="Nav">
+        <a href="#" class="logo" ui-sref="home">Kurea</a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!--
+            <a href="#" class="navbar-btn sidebar-toggle" role="button" ng-click="toggleCollapsed()">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            -->
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Modules <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!--<li><a href="{{pathFor 'log'}}">Log Viewer</a></li>-->
+                                <li><a href="#" ui-sref="idle">Idle Lands</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <aside class="left-side">
+            <section class="sidebar" ui-view="sidebar"></section>
+        </aside>
+        <aside class="right-side" ui-view="content"></aside>
+    </div>
+</body>
+
+<template name="home">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Welcome</h1>
+            <p>to kurea.link, home of the IRC bot, <a href="https://github.com/kellyirc/kurea" target="_blank">Kurea</a>.</p>
+            <p>Kurea has the potential to have a completely web-controlled interface as well as some fancy-pants interfaces to existing modules. You can see some of them in action here by hitting the modules dropdown above.</p>
+        </div>
+    </div>
+</template>

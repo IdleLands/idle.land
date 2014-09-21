@@ -1,0 +1,41 @@
+<template name="idle">
+    <section class="content-header">
+        <h1>IdleLands<small>Players</small></h1>
+        <ol class="breadcrumb">
+            <li class="active"><span class="fa fa-group"></span> <a href="#" ui-sref="idle">Player List</a></li>
+        </ol>
+    </section>
+    <section>
+        <div class="col-md-3 col-sm-3 col-xs-6" ng-repeat="player in filteredPlayers()">
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3>Level [[player.level.__current]]</h3>
+                    <p>[[player.professionName]]</p>
+                </div>
+                <a ui-sref="idleplayer({playerName: player.name})" class="small-box-footer">
+                    [[player.name]] <span class="fa fa-arrow-circle-right"></span>
+                </a>
+            </div>
+        </div>
+    </section>
+</template>
+
+<template name="idle-sidebar">
+    <section class="content-header">
+        <h3 class="text-center filter-header">Filters</h3>
+    </section>
+    <div class="filters">
+        <div class="row">
+            <div class="col-xs-12">
+                <input class="form-control" ng-model="editing.name" placeholder="Search by name..."/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <select class="form-control" ng-model="editing.stat" placeholder="Select a stat...">
+                    <option ng-repeat="stat in filterableStats" ng-value="stat.key" ng-selected="stat.selected">[[stat.name]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</template>

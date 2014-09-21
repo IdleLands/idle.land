@@ -1,0 +1,17 @@
+# Meteor packages used by this project, one per line.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+insecure
+iron:layout
+urigo:angular-ui-router
+coffeescript
+kidovate:pnotify
+less
+mizzao:bootstrap-3
+pfafman:font-awesome-4
+urigo:ngmeteor
+wizonesolutions:underscore-string
+
