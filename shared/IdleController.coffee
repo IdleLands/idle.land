@@ -79,7 +79,7 @@ if Meteor.isClient
       try
         _.reduce (key.split "."), ((prev, cur) -> prev?[cur]), player
       catch e
-        0
+        return 0
   ]
 
   ngMeteor.controller 'IdlePlayer', [
