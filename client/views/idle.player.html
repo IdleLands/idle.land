@@ -125,7 +125,7 @@
         <div class="box-header">
             <div class="row">
                 <div class="col-xs-12">
-                    <h3 class="box-title">[[equipment.name]]</h3>
+                    <h3 class="box-title">[[equipment.enchantLevel ? '+'+equipment.enchantLevel+' ' : '']][[equipment.name]]</h3>
                     <div class="box-tools pull-right">
                         <div class="label [[equipment.bgClassColor]] class-label pull-right" ng-if="equipment.itemClass">[[equipment.itemClass]]</div>
                         <br ng-if="equipment.itemClass">
