@@ -379,7 +379,7 @@ if Meteor.isClient
         if _.isNaN (my/total) then 0 else val
 
       $scope.getStatFor = (player, key) ->
-        if key is "__personality" then player.personalityStrings?.length else player.statistics?[key]
+        if key is "__personalities" then player.personalityStrings?.length else player.statistics?[key]
 
       $scope.totalFromStatistics = (key) ->
         (_.reduce $scope.players, ((prev, player) => prev+((@getStatFor player, key) or 0)), 0) or 0
