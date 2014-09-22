@@ -21,18 +21,18 @@
 
 <template name="idleplayerheader">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5 col-xs-7">
             <h1>[[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
             <h4 ng-if="getPlayerTagline(item)"><small>[[getPlayerTagline(item)]]</small></h4>
             <h4 ng-if="item.partyName">Member of [[item.partyName]]</h4>
             <h4 ng-if="!item.partyName">No party</h4>
             <h4>Gold: [[item.gold.__current]]</h4>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7 col-xs-5">
             [[updateXp(item)]]
             <div id="xp-container">
-                <canvas id="xpGauge" class="pull-left"></canvas>
-                <div class="xpval">
+                <canvas id="xpGauge"></canvas>
+                <div class="xpval pull-left">
                     <b>Experience</b>
                     <br>
                     <span>[[item.xp.__current]]/[[item.xp.maximum]]</span>
@@ -78,7 +78,7 @@
 </template>
 
 <template name="idleplayerstats">
-    <div ng-class="{'col-md-4': item.special.name, 'col-md-6': !item.special.name}">
+    <div ng-class="{'col-xs-4': item.special.name, 'col-xs-6': !item.special.name}">
         <div class="small-box bg-red">
             <div class="inner">
                 <h3>[[item.hp.maximum]]</h3>
@@ -90,7 +90,7 @@
             <a class="small-box-footer">Maximum HP</a>
         </div>
     </div>
-    <div ng-class="{'col-md-4': item.special.name, 'col-md-6': !item.special.name}">
+    <div ng-class="{'col-xs-4': item.special.name, 'col-xs-6': !item.special.name}">
         <div class="small-box bg-purple">
             <div class="inner">
                 <h3>[[item.mp.maximum]]</h3>
@@ -102,7 +102,7 @@
             <a class="small-box-footer">Maximum MP</a>
         </div>
     </div>
-    <div class="col-md-4" ng-if="item.special.name">
+    <div class="col-xs-4" ng-if="item.special.name">
         <div class="small-box bg-yellow">
             <div class="inner">
                 <h3>[[item.special.__current]]</h3>
