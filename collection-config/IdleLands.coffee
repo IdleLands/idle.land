@@ -4,7 +4,7 @@ if Meteor.isClient
     ($stateProvider) ->
       $stateProvider
       .state 'idle',
-        url: '/idle'
+        abstract: yes
         views:
           'content':
             template: UiRouter.template 'idle'
@@ -12,6 +12,11 @@ if Meteor.isClient
           'sidebar':
             template: UiRouter.template 'idle-sidebar'
             controller: 'IdleFilter'
+
+      .state 'idle.urlone',
+        url: '/idle'
+      .state 'idle.urltwo',
+        url: '/idle/'
 
       .state 'idleglobalstats',
         url: '/idle/@'
