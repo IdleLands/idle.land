@@ -277,11 +277,11 @@ if Meteor.isClient
         _.sortBy (_.keys player.statistics or []), (v) -> v
 
       $scope.itemItemScore = (item) ->
-        return null if not item._baseScore or not item._calcScore
+        return 0 if not item._baseScore or not item._calcScore
         parseInt (item._calcScore / item._baseScore) * 100
 
       $scope.playerItemScore = (player, item) ->
-        return null if not item._calcScore or not player._baseStats.itemFindRange
+        return 0 if not item._calcScore or not player._baseStats.itemFindRange
         parseInt (item._calcScore / player._baseStats.itemFindRange) * 100
 
       gauge = null
