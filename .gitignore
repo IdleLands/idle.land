@@ -27,3 +27,6 @@ node_modules
 .idea
 
 *idle_config*
+
+mup.json
+settings.json
