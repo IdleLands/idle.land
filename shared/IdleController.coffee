@@ -271,6 +271,7 @@ if Meteor.isClient
           .join ""
 
         return "<ul class='kills no-margin'>#{buildHtmlFromObject val, true}</ul>" if (_.isObject val) and key is 'calculated kills'
+        return "<ul class='kills no-margin'>#{buildHtmlFromObject val, false}</ul>" if (_.isObject val) and $scope.isHtmlStat key
         parseInt val
 
       $scope.getStats = (player) ->
