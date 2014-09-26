@@ -257,7 +257,7 @@ if Meteor.isClient
         null
 
       $scope.isHtmlStat = (stat) ->
-        stat in ['calculated kills', 'calculated kills by class', 'class changes']
+        stat in ['calculated kills', 'calculated kills by class', 'calculated class changes']
 
       $scope.statsObj = (player, key) ->
         val = player.statistics[key] or 0
