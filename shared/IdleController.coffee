@@ -424,3 +424,12 @@ if Meteor.isClient
         $scope.filters = newVal
       , yes
   ]
+
+  ngMeteor.controller 'IdleAchievements', [
+    '$scope', '$stateParams', '$collection',
+    ($scope, $stateParams, $collection) =>
+      $scope._ = window._
+
+      $collection IdlePlayers, name: $stateParams.playerName
+      .bind $scope, 'player'
+  ]

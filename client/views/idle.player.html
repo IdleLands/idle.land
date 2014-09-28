@@ -24,9 +24,10 @@
         <div class="col-md-5 col-xs-7">
             <h1>[[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
             <h4 ng-if="getPlayerTagline(item)"><small>[[getPlayerTagline(item)]]</small></h4>
-            <h4 ng-if="item.partyName">Member of [[item.partyName]]</h4>
-            <h4 ng-if="!item.partyName">No party</h4>
-            <h4>Gold: [[item.gold.__current]]</h4>
+            <h5 ng-if="item.achievements"><a href="#" ui-sref="idleachievements({playerName: item.name})"><span class="fa fa-bookmark"></span> Achievements</a></h5>
+            <h5 ng-if="item.partyName">Member of [[item.partyName]]</h5>
+            <h5 ng-if="!item.partyName">No party</h5>
+            <h5>Gold: [[item.gold.__current]]</h5>
         </div>
         <div class="col-md-7 col-xs-5">
             [[updateXp(item)]]

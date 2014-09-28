@@ -31,4 +31,11 @@ if Meteor.isClient
           'content':
             template: UiRouter.template 'idleplayer'
             controller: 'IdlePlayer'
+
+      .state 'idleachievements',
+        url: '/idle/:playerName/achievements'
+        views:
+          'content':
+            template: UiRouter.template 'idleplayerachievements'
+            controller: 'IdleAchievements'
   ]

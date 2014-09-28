@@ -1,0 +1,44 @@
+<template name="idleplayerachievements">
+    <section class="content-header" ng-repeat="item in player">
+        <h1>IdleLands<small>Achievements</small></h1>
+        <ol class="breadcrumb">
+            <li>
+                <span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a>
+            </li>
+            <li><a href="#" ui-sref="idleplayer({playerName:item.name})">[[item.name]]</a></li>
+            <li class="active">Achievements</li>
+        </ol>
+    </section>
+
+    <div ng-repeat="item in player">
+        {{> idleplayerachevementheader }}
+        {{> idleplayerachevementbody }}
+    </div>
+
+</template>
+
+<template name="idleplayerachievement">
+    <div class="col-sm-3">
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>[[achievement.name]]</h3>
+                <p>[[achievement.desc]]</p>
+            </div>
+            <a class="small-box-footer">
+                [[achievement.reward]]
+            </a>
+        </div>
+    </div>
+</template>
+
+<template name="idleplayerachevementheader">
+    <h1>[[item.name]]'s Achievements</h1>
+</template>
+
+<template name="idleplayerachevementbody">
+    <div class="row">
+        <div ng-repeat="achievement in item.achievements">
+            {{> idleplayerachievement }}
+        </div>
+    </div>
+</template>
