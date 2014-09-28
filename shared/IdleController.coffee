@@ -253,7 +253,7 @@ if Meteor.isClient
             @game.camera.follow sprite
 
         return if (not player) or game
-        game = new Phaser.Game 600,300, Phaser.AUTO, 'map', phaserOpts
+        game = new Phaser.Game '100%',300, Phaser.AUTO, 'map', phaserOpts
         null
 
       $scope.isHtmlStat = (stat) ->

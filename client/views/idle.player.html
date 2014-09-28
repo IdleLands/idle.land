@@ -45,29 +45,34 @@
 
 <template name="idleplayerbody">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-lg-7">
             <div class="row">
-                {{> idleplayerstats }}
+                <div class="col-md-12">
+                    {{> idleplayerstats }}
+                </div>
             </div>
             <div class="row" ng-init="allEquipment = getEquipmentAndTotals(item)">
-                <div class="col-md-12" ng-repeat="equipment in allEquipment">
+                <div class="col-xs-12" ng-repeat="equipment in allEquipment">
                     {{> idleplayerequipment }}
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+
+        <div class="col-md-6 col-lg-5">
             <div class="row">
-                {{> idleplayermap }}
+                <div class="col-md-12">
+                    {{> idleplayermap }}
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="row">
-                {{> idleplayerpersonalities }}
+                <div class="col-md-12">
+                    {{> idleplayerpersonalities }}
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="row">
-                {{> idleplayerstatistics }}
+                <div class="col-md-12">
+                    {{> idleplayerstatistics }}
+                </div>
             </div>
         </div>
         <!--<div class="col-md-6">
