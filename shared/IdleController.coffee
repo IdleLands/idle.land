@@ -8,7 +8,7 @@ if Meteor.isServer
   Meteor.publish 'allPlayers', ->
 
     lastMonth = new Date
-    lastMonth.setDate lastMonth.getDate() - 7
+    lastMonth.setDate lastMonth.getDate() - 2
 
     IdlePlayers.find {lastLogin: {$gt: lastMonth}}, {sort: {'name': 1}}
 
