@@ -7,7 +7,7 @@
     </section>
     <section>
         <div class="col-md-3 col-sm-3 col-xs-6"
-             ng-repeat="player in filteredPlayers() | filter:{name:filters.name, professionName: filters.profession, map: filters.map} | orderBy:filters.stat:true | orderBy:player.name"
+             ng-repeat="player in filteredPlayers() | filter:{name:filters.name, professionName: filters.profession, map: filters.map} | orderBy:filters.stat:true"
              ng-if="decompose(player, filters.stat)">
             <div class="small-box bg-blue">
                 <div class="inner">
