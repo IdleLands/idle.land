@@ -7,14 +7,18 @@ if Meteor.isServer
 
   Meteor.publish 'allPlayers', ->
 
-    lastMonth = new Date
-    lastMonth.setDate lastMonth.getDate() - 2
+    yesterday = new Date
+    yesterday.setDate yesterday.getDate() - 1
 
-    IdlePlayers.find {lastLogin: {$gt: lastMonth}}, {sort: {'name': 1}}
+    IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1}}
+
+  Meteor.publish 'allEvents', ->
+    IdlePlayerEvents.find()
 
 if Meteor.isClient
 
   Meteor.subscribe 'allPlayers'
+  Meteor.subscribe 'allEvents'
 
   IdlePlayers = new Mongo.Collection "players"
   IdlePlayerEvents = new Mongo.Collection "playerEvents"
@@ -81,6 +85,9 @@ if Meteor.isClient
 
     $collection IdlePlayers, {}, sort: 'level.__current': -1
     .bind $scope, 'players'
+
+    #$collection IdlePlayerEvents
+    #.bind $scope, 'playerEvents'
 
     $scope.filteredPlayers = ->
       $scope.players
