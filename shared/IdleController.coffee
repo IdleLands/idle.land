@@ -263,8 +263,10 @@ if Meteor.isClient
         val = player.statistics[key] or 0
 
         buildHtmlFromObject = (obj, playerLink = no) ->
-          _.sortBy (_.keys obj), (key) ->
+          _(_.keys obj).sortBy (key) ->
             -obj[key]
+          .filter (key) ->
+            not _.str.isBlank key
           .map (key) ->
             embedKey =  if playerLink then "<a href='#{key}'>#{key}</a>" else key
             "<li>#{embedKey} (#{obj[key]})</li>"
