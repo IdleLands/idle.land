@@ -193,8 +193,14 @@ img {
     blue, indigo, violet);
 }
 .bg-gray {
-    color: #000;
-  background-color: #eaeaec !important;
+    color: #ccc;
+    background-color: #eaeaec !important;
+}
+.bg-gray .inner {
+    color: #777;
+}
+.bg-gray a.small-box-footer {
+    color: #888;
 }
 .bg-black {
   background-color: #222222 !important;

@@ -22,7 +22,9 @@
 <template name="idleplayerheader">
     <div class="row">
         <div class="col-md-5 col-xs-7">
-            <h1>[[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
+            <h1>
+                <small><span class="fa fa-certificate" ng-class="{'text-muted': !item.isOnline, 'text-success': item.isOnline}"></span></small>
+                [[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
             <h4 ng-if="getPlayerTagline(item)"><small>[[getPlayerTagline(item)]]</small></h4>
             <h5 ng-if="item.achievements"><a href="#" ui-sref="idleachievements({playerName: item.name})"><span class="fa fa-bookmark"></span> Achievements</a></h5>
             <h5 ng-if="item.partyName">Member of [[item.partyName]]</h5>
