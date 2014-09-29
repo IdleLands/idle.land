@@ -355,6 +355,7 @@ if Meteor.isClient
         {name: 'Attacks Deflected', key: 'combat self deflect'}
         {name: 'Attacks Dodged', key: 'combat self dodge'}
         {name: 'Personalities', key: '__personalities'}
+        {name: 'Achievements', key: '__achievements'}
       ], (stat) -> stat.name
 
       $scope.getMaxOfStat = (stat) ->
@@ -389,7 +390,10 @@ if Meteor.isClient
         if _.isNaN (my/total) then 0 else val
 
       $scope.getStatFor = (player, key) ->
-        if key is "__personalities" then player.personalityStrings?.length else player.statistics?[key]
+        switch key
+          when "__personalities" then player.personalityStrings?.length
+          when "__achievements" then player.achievements?.length
+          else player.statistics?[key]
 
       $scope.totalFromStatistics = (key) ->
         (_.reduce $scope.players, ((prev, player) => prev+((@getStatFor player, key) or 0)), 0) or 0

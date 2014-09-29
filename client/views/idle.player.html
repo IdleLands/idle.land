@@ -26,7 +26,7 @@
                 <small><span class="fa fa-certificate" ng-class="{'text-muted': !item.isOnline, 'text-success': item.isOnline}"></span></small>
                 [[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
             <h4 ng-if="getPlayerTagline(item)"><small>[[getPlayerTagline(item)]]</small></h4>
-            <h5 ng-if="item.achievements"><a href="#" ui-sref="idleachievements({playerName: item.name})"><span class="fa fa-bookmark"></span> Achievements</a></h5>
+            <h5 ng-if="item.achievements"><a href="#" ui-sref="idleachievements({playerName: item.name})"><span class="fa fa-bookmark"></span> [[item.achievements.length]] Achievements</a></h5>
             <h5 ng-if="item.partyName">Member of [[item.partyName]]</h5>
             <h5 ng-if="!item.partyName">No party</h5>
             <h5>Gold: [[item.gold.__current]]</h5>
