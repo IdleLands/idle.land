@@ -46,6 +46,9 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            {{> idleglobalstatsitems }}
+        </div>
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -63,33 +66,40 @@
     </div>
 </template>
 
-<template name="idleglobalstatsgeneratable">
-    <div class="box box-info">
+<template name="idleglobalstatsitems">
+    <div class="box box-warning">
         <div class="box-header">
-            <h4 class="text-center">Generally Generatable</h4>
+            <h4 class="text-center">Best Items of All Time (For Now)</h4>
         </div>
         <div class="box-body no-padding">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Data Type</th>
-                    <th class="text-center">Total Available</th>
+                    <th>Owner Name</th>
+                    <th>Item Categorization</th>
+                    <th>Item Name</th>
+                    <th>Item Score</th>
+                    <th ng-repeat="header in topEquipmentDisplayOrder">[[header.toUpperCase()]]</th>
                 </tr>
                 </thead>
-                <tr ng-if="_.isEmpty(cached)">
-                    <td colspan="2">Loading database metrics...</td>
+                <tr ng-if="topEquipment.length === 0">
+                    <td>Calculating the best items...</td>
                 </tr>
-                <tr ng-repeat="(key,value) in cached">
-                    <td>[[key]]</td>
-                    <td class="text-center">[[value]]</td>
+                <tr ng-repeat="item in topEquipment">
+                    <td><a ui-sref="idleplayer({playerName:item.owner})">[[item.owner]]</a></td>
+                    <td>[[item.itemClass]] [[item.type]]</td>
+                    <td>[[item.name]]</td>
+                    <td>[[item._calcScore]]</td>
+                    <td ng-repeat="header in topEquipmentDisplayOrder"
+                        ng-class="{
+                            'text-success': item[header] > 0,
+                            'text-danger': item[header] < 0
+                        }">
+                        [[ item[header] ]]</td>
                 </tr>
             </table>
         </div>
     </div>
-</template>
-
-<template name="idleglobalstatsitems">
-
 </template>
 
 <template name="idleglobalstatsbase">
@@ -224,6 +234,31 @@
                 <tr ng-repeat="stat in statisticsToShow">
                     <th class="text-right">[[stat.name]]</th>
                     <td>[[_.str.numberFormat(totalFromStatistics(stat.key))]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatsgeneratable">
+    <div class="box box-info">
+        <div class="box-header">
+            <h4 class="text-center">Generally Generatable</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Data Type</th>
+                    <th class="text-center">Total Available</th>
+                </tr>
+                </thead>
+                <tr ng-if="_.isEmpty(cached)">
+                    <td colspan="2">Loading database metrics...</td>
+                </tr>
+                <tr ng-repeat="(key,value) in cached">
+                    <td>[[key]]</td>
+                    <td class="text-center">[[value]]</td>
                 </tr>
             </table>
         </div>

@@ -18,6 +18,7 @@ if Meteor.isClient
       $scope.filters = {}
 
       $scope.cached = {}
+      $scope.topEquipment = []
 
       $scope.statisticsToShow = _.sortBy [
         {name: 'Damage Dealt', key: 'calculated total damage given'}
@@ -102,9 +103,27 @@ if Meteor.isClient
         try
           _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
 
+      $scope.topEquipmentDisplayOrder = [
+        'str'
+        'agi'
+        'dex'
+        'con'
+        'int'
+        'wis'
+        'luck'
+      ]
+      $scope.getTopEquipment = ->
+        $scope.topEquipment = []
+        _.each $scope.players, (player) ->
+          _.each player.equipment, (item) -> item.owner = player.name
+          $scope.topEquipment = $scope.topEquipment.concat player.equipment
+
+        $scope.topEquipment = (_.sortBy $scope.topEquipment, (item) -> -item._calcScore)[0..10]
+
       $scope.$watch 'players', (newVal, oldVal) ->
         return if newVal.length is 0 or newVal is oldVal
         $scope._filters.loadFiltersFromPlayers newVal
+        $scope.getTopEquipment()
 
       $scope.$watch '_filters.getFilterData()', (newVal, oldVal) ->
         return if newVal is oldVal
