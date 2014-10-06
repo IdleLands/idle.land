@@ -19,21 +19,21 @@ if Meteor.isClient
         url: '/idle/'
 
       .state 'idleglobalstats',
-        url: '/idle/@'
+        url: '/idle/global'
         views:
           'content':
             template: UiRouter.template 'idleglobalstats'
             controller: 'IdleGlobalStats'
 
       .state 'idleplayer',
-        url: '/idle/:playerName'
+        url: '/idle/p/:playerName'
         views:
           'content':
             template: UiRouter.template 'idleplayer'
             controller: 'IdlePlayer'
 
       .state 'idleachievements',
-        url: '/idle/:playerName/achievements'
+        url: '/idle/p/:playerName/achievements'
         views:
           'content':
             template: UiRouter.template 'idleplayerachievements'
