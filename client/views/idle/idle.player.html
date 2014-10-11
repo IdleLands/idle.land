@@ -43,6 +43,11 @@
         </li>
         <li>
             <a>
+                <i class="fa fa-fw fa-clock-o"></i> Started <span am-time-ago="item.registrationDate"></span>
+            </a>
+        </li>
+        <li>
+            <a>
                 <i class="fa fa-fw icon-money"></i> [[_.str.numberFormat(item.gold.__current)]] Gold
             </a>
         </li>
@@ -63,7 +68,7 @@
         </li>
         <li>
             <a href="#" ng-click="getJSONFor(item)">
-                <i class="fa fa-fw fa-download"></i> Get JSON for [[item.name]]
+                <i class="fa fa-fw fa-file-code-o"></i> Download JSON
             </a>
         </li>
     </ul>
