@@ -1,0 +1,22 @@
+<template name="idleevents">
+    <section class="content-header">
+        <h1>IdleLands<small>[[playerName ? '' : 'Global']] Event Frequency</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a></li>
+            <li ng-class="{active: !playerName}"><span class="fa fa-area-chart"></span> <a ui-sref="idleglobalanalytics">Analytics</a></li>
+            <li ng-if="playerName" ng-class="active"><a ui-sref="idleplayer({playerName:playerName})">[[playerName]]</a></li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-users text-info"></span> [[playerEvents.length]] event occurrences were crammed into this events page
+        </span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 analytics-chart filter-header">
+            <highchart config="options"></highchart>
+        </div>
+    </div>
+</template>
