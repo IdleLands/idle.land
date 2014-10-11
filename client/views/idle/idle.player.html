@@ -212,26 +212,26 @@
                     <span
                     data-html="true"
                     data-placement="bottom"
-                    data-trigger="[[equipment.name === 'Stat Totals' ? 'hover' : 'manual']]"
+                    data-trigger="[[equipment.name === 'Equipment Stat Totals' ? 'hover' : 'manual']]"
                     data-content="[[$sce.trustAsHtml(getPopoverFor(item, stat.name))]]"
                     bs-popover
                     ng-class="{
                         'text-danger': equipment[stat.name] < 0,
                         'text-success': equipment[stat.name] > 0,
-                        'stat-total': equipment.name === 'Stat Totals'}
-                    ">[[ equipment[stat.name] ]]</span>
-                    /
+                        'stat-total': equipment.name === 'Equipment Stat Totals'}
+                    ">[[ equipment[stat.name] || 0 ]]</span>
                     <span
+                    ng-if="equipment.name !== 'Last Cached Calculated Stats'"
                     data-html="true"
                     data-placement="bottom"
-                    data-trigger="[[equipment.name === 'Stat Totals' ? 'hover' : 'manual']]"
+                    data-trigger="[[equipment.name === 'Equipment Stat Totals' ? 'hover' : 'manual']]"
                     data-content="[[$sce.trustAsHtml(getPopoverFor(item, stat.name+'Percent'))]]"
                     bs-popover
                     ng-class="{
                         'text-danger': equipment[stat.name+'Percent'] < 0,
                         'text-success': equipment[stat.name+'Percent'] > 0,
-                        'stat-total': equipment.name === 'Stat Totals'}
-                    ">[[ equipment[stat.name+'Percent'] ]]%</span>
+                        'stat-total': equipment.name === 'Equipment Stat Totals'}
+                    ">/ [[ equipment[stat.name+'Percent'] || 0 ]]%</span>
                 </div>
             </div>
             <div class="row">

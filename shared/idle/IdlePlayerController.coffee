@@ -29,14 +29,23 @@ if Meteor.isClient
       $scope.getEquipmentAndTotals = (player) ->
         items = $scope.getEquipment player
 
+        console.log player._baseStats
+
         test = _.reduce items, (prev, cur) ->
           for key, val of cur
             prev[key] = 0 if not (key of prev) and _.isNumber val
             prev[key] += val if _.isNumber val
           prev
-        , {name: 'Stat Totals', type: 'STAT TOTALS', bgColor: 'bg-maroon'}
+        , {name: 'Equipment Stat Totals', type: 'EQUIPMENT', bgColor: 'bg-maroon'}
 
         items.unshift test
+
+        lastCalc = player._statCache
+        lastCalc.name = 'Last Cached Calculated Stats'
+        lastCalc.type = 'CACHED'
+        lastCalc.bgColor = 'bg-maroon'
+
+        items.unshift lastCalc
 
         items
 
@@ -148,7 +157,7 @@ if Meteor.isClient
         null
 
       $scope.isHtmlStat = (stat) ->
-        stat in ['calculated kills', 'calculated kills by class', 'calculated class changes']
+        stat in ['calculated kills', 'calculated kills by class', 'calculated class changes', 'calculated boss kills', 'calculated map changes']
 
       $scope.statsObj = (player, key) ->
         val = player.statistics[key] or 0

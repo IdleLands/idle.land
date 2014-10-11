@@ -34,9 +34,9 @@ if Meteor.isClient
 
         head: sorted[0]
         runnerups: sorted[1..3]
-        tail: sorted[-1]
-        tailerups: sorted[-2..-4]
-        all: sorted
+        #tail: sorted[-1]
+        #tailerups: sorted[-2..-4]
+        #all: sorted
 
       $scope.setMaxOnAllStats = ->
         _.each $scope.filters.stats, (stat) =>
@@ -74,9 +74,9 @@ if Meteor.isClient
 
         head: sorted[0]
         runnerups: sorted[1..3]
-        tail: sorted[-1]
-        tailerups: sorted[-2..-4]
-        all: sorted
+        #tail: sorted[-1]
+        #tailerups: sorted[-2..-4]
+        #all: sorted
 
       $scope.decompose = (player, key) ->
         try
