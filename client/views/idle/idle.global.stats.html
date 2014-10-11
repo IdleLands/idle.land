@@ -150,7 +150,7 @@
                     <th>XP</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="player in getOrderedByXpPercent()" ng-if="$index < 5">
+                <tr ng-repeat="player in getOrderedByXpPercent()" ng-if="$index < 7">
                     <td><a ui-sref="idleplayer({playerName:player.name})">[[player.name]]</a></td>
                     <td>[[player.level.__current]]</td>
                     <td>[[(player.xp.__current/player.xp.maximum*100).toFixed(3)]]%</td>
@@ -174,7 +174,7 @@
                     <th class="text-center">Join Time</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="player in getOrderedByJoinTime()" ng-if="$index < 5">
+                <tr ng-repeat="player in getOrderedByJoinTime()" ng-if="$index < 7">
                     <td><a ui-sref="idleplayer({playerName:player.name})">[[player.name]]</a></td>
                     <td class="text-center"
                         am-time-ago="player.registrationDate"

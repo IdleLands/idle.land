@@ -44,9 +44,13 @@ if Meteor.isClient
       ]
       extraStats: _.sortBy [
         {name: 'Damage Dealt',            key: 'statistics.calculated total damage given'}
-        {name: 'Damage Taken',            key: 'statistics.calculated damage received'}
-        {name: 'Healing Received',        key: 'statistics.calculated heal received'}
-        {name: 'Healing Given',           key: 'statistics.calculated total heals given'}
+        {name: 'Damage Taken',            key: 'statistics.calculated total damage received'}
+        {name: 'Healing Received',        key: 'statistics.calculated total healing received'}
+        {name: 'Healing Given',           key: 'statistics.calculated total healing given'}
+        {name: 'Gold Found',              key: 'statistics.calculated total gold gained'}
+        {name: 'Gold Lost',               key: 'statistics.calculated total gold lost'}
+        {name: 'Experience Gained',       key: 'statistics.calculated total xp gained'}
+        {name: 'Experience Lost',         key: 'statistics.calculated total xp lost'}
         {name: 'Steps Taken',             key: 'statistics.explore walk'}
         {name: 'Fled From Combat',        key: 'statistics.combat self flee'}
         {name: 'Events Experienced',      key: 'statistics.event'}
@@ -57,6 +61,7 @@ if Meteor.isClient
         {name: 'Walls Walked Into',       key: 'statistics.explore hit wall'}
         {name: 'Items Sold',              key: 'statistics.event sellItem'}
         {name: 'Monster Battles',         key: 'statistics.event monsterbattle'}
+        {name: 'Boss Kills',              key: 'statistics.event bossbattle win'}
         {name: 'Items Equipped',          key: 'statistics.event findItem'}
         {name: 'Switcheroos',             key: 'statistics.event flipStat'}
         {name: 'Enchantments',            key: 'statistics.event enchant'}
