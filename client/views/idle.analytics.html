@@ -1,0 +1,105 @@
+<template name="idleanalytics">
+    <section class="content-header">
+        <h1>IdleLands<small>[[playerName ? '' : 'Global']] Analytics</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a></li>
+            <li ng-class="{active: !playerName}"><span class="fa fa-line-chart"></span> <a ui-sref="idleglobalanalytics">Analytics</a></li>
+            <li ng-if="playerName" ng-class="active"><a ui-sref="idleplayer({playerName:playerName})">[[playerName]]</a></li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-users text-info"></span> [[playerSnapshots.length]] snapshots were factored into this analytics page
+        </span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 analytics-chart filter-header">
+            <highchart config="options"></highchart>
+        </div>
+    </div>
+</template>
+
+<template name="idleanalyticssidebar">
+    <section class="content-header">
+        <h3 class="text-center filter-header">Filters</h3>
+    </section>
+    <div class="filters">
+        <div class="row" ng-if="playerName">
+            <div class="col-xs-12 filter-header text-center">
+                <div class="btn-group" ng-model="editing.classification" bs-radio-group ng-init="editing.classification = 'global'">
+                    <label class="btn btn-primary"><input type="radio" value="player" /> Player</label>
+                    <label class="btn btn-primary"><input type="radio" value="global" /> Global</label>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="!playerName">
+            <h4 class="text-center filter-header">Change All <small><a href ng-click="clearSelection()">clear</a></small></h4>
+            <div class="col-xs-12 text-center">
+                <div class="btn-group" ng-model="editing.selectedFunction" bs-radio-group>
+                    <label class="btn btn-primary"><input type="radio" value="avg" /> Avg</label>
+                    <label class="btn btn-primary"><input type="radio" value="min" /> Min</label>
+                    <label class="btn btn-primary"><input type="radio" value="max" /> Max</label>
+                    <label class="btn btn-primary"><input type="radio" value="sum" /> Sum</label>
+                </div>
+            </div>
+        </div>
+        <div class="row filter-header">
+            <h3 class="text-center filter-header">
+                New Filter
+                <small><a href ng-click="toggleFilterBox()">[[editing._showFilterBox ? 'hide' : 'show']]</a></small>
+            </h3>
+        </div>
+        <div class="row filter-header" ng-if="editing._showFilterBox && editing.classification !== 'player'">
+            <h4 class="text-center">Function</h4>
+            <div class="col-xs-12 text-center">
+                <div class="btn-group" ng-model="editing.newFilter.type" bs-radio-group>
+                    <label class="btn btn-primary"><input type="radio" value="avg" /> Avg</label>
+                    <label class="btn btn-primary"><input type="radio" value="min" /> Min</label>
+                    <label class="btn btn-primary"><input type="radio" value="max" /> Max</label>
+                    <label class="btn btn-primary"><input type="radio" value="sum" /> Sum</label>
+                </div>
+            </div>
+        </div>
+        <div class="row sidebar-form" ng-if="editing._showFilterBox">
+            <div class="col-xs-12">
+                <h4 class="text-center filter-header">Stat</h4>
+                <select class="form-control" ng-model="editing.newFilter.key" ng-options="stat.key as stat.name for stat in allFilters">
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-if="editing._showFilterBox">
+            <div class="col-xs-12 text-center filter-header">
+                <button class="btn btn-success" ng-click="addNewFilter()"><span class="fa fa-plus"></span> Add</button>
+                <button class="btn btn-warning"
+                        ng-if="editing.classification !== 'player'"
+                        ng-click="addNewFilterAll()">
+                    <span class="fa fa-plus-square"></span> Add All</button>
+            </div>
+        </div>
+        <div class="row filter-header" ng-show="editing._showFilterBox">
+            <div class="col-xs-12">
+                <div id="bad-data-alert"></div>
+            </div>
+        </div>
+        <div class="row filter-header">
+            <h3 class="text-center filter-header">
+                Current Filters
+                <small><a href ng-click="toggleCurrentFilterBox()">[[editing._showCurrentFilterBox ? 'hide' : 'show']]</a></small>
+            </h3>
+        </div>
+        <div class="row filter-header" ng-if="editing._showCurrentFilterBox">
+            <div class="col-md-12">
+                <table class="no-padding table table-striped table-condensed">
+                    <tr ng-repeat="stat in editing.chartStats">
+                        <td>
+                            [[stat.name]] ([[stat.type]])
+                        </td>
+                        <td class="text-center remove-filter" ng-click="removeFilter(stat)">&times;</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>

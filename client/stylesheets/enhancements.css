@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'enhancements';
-  src: url('../font/enhancements.eot?83352623');
-  src: url('../font/enhancements.eot?83352623#iefix') format('embedded-opentype'),
-       url('../font/enhancements.woff?83352623') format('woff'),
-       url('../font/enhancements.ttf?83352623') format('truetype'),
-       url('../font/enhancements.svg?83352623#enhancements') format('svg');
+  src: url('../font/enhancements.eot?18825772');
+  src: url('../font/enhancements.eot?18825772#iefix') format('embedded-opentype'),
+       url('../font/enhancements.woff?18825772') format('woff'),
+       url('../font/enhancements.ttf?18825772') format('truetype'),
+       url('../font/enhancements.svg?18825772#enhancements') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'enhancements';
-    src: url('../font/enhancements.svg?83352623#enhancements') format('svg');
+    src: url('../font/enhancements.svg?18825772#enhancements') format('svg');
   }
 }
 */
@@ -51,3 +51,8 @@
 }
  
 .icon-snow:before { content: '\e800'; } /* '' */
+.icon-water:before { content: '\e801'; } /* '' */
+.icon-money:before { content: '\e802'; } /* '' */
+.icon-trophy:before { content: '\e803'; } /* '' */
+.icon-compass-circled:before { content: '\e804'; } /* '' */
+.icon-network:before { content: '\e805'; } /* '' */

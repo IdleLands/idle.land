@@ -1,0 +1,55 @@
+<template name="idleachievements">
+    <section class="content-header">
+        <h1>IdleLands<small>[[playerName ? playerName+"'s" : 'Global']] Achievements [[playerName ? "("+player[0].achievements.length+")" : '']]</small></h1>
+        <ol class="breadcrumb">
+            <li>
+                <span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a>
+            </li>
+            <li ng-class="{active: !playerName}"><span class="fa icon-trophy"></span> <a href ui-sref="idleglobalachievements">Achievements</a></li>
+            <li ng-if="playerName" class="active"><a href ui-sref="idleplayer({playerName:playerName})">[[playerName]]</a></li>
+        </ol>
+    </section>
+
+    <div ng-if="!player">
+        {{> idleglobalachievementheader }}
+        {{> idleachievementbody }}
+    </div>
+
+    <div ng-repeat="item in player" ng-if="player">
+        {{> idleachievementbody }}
+    </div>
+
+</template>
+
+<template name="idleglobalachievementheader">
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-users text-info"></span> [[players.length]] players were counted in the making of this page
+        </span>
+    </div>
+</template>
+
+<template name="idleachievementbody">
+    <div class="row filter-header">
+        <div ng-repeat="achievement in getAchievements()">
+            {{> idleachievement }}
+        </div>
+    </div>
+</template>
+
+<template name="idleachievement">
+    <div class="col-sm-6 col-md-3">
+        <div class="small-box bg-maroon">
+            <div class="inner">
+                <h4>[[achievement.name]]</h4>
+                <p><small>[[achievement.desc]]</small></p>
+            </div>
+            <div class="icon" ng-if="achievement.person">
+                [[achievement.percent]]%
+            </div>
+            <a class="small-box-footer">
+                [[achievement.reward]]
+            </a>
+        </div>
+    </div>
+</template>

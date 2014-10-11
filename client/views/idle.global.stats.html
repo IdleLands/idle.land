@@ -2,7 +2,8 @@
     <section class="content-header">
         <h1>IdleLands<small>Global Statistics</small></h1>
         <ol class="breadcrumb">
-            <li class="active"><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li class="active"><span class="fa fa-calculator"></span> Stats</li>
         </ol>
     </section>
 
@@ -83,7 +84,7 @@
                 </tr>
                 </thead>
                 <tr ng-if="topEquipment.length === 0">
-                    <td>Calculating the best items...</td>
+                    <td colspan="11">Calculating the best items...</td>
                 </tr>
                 <tr ng-repeat="item in topEquipment">
                     <td><a ui-sref="idleplayer({playerName:item.owner})">[[item.owner]]</a></td>
@@ -201,7 +202,7 @@
                     <th>Contribution</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="stat in statisticsToShow">
+                <tr ng-repeat="stat in statisticsToShow" ng-if="stat.name">
                     <th class="text-right">[[stat.name]]</th>
                     <td><a ui-sref="idleplayer({playerName:maxFromStatistics(stat.key).head.name})">[[maxFromStatistics(stat.key).head.name]]</a></td>
                     <td
@@ -231,7 +232,7 @@
                     <th>Count</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="stat in statisticsToShow">
+                <tr ng-repeat="stat in statisticsToShow" ng-if="stat.name">
                     <th class="text-right">[[stat.name]]</th>
                     <td>[[_.str.numberFormat(totalFromStatistics(stat.key))]]</td>
                 </tr>

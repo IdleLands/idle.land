@@ -42,6 +42,32 @@ if Meteor.isClient
         {name: 'MP',    key: 'mp.maximum'}
         {name: 'Gold',  key: 'gold.__current'}
       ]
+      extraStats: _.sortBy [
+        {name: 'Damage Dealt',            key: 'statistics.calculated total damage given'}
+        {name: 'Damage Taken',            key: 'statistics.calculated damage received'}
+        {name: 'Healing Received',        key: 'statistics.calculated heal received'}
+        {name: 'Healing Given',           key: 'statistics.calculated total heals given'}
+        {name: 'Steps Taken',             key: 'statistics.explore walk'}
+        {name: 'Fled From Combat',        key: 'statistics.combat self flee'}
+        {name: 'Events Experienced',      key: 'statistics.event'}
+        {name: 'Cataclysms Experienced',  key: 'statistics.event cataclysms'}
+        {name: 'Times Fallen',            key: 'statistics.explore transfer fall'}
+        {name: 'Times Ascended',          key: 'statistics.explore transfer ascend'}
+        {name: 'Times Descended',         key: 'statistics.explore transfer descend'}
+        {name: 'Walls Walked Into',       key: 'statistics.explore hit wall'}
+        {name: 'Items Sold',              key: 'statistics.event sellItem'}
+        {name: 'Monster Battles',         key: 'statistics.event monsterbattle'}
+        {name: 'Items Equipped',          key: 'statistics.event findItem'}
+        {name: 'Switcheroos',             key: 'statistics.event flipStat'}
+        {name: 'Enchantments',            key: 'statistics.event enchant'}
+        {name: 'Class Changes',           key: 'statistics.player profession change'}
+        {name: 'Times Gained XP',         key: 'statistics.player xp gain'}
+        {name: 'Player Kills',            key: 'statistics.combat self kill'}
+        {name: 'Player Deaths',           key: 'statistics.combat self killed'}
+        {name: 'Attacks Made',            key: 'statistics.combat self attack'}
+        {name: 'Attacks Deflected',       key: 'statistics.combat self deflect'}
+        {name: 'Attacks Dodged',          key: 'statistics.combat self dodge'}
+      ], (item) -> item.name
       classes: []
       maps: []
 

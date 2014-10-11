@@ -1,30 +1,17 @@
 
 #xp-container {
   position: relative;
-  top: 30px;
-  left: -50px;
+  height: 100px;
+  margin-left: -7px;
 
   .xpval {
-    position: absolute;
     text-align: center;
-    font-size: 18px;
-    left: 100px;
-    top: 35px;
+    margin-top: -115px;
   }
 
   #xpGauge {
-    position: absolute;
-    top: -20px;
+    margin-left: -59px;
   }
-/*
-  .xpval {
-    position: absolute;
-    left: -600px;
-    right: 0;
-    top: 55px;
-    margin-left: auto;
-    margin-right: auto;
-  }*/
 }
 
 .popover {
@@ -74,7 +61,6 @@
   padding-left: 0;
   padding-right: 0;
   display: block;
-  width: 600px;
 }
 
 .filter-header {
@@ -95,6 +81,10 @@
   cursor: pointer;
 }
 
+.remove-filter {
+  cursor: pointer;
+}
+
 .subnote {
   font-style: italic;
   font-size: 75%;
@@ -104,6 +94,31 @@
   width: 10%;
 }
 
+.no-padding {
+  padding: 0;
+}
+
 .no-zindex {
   z-index: 0;
+}
+
+.analytics-chart {
+  height: 800px;
+}
+
+.btn-group > .btn:not(.active) {
+  background-color: #ccc;
+  color: #000;
+}
+
+.label.bg-gray {
+  color: black!important;
+}
+
+.content-header {
+  margin-bottom: 15px;
+}
+
+.sidebar-form {
+  border: 0!important;
 }

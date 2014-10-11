@@ -2,33 +2,37 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'Idle', ['$scope', '$collection', 'IdleFilterData', 'IdleCollections', ($scope, $collection, Filters, IdleCollections) =>
+  ngMeteor.controller 'Idle', [
+    '$scope', '$collection', 'IdleFilterData', 'IdleCollections', 'PageTitle',
+    ($scope, $collection, Filters, IdleCollections, PageTitle) =>
 
-    $scope._filters = Filters
-    $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
+      PageTitle.setTitle "Idle Lands - Player List"
 
-    $collection IdleCollections.IdlePlayers, {}, sort: 'level.__current': -1
-    .bind $scope, 'players'
+      $scope._filters = Filters
+      $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
 
-    $scope.filteredPlayers = ->
-      return 0 if not $scope.filtered
-      return 0 if $scope.filtered.length is $scope.players.length
-      $scope.players.length - $scope.filtered.length
+      $collection IdleCollections.IdlePlayers, {}, sort: 'level.__current': -1
+      .bind $scope, 'players'
 
-    $scope.allPlayers = ->
-      $scope.players
+      $scope.filteredPlayers = ->
+        return 0 if not $scope.filtered
+        return 0 if $scope.filtered.length is $scope.players.length
+        $scope.players.length - $scope.filtered.length
 
-    $scope.decompose = (player, key) ->
-      try
-        _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+      $scope.allPlayers = ->
+        $scope.players
 
-    $scope.$watch '_filters.getFilters()', (newVal, oldVal) ->
-      return if newVal is oldVal
-      $scope.filters = newVal
-    , yes
+      $scope.decompose = (player, key) ->
+        try
+          _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
 
-    $scope.$watch 'players', (newVal, oldVal) ->
-      return if newVal is oldVal or newVal.length is 0
-      $scope._filters.loadFiltersFromPlayers newVal
+      $scope.$watch '_filters.getFilters()', (newVal, oldVal) ->
+        return if newVal is oldVal
+        $scope.filters = newVal
+      , yes
+
+      $scope.$watch 'players', (newVal, oldVal) ->
+        return if newVal is oldVal or newVal.length is 0
+        $scope._filters.loadFiltersFromPlayers newVal
 
   ]

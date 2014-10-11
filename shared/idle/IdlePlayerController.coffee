@@ -1,10 +1,16 @@
 
 if Meteor.isClient
   ngMeteor.controller 'IdlePlayer', [
-    '$scope', '$stateParams', '$sce', '$collection', 'IdleCollections',
-    ($scope, $stateParams, $sce, $collection, IdleCollections) =>
+    '$scope', '$stateParams', '$sce', '$collection', 'IdleCollections', 'PageTitle'
+    ($scope, $stateParams, $sce, $collection, IdleCollections, PageTitle) =>
+
+      window.scrollTo 0,0
+
       $scope.$sce = $sce
       $scope._ = window._
+      $scope.playerName = $stateParams.playerName
+
+      PageTitle.setTitle "Idle Lands - #{$scope.playerName} (Stats)"
 
       $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
       .bind $scope, 'player'
@@ -13,18 +19,6 @@ if Meteor.isClient
 
       $collection IdleCollections.IdlePlayerEvents, {player: $stateParams.playerName}, limit: 7, sort: {createdAt: -1}
       .bind $scope, 'playerEvents'
-
-      $scope.$watch 'playerEvents', (newVal, oldVal) ->
-        console.log 'test',newVal
-
-      $scope.getJSONFor = (player) ->
-        str = JSON.stringify player, null, 4
-        blob = new Blob [str], type: 'application/json'
-        url = URL.createObjectURL blob
-        a = document.createElement 'a'
-        a.download = "#{player.name}-#{Date.now()}.json"
-        a.href = url
-        a.click()
 
       $scope.getPlayerTagline = (player) ->
         player.messages?.web
@@ -71,7 +65,7 @@ if Meteor.isClient
         {name: 'int', fa: 'fa-mortar-board'}
         {name: 'wis', fa: 'fa-book'}
         {name: 'fire', fa: 'fa-fire'}
-        {name: 'water', fa: 'fa-cloud'}
+        {name: 'water', fa: 'icon-water'}
         {name: 'thunder', fa: 'fa-bolt'}
         {name: 'earth', fa: 'fa-leaf'}
         {name: 'ice', fa: 'icon-snow'}
@@ -98,7 +92,7 @@ if Meteor.isClient
         string + "</table>"
 
       $scope.getExtraStats = (item) ->
-        keys = _.filter (_.keys item), (key) -> _.isNumber item[key]
+        keys = _.filter (_.compact _.keys item), (key) -> _.isNumber item[key]
 
         _.each $scope.extendedEquipmentStatArray, (stat) ->
           keys = _.without keys, stat.name
@@ -183,28 +177,4 @@ if Meteor.isClient
       $scope.playerItemScore = (player, item) ->
         return 0 if not item._calcScore or not player._baseStats.itemFindRange
         parseInt (item._calcScore / player._baseStats.itemFindRange) * 100
-
-      gauge = null
-      $scope.updateXp = (player) ->
-        if not gauge
-          xpEl = document.getElementById 'xpGauge'
-          opts =
-            lines: 12
-            angle: 0
-            lineWidth: 0.07
-            pointer:
-              length: 0.9
-              strokeWidth: 0.035
-              color: '#000000'
-            limitMax: 'false'
-            colorStart: '#66CD00'
-            colorStop: '#3B5323'
-            strokeColor: '#EEEEEE'
-            generateGradient: true
-
-          gauge = new Donut(xpEl).setOptions opts
-
-        gauge.maxValue = player.xp.maximum
-        gauge.set player.xp.__current
-        null
   ]

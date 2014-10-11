@@ -19,23 +19,62 @@ if Meteor.isClient
         url: '/idle/'
 
       .state 'idleglobalstats',
-        url: '/idle/global'
+        url: '/idle/stats'
         views:
           'content':
             template: UiRouter.template 'idleglobalstats'
             controller: 'IdleGlobalStats'
 
+      .state 'idleglobalanalytics',
+        url: '/idle/analytics'
+        views:
+          'content':
+            template: UiRouter.template 'idleanalytics'
+            controller: 'IdleAnalytics'
+          'sidebar':
+            template: UiRouter.template 'idleanalyticssidebar'
+            controller: 'IdleAnalyticsFilter'
+
+      .state 'idleglobalachievements',
+        url: '/idle/achievements'
+        views:
+          'content':
+            template: UiRouter.template 'idleachievements'
+            controller: 'IdleAchievements'
+
+      .state 'idleplayerachievements',
+        url: '/idle/achievements/:playerName'
+        views:
+          'content':
+            template: UiRouter.template 'idleachievements'
+            controller: 'IdleAchievements'
+
+      .state 'idleplayeranalytics',
+        url: '/idle/analytics/:playerName'
+        views:
+          'content':
+            template: UiRouter.template 'idleanalytics'
+            controller: 'IdleAnalytics'
+          'sidebar':
+            template: UiRouter.template 'idleanalyticssidebar'
+            controller: 'IdleAnalyticsFilter'
+
       .state 'idleplayer',
-        url: '/idle/p/:playerName'
+        url: '/idle/stats/:playerName'
         views:
           'content':
             template: UiRouter.template 'idleplayer'
             controller: 'IdlePlayer'
+          'sidebar':
+            template: UiRouter.template 'idleplayersidebar'
+            controller: 'IdlePlayerSidebar'
 
-      .state 'idleachievements',
-        url: '/idle/p/:playerName/achievements'
+      .state 'idlespecialthanks',
+        url: '/idle/thanks'
         views:
           'content':
-            template: UiRouter.template 'idleplayerachievements'
-            controller: 'IdleAchievements'
+            template: UiRouter.template 'idlespecialthanks'
+            controller: 'IdleSpecialThanks'
+          'sidebar':
+            template: UiRouter.template 'idlespecialthankssidebar'
   ]

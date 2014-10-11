@@ -1,14 +1,14 @@
 
 <template name="idleplayer">
     <section class="content-header" ng-repeat="item in player">
-        <h1>IdleLands<small>Players</small></h1>
+        <h1>IdleLands<small>[[item.name]], the level [[item.level.__current]] [[item.professionName]]</small></h1>
         <ol class="breadcrumb">
             <li>
-                <span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a>
+                <span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a>
             </li>
-            <li class="active">[[item.name]]</li>
+            <li><span class="fa fa-calculator"></span> <a href ui-sref="idleglobalstats">Stats</a></li>
+            <li class="active">[[playerName]]</li>
         </ol>
-        <div class="pull-right subnote"><a href="#" ng-click="getJSONFor(item)">Want this character's JSON?</a></div>
     </section>
 
     <div ng-repeat="item in player">
@@ -19,28 +19,65 @@
 
 </template>
 
-<template name="idleplayerheader">
-    <div class="row">
-        <div class="col-md-5 col-xs-7">
-            <h1>
-                <small><span class="fa fa-certificate" ng-class="{'text-muted': !item.isOnline, 'text-success': item.isOnline}"></span></small>
-                [[item.name]] <small>the level [[item.level.__current]] [[item.professionName]]</small></h1>
-            <h4 ng-if="getPlayerTagline(item)"><small>[[getPlayerTagline(item)]]</small></h4>
-            <h5 ng-if="item.achievements"><a href="#" ui-sref="idleachievements({playerName: item.name})"><span class="fa fa-bookmark"></span> [[item.achievements.length]] Achievements</a></h5>
-            <h5 ng-if="item.partyName">Member of "[[item.partyName]]"</h5>
-            <h5 ng-if="!item.partyName">No party</h5>
-            <h5>Gold: [[item.gold.__current]]</h5>
-        </div>
-        <div class="col-md-7 col-xs-5">
+<template name="idleplayersidebar">
+    <div class="user-panel" ng-repeat="item in player">
+        <div class="info">
             [[updateXp(item)]]
             <div id="xp-container">
                 <canvas id="xpGauge"></canvas>
-                <div class="xpval pull-left">
+                <div class="xpval">
                     <b>Experience</b>
-                    <br>
+                    <br><br>
                     <span>[[item.xp.__current]]/[[item.xp.maximum]]</span>
                 </div>
             </div>
+        </div>
+    </div>
+    <ul class="sidebar-menu" ng-repeat="item in player">
+        <li>
+            <a>
+                <i class="fa fa-fw fa-certificate" ng-class="{
+                    'text-muted': !item.isOnline,
+                    'text-success': item.isOnline}"></i> <span>[[item.isOnline ? 'Online' : 'Offline']]</span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw icon-money"></i> [[_.str.numberFormat(item.gold.__current)]] Gold
+            </a>
+        </li>
+        <li>
+            <a href ui-sref="idleplayerachievements({playerName: item.name})">
+                <i class="fa fa-fw icon-trophy"></i> [[item.achievements.length]] Achievements
+            </a>
+        </li>
+        <li>
+            <a href ui-sref="idleplayeranalytics({playerName: item.name})">
+                <i class="fa fa-fw fa-line-chart"></i> Analytics
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-group"></i> [[item/partyName ? item.partyName : 'No Party']]
+            </a>
+        </li>
+        <li>
+            <a href="#" ng-click="getJSONFor(item)">
+                <i class="fa fa-fw fa-download"></i> Get JSON for [[item.name]]
+            </a>
+        </li>
+    </ul>
+</template>
+
+<template name="idleplayerheader">
+    <div class="row">
+        <div class="col-md-5 col-xs-7">
+            <blockquote ng-if="getPlayerTagline(item)">
+                <p>
+                    [[getPlayerTagline(item)]]
+                </p>
+                <small>[[item.name]]</small>
+            </blockquote>
         </div>
     </div>
 </template>

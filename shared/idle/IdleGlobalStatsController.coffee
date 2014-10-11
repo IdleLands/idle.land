@@ -2,8 +2,11 @@
 if Meteor.isClient
 
   ngMeteor.controller 'IdleGlobalStats', [
-    '$scope', '$collection', 'IdleFilterData', 'IdleCollections',
-    ($scope, $collection, Filters, IdleCollections) ->
+    '$scope', '$collection', 'IdleFilterData', 'IdleCollections', 'PageTitle',
+    ($scope, $collection, Filters, IdleCollections, PageTitle) ->
+
+      PageTitle.setTitle "Idle Lands - Global Stats"
+
       $scope._ = window._
       $collection IdleCollections.IdlePlayers
       .bind $scope, 'players'
@@ -20,34 +23,10 @@ if Meteor.isClient
       $scope.cached = {}
       $scope.topEquipment = []
 
-      $scope.statisticsToShow = _.sortBy [
-        {name: 'Damage Dealt', key: 'calculated total damage given'}
-        {name: 'Damage Taken', key: 'calculated damage received'}
-        {name: 'Healing Received', key: 'calculated heal received'}
-        {name: 'Healing Given', key: 'calculated total heals given'}
-        {name: 'Steps Taken', key: 'explore walk'}
-        {name: 'Fled From Combat', key: 'combat self flee'}
-        {name: 'Events Experienced', key: 'event'}
-        {name: 'Cataclysms Experienced', key: 'event cataclysms'}
-        {name: 'Times Fallen', key: 'explore transfer fall'}
-        {name: 'Times Ascended', key: 'explore transfer ascend'}
-        {name: 'Times Descended', key: 'explore transfer descend'}
-        {name: 'Walls Walked Into', key: 'explore hit wall'}
-        {name: 'Items Sold', key: 'event sellItem'}
-        {name: 'Monster Battles', key: 'event monsterbattle'}
-        {name: 'Items Equipped', key: 'event findItem'}
-        {name: 'Switcheroos', key: 'event flipStat'}
-        {name: 'Enchantments', key: 'event enchant'}
-        {name: 'Class Changes', key: 'player profession change'}
-        {name: 'Times Gained XP', key: 'player xp gain'}
-        {name: 'Player Kills', key: 'combat self kill'}
-        {name: 'Player Deaths', key: 'combat self killed'}
-        {name: 'Attacks Made', key: 'combat self attack'}
-        {name: 'Attacks Deflected', key: 'combat self deflect'}
-        {name: 'Attacks Dodged', key: 'combat self dodge'}
+      $scope.statisticsToShow = _.sortBy Filters.getFilterData().extraStats.concat [
         {name: 'Personalities', key: '__personalities'}
         {name: 'Achievements', key: '__achievements'}
-      ], (stat) -> stat.name
+      ]..., (stat) -> stat.name
 
       $scope.getMaxOfStat = (stat) ->
         list = _.filter $scope.players, (player) -> _.isNumber $scope.decompose player, stat
@@ -85,7 +64,7 @@ if Meteor.isClient
         switch key
           when "__personalities" then player.personalityStrings?.length
           when "__achievements" then player.achievements?.length
-          else player.statistics?[key]
+          else $scope.decompose player, key
 
       $scope.totalFromStatistics = (key) ->
         (_.reduce $scope.players, ((prev, player) => prev+((@getStatFor player, key) or 0)), 0) or 0
@@ -101,7 +80,8 @@ if Meteor.isClient
 
       $scope.decompose = (player, key) ->
         try
-          _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+          return _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+        0
 
       $scope.topEquipmentDisplayOrder = [
         'str'
