@@ -86,7 +86,7 @@ if Meteor.isClient
             else stat.type
 
           array = if stat.type is "player" then $scope.individualPlayer else $scope.sortedPlayers
-          return [] if not $scope.individualPlayer and stat.type is "player"
+          return {name:'', data:[]} if not $scope.individualPlayer and stat.type is "player"
 
           name: "#{stat.name} (#{displayType})"
           data: _.map (_.keys array), (level) ->
@@ -108,6 +108,5 @@ if Meteor.isClient
       $scope.$watch 'individualSnapshots', (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.individualPlayer = _.groupBy newVal, (player) -> player.level.__current
-        console.log $scope.individualPlayer
         $scope.organizeData()
   ]
