@@ -43,8 +43,6 @@ if Meteor.isClient
 
       $scope.editing.newFilter.name = (_.findWhere $scope.allFilters, {key: key}).name
 
-      console.log $scope.editing.newFilter
-
       item = _.findWhere $scope.editing.chartStats, {key: key, type: $scope.editing.newFilter.type}
       if item
         $alert
