@@ -29,8 +29,6 @@ if Meteor.isClient
       $scope.getEquipmentAndTotals = (player) ->
         items = $scope.getEquipment player
 
-        console.log player._baseStats
-
         test = _.reduce items, (prev, cur) ->
           for key, val of cur
             prev[key] = 0 if not (key of prev) and _.isNumber val

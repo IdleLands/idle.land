@@ -86,7 +86,7 @@
                 <tr ng-if="topEquipment.length === 0">
                     <td colspan="11">Calculating the best items...</td>
                 </tr>
-                <tr ng-repeat="item in topEquipment">
+                <tr ng-repeat="item in topEquipment track by $index">
                     <td><a ui-sref="idleplayer({playerName:item.owner})">[[item.owner]]</a></td>
                     <td>[[item.itemClass]] [[item.type]]</td>
                     <td>[[item.name]]</td>
