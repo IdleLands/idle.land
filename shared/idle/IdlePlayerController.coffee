@@ -34,21 +34,32 @@ if Meteor.isClient
             prev[key] = 0 if not (key of prev) and _.isNumber val
             prev[key] += val if _.isNumber val
           prev
-        , {name: 'Equipment Stat Totals', type: 'EQUIPMENT', bgColor: 'bg-maroon'}
+        , {name: 'Equipment Stat Totals', type: 'EQUIPMENT', bgColor: 'bg-maroon', headerColor: 'primary'}
 
         items.unshift test
 
         lastCalc = player._statCache
 
-        return items if not lastCalc
+        if lastCalc
+          _.each (_.keys lastCalc), (key) -> lastCalc[key] = lastCalc[key].toFixed 1
 
-        _.each (_.keys lastCalc), (key) -> lastCalc[key] = lastCalc[key].toFixed 1
+          lastCalc.name = 'Last Cached Calculated Stats'
+          lastCalc.type = 'CACHED'
+          lastCalc.bgColor = 'bg-maroon'
+          lastCalc.headerColor = 'primary'
 
-        lastCalc.name = 'Last Cached Calculated Stats'
-        lastCalc.type = 'CACHED'
-        lastCalc.bgColor = 'bg-maroon'
+          items.unshift lastCalc
 
-        items.unshift lastCalc
+        overflow = player.overflow
+
+        if overflow
+          _.each player.overflow, (item, index) ->
+            item.headerColor = "success"
+            item.bgColor = 'bg-green'
+            item.bgClassColor = $scope.classToColor item.itemClass
+            item.extraColor = 'bg-orange'
+            item.extraText = "SLOT #{index}"
+            items.push item
 
         items
 
