@@ -41,6 +41,9 @@ if Meteor.isClient
         lastCalc = player._statCache
 
         return items if not lastCalc
+
+        _.each (_.keys lastCalc), (key) -> lastCalc[key] = lastCalc[key].toFixed 1
+
         lastCalc.name = 'Last Cached Calculated Stats'
         lastCalc.type = 'CACHED'
         lastCalc.bgColor = 'bg-maroon'

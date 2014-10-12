@@ -98,7 +98,7 @@ if Meteor.isClient
           _.each player.equipment, (item) -> item.owner = player.name
           $scope.topEquipment = $scope.topEquipment.concat player.equipment
 
-        $scope.topEquipment = (_.sortBy $scope.topEquipment, (item) -> -item._calcScore)[0..10]
+        $scope.topEquipment = (_.sortBy (_.compact $scope.topEquipment), (item) -> -item?._calcScore or 0)[0..10]
 
       $scope.$watch 'players', (newVal, oldVal) ->
         return if newVal.length is 0 or newVal is oldVal
