@@ -59,7 +59,7 @@ if Meteor.isClient
         {name: 'Times Ascended',          key: 'statistics.explore transfer ascend'}
         {name: 'Times Descended',         key: 'statistics.explore transfer descend'}
         {name: 'Walls Walked Into',       key: 'statistics.explore hit wall'}
-        {name: 'Items Sold',              key: 'statistics.event sellItem'}
+        {name: 'Items Sold',              key: 'statistics.player sellItem'}
         {name: 'Monster Battles',         key: 'statistics.event monsterbattle'}
         {name: 'Boss Kills',              key: 'statistics.event bossbattle win'}
         {name: 'Items Equipped',          key: 'statistics.event findItem'}
