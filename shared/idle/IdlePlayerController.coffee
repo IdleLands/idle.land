@@ -41,6 +41,8 @@ if Meteor.isClient
         items.unshift test
 
         lastCalc = player._statCache
+
+        return items if not lastCalc
         lastCalc.name = 'Last Cached Calculated Stats'
         lastCalc.type = 'CACHED'
         lastCalc.bgColor = 'bg-maroon'
