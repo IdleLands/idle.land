@@ -22,7 +22,6 @@ if Meteor.isServer
     IdlePlayers.find {name: playerName}
 
   Meteor.publish 'analytics', ->
-    console.log "all"
     IdleAnalytics.find()
 
   Meteor.publish 'singlePlayerAnalytics', (playerName) ->
