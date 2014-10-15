@@ -17,7 +17,7 @@ $(".right-side").toggleClass("strech");
 ###
 
 if Meteor.isClient
-  ngMeteor.controller 'Nav', ['$scope', '$window', ($scope, $window) ->
+  angular.module('kurea.web').controller 'Nav', ['$scope', '$window', ($scope, $window) ->
     $scope.isSidebarCollapsed = no
 
     $scope.giveOffcanvasClasses = ->

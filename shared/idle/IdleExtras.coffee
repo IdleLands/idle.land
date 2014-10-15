@@ -2,13 +2,7 @@
 
 if Meteor.isClient
 
-  Meteor.subscribe 'allPlayers'
-  Meteor.subscribe 'playerEvents'
-  Meteor.subscribe 'analytics'
-  Meteor.subscribe 'items'
-  Meteor.subscribe 'monsters'
-
-  ngMeteor.service 'IdleCollections', ->
+  angular.module('kurea.web').service 'IdleCollections', ->
 
     IdlePlayers = new Mongo.Collection "players"
     IdlePlayerEvents = new Mongo.Collection "playerEvents"
@@ -18,7 +12,7 @@ if Meteor.isClient
 
     { IdlePlayers, IdlePlayerEvents, IdleAnalytics, IdleMonsters, IdleItems }
 
-  ngMeteor.service 'IdleFilterData', ->
+  angular.module('kurea.web').service 'IdleFilterData', ->
     filters = {}
     filterData =
       cache:

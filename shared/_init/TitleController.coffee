@@ -1,13 +1,13 @@
 
 if Meteor.isClient
 
-  ngMeteor.service 'PageTitle', ->
+  angular.module('kurea.web').service 'PageTitle', ->
     pageTitle = defaultTitle = 'Kurea Web Interface'
 
     setTitle: (title) -> pageTitle = if not title then defaultTitle else title
     getTitle: -> pageTitle
 
-  ngMeteor.controller 'Title', ['$scope', 'PageTitle', ($scope, Title) ->
+  angular.module('kurea.web').controller 'Title', ['$scope', 'PageTitle', ($scope, Title) ->
     $scope.pageTitle = ''
     $scope._title = Title
 

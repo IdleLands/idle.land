@@ -1,9 +1,9 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'IdleAnalytics', [
-    '$scope', '$collection', '$stateParams', 'IdleCollections', 'IdleFilterData', 'PageTitle',
-    ($scope, $collection, $stateParams, IdleCollections, Filters, PageTitle) ->
+  angular.module('kurea.web').controller 'IdleAnalytics', [
+    '$scope', '$collection', '$subscribe', '$stateParams', 'IdleCollections', 'IdleFilterData', 'PageTitle',
+    ($scope, $collection, $subscribe, $stateParams, IdleCollections, Filters, PageTitle) ->
 
       $scope._ = window._
       $scope._filters = Filters
@@ -11,21 +11,24 @@ if Meteor.isClient
       $scope.data = []
       $scope.sortedPlayers = {}
 
+      $subscribe.subscribe 'analytics'
+
       $scope.playerName = $stateParams.playerName
 
-      PageTitle.setTitle "Idle Lands - #{if $scope.playerName then "#{$scope.playerName} (Analytics)" else "Global Analytics"}"
+      PageTitle.setTitle "Idle Lands - #{if $stateParams.playerName then "#{$stateParams.playerName} (Analytics)" else "Global Analytics"}"
 
       $collection IdleCollections.IdleAnalytics
       .bind $scope, 'playerSnapshots'
 
       if $scope.playerName
-        $collection IdleCollections.IdleAnalytics, name: $scope.playerName
+        $subscribe.subscribe 'singlePlayerAnalytics', $stateParams.playerName
+        $collection IdleCollections.IdleAnalytics, name: $stateParams.playerName
         .bind $scope, 'individualSnapshots'
 
       $scope.options =
         options:
           title:
-            text: "Idle Lands #{if $scope.playerName then "Analytics - #{$scope.playerName}" else "Global Analytics"}"
+            text: "Idle Lands #{if $stateParams.playerName then "Analytics - #{$stateParams.playerName}" else "Global Analytics"}"
 
           chart:
             type: 'line'

@@ -1,6 +1,6 @@
 
 if Meteor.isClient
-  ngMeteor.config ['$stateProvider',
+  angular.module('kurea.web').config ['$stateProvider',
     ($stateProvider) ->
       $stateProvider
       .state 'idle',

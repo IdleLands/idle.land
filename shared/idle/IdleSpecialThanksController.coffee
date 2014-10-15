@@ -1,6 +1,6 @@
 
 if Meteor.isClient
-  ngMeteor.controller 'IdleSpecialThanks', [
+  angular.module('kurea.web').controller 'IdleSpecialThanks', [
     'PageTitle',
     (PageTitle) =>
       PageTitle.setTitle "Idle Lands - Special Thanks"

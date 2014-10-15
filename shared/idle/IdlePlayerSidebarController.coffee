@@ -1,11 +1,13 @@
 
 if Meteor.isClient
-  ngMeteor.controller 'IdlePlayerSidebar', [
-    '$scope', '$stateParams', '$collection', 'IdleCollections',
-    ($scope, $stateParams, $collection, IdleCollections) =>
+  angular.module('kurea.web').controller 'IdlePlayerSidebar', [
+    '$scope', '$stateParams', '$subscribe', '$collection', 'IdleCollections',
+    ($scope, $stateParams, $subscribe, $collection, IdleCollections) =>
 
       $scope.playerName = $stateParams.playerName
       $scope._ = window._
+
+      $subscribe.subscribe 'singlePlayer', $stateParams.playerName
 
       $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
       .bind $scope, 'player'

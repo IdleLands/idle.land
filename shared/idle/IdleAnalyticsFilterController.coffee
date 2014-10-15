@@ -1,7 +1,7 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'IdleAnalyticsFilter', ['$scope', '$alert', 'IdleFilterData', '$stateParams', ($scope, $alert, Filters, $stateParams) ->
+  angular.module('kurea.web').controller 'IdleAnalyticsFilter', ['$scope', '$alert', 'IdleFilterData', '$stateParams', ($scope, $alert, Filters, $stateParams) ->
 
     $scope._filterData = Filters.getFilterData()
     $scope.playerName = $stateParams.playerName

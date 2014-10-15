@@ -1,7 +1,7 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'IdleFilter', ['$scope', 'IdleFilterData', ($scope, Filters) ->
+  angular.module('kurea.web').controller 'IdleFilter', ['$scope', 'IdleFilterData', ($scope, Filters) ->
     $scope.editing = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
 
     $scope._filterData = Filters.getFilterData()

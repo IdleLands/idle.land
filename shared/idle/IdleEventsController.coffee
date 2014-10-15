@@ -1,7 +1,7 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'IdleEvents', [
+  angular.module('kurea.web').controller 'IdleEvents', [
     '$scope', '$collection', '$stateParams', 'IdleCollections', 'IdleFilterData', 'PageTitle',
     ($scope, $collection, $stateParams, IdleCollections, Filters, PageTitle) ->
 

@@ -13,13 +13,20 @@ if Meteor.isServer
     yesterday = new Date
     yesterday.setDate yesterday.getDate() - 1
 
-    IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1}}
+    IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}}
 
-  Meteor.publish 'playerEvents', ->
-    IdlePlayerEvents.find()
+  Meteor.publish 'playerEvents', (playerName) ->
+    IdlePlayerEvents.find {player: playerName}, limit: 7, sort: {createdAt: -1}
+
+  Meteor.publish 'singlePlayer', (playerName) ->
+    IdlePlayers.find {name: playerName}
 
   Meteor.publish 'analytics', ->
+    console.log "all"
     IdleAnalytics.find()
+
+  Meteor.publish 'singlePlayerAnalytics', (playerName) ->
+    IdleAnalytics.find {name: playerName}
 
   Meteor.publish 'monsters', ->
     IdleMonsters.find()

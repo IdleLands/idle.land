@@ -1,12 +1,12 @@
 
 if Meteor.isClient
-  ngMeteor.controller 'IdleAchievements', [
+  angular.module('kurea.web').controller 'IdleAchievements', [
     '$scope', '$stateParams', '$collection', 'IdleCollections', 'PageTitle',
     ($scope, $stateParams, $collection, IdleCollections, PageTitle) =>
       $scope._ = window._
       $scope.playerName = $stateParams.playerName
 
-      PageTitle.setTitle "Idle Lands - #{if $scope.playerName then "#{$scope.playerName} (Achievements)" else "Global Achievements"}"
+      PageTitle.setTitle "Idle Lands - #{if $stateParams.playerName then "#{$stateParams.playerName} (Achievements)" else "Global Achievements"}"
 
       $scope.getAchievements = ->
         if $scope.playerName then $scope.player[0].achievements else $scope.calculatedAchievements

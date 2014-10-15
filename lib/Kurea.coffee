@@ -3,7 +3,7 @@ if Meteor.isServer
 
 if Meteor.isClient
 
-  ngMeteor.config ['$stateProvider', '$urlRouterProvider',
+  angular.module('kurea.web').config ['$stateProvider', '$urlRouterProvider',
     ($stateProvider, $urlRouterProvider) ->
 
       $urlRouterProvider.otherwise '/'

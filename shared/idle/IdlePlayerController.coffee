@@ -1,8 +1,11 @@
 
 if Meteor.isClient
-  ngMeteor.controller 'IdlePlayer', [
-    '$scope', '$stateParams', '$sce', '$collection', 'IdleCollections', 'PageTitle'
-    ($scope, $stateParams, $sce, $collection, IdleCollections, PageTitle) =>
+  angular.module('kurea.web').controller 'IdlePlayer', [
+    '$scope', '$stateParams', '$sce', '$collection', '$subscribe', 'IdleCollections', 'PageTitle'
+    ($scope, $stateParams, $sce, $collection, $subscribe, IdleCollections, PageTitle) =>
+
+      $subscribe.subscribe 'playerEvents', $stateParams.playerName
+      $subscribe.subscribe 'singlePlayer', $stateParams.playerName
 
       window.scrollTo 0,0
 
@@ -17,7 +20,7 @@ if Meteor.isClient
 
       $scope.playerEvents = []
 
-      $collection IdleCollections.IdlePlayerEvents, {player: $stateParams.playerName}, limit: 7, sort: {createdAt: -1}
+      $collection IdleCollections.IdlePlayerEvents
       .bind $scope, 'playerEvents'
 
       $scope.getPlayerTagline = (player) ->

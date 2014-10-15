@@ -2,16 +2,18 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'Idle', [
-    '$scope', '$collection', 'IdleFilterData', 'IdleCollections', 'PageTitle',
-    ($scope, $collection, Filters, IdleCollections, PageTitle) =>
+  angular.module('kurea.web').controller 'Idle', [
+    '$scope', '$collection', '$subscribe', 'IdleFilterData', 'IdleCollections', 'PageTitle',
+    ($scope, $collection, $subscribe, Filters, IdleCollections, PageTitle) =>
 
       PageTitle.setTitle "Idle Lands - Player List"
 
       $scope._filters = Filters
       $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
 
-      $collection IdleCollections.IdlePlayers, {}, sort: 'level.__current': -1
+      $subscribe.subscribe 'allPlayers'
+
+      $collection IdleCollections.IdlePlayers
       .bind $scope, 'players'
 
       $scope.filteredPlayers = ->

@@ -1,11 +1,15 @@
 
 if Meteor.isClient
 
-  ngMeteor.controller 'IdleGlobalStats', [
-    '$scope', '$collection', 'IdleFilterData', 'IdleCollections', 'PageTitle',
-    ($scope, $collection, Filters, IdleCollections, PageTitle) ->
+  angular.module('kurea.web').controller 'IdleGlobalStats', [
+    '$scope', '$collection', '$subscribe', 'IdleFilterData', 'IdleCollections', 'PageTitle',
+    ($scope, $collection, $subscribe, Filters, IdleCollections, PageTitle) ->
 
       PageTitle.setTitle "Idle Lands - Global Stats"
+
+      $subscribe.subscribe 'monsters'
+      $subscribe.subscribe 'allPlayers'
+      $subscribe.subscribe 'items'
 
       $scope._ = window._
       $collection IdleCollections.IdlePlayers
