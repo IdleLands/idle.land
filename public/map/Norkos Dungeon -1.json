@@ -61,6 +61,20 @@
                  "width":0,
                  "x":480,
                  "y":32
+                }, 
+                {
+                 "gid":26,
+                 "height":0,
+                 "name":"Goblin Lord",
+                 "properties":
+                    {
+
+                    },
+                 "type":"Boss",
+                 "visible":true,
+                 "width":0,
+                 "x":656,
+                 "y":240
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -79,7 +93,7 @@
         {
          "firstgid":1,
          "image":"..\/..\/..\/img\/tiles.png",
-         "imageheight":32,
+         "imageheight":64,
          "imagewidth":144,
          "margin":0,
          "name":"tiles",

@@ -134,8 +134,19 @@ if Meteor.isClient
 
       sprite = null
       game = null
+      mapName = null
+      newMapName = null
 
+      ###
+      want to reload maps?
+
+      cd /public/maps
+      find ../../../idle/assets/map/ -type f -print0 | xargs -0 cp -t .
+
+      ###
       $scope.drawMap = (player) ->
+
+        newMapName = player.map if not newMapName
 
         if sprite
           sprite.x = (player.x*16)
@@ -143,28 +154,26 @@ if Meteor.isClient
           game.camera.x = sprite.x
           game.camera.y = sprite.y
 
-          game.load.tilemap "../map/#{player.map}.json", null, Phaser.Tilemap.TILED_JSON
+          if player.map isnt mapName
+            newMapName = player.map
+            mapName = player.map
+            game.state.restart()
 
         phaserOpts =
           preload: ->
             @game.load.image "tiles", "../../img/tiles.png", 16, 16
             @game.load.spritesheet "interactables", "../../img/tiles.png", 16, 16
-            @game.load.tilemap player.map, "../../map/#{player.map}.json", null, Phaser.Tilemap.TILED_JSON
+            @game.load.tilemap newMapName, "../../map/#{newMapName}.json", null, Phaser.Tilemap.TILED_JSON
 
           create: ->
-            map = @game.add.tilemap player.map
+            map = @game.add.tilemap newMapName
             map.addTilesetImage "tiles", "tiles"
             terrain = map.createLayer "Terrain"
             terrain.resizeWorld()
             map.createLayer "Blocking"
 
-            map.createFromObjects "Interactables", 1, "interactables"
-            map.createFromObjects "Interactables", 2, "interactables"
-
-            map.createFromObjects "Interactables", 12, "interactables", 11
-            map.createFromObjects "Interactables", 13, "interactables", 12
-            map.createFromObjects "Interactables", 14, "interactables", 13
-            map.createFromObjects "Interactables", 18, "interactables", 17
+            for i in [1, 2, 12, 13, 14, 15, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35]
+              map.createFromObjects "Interactables", i, "interactables", i-1
 
             sprite = @game.add.sprite player.x*16, player.y*16, 'interactables', 12
             @game.camera.follow sprite
