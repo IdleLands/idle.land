@@ -25,13 +25,13 @@ if Meteor.isClient
         personality: {}
       stats: [
         {name: 'Level', key: 'level.__current'}
-        {name: 'Luck',  key: '_baseStats.luck'}
-        {name: 'STR',   key: '_baseStats.str'}
-        {name: 'DEX',   key: '_baseStats.dex'}
-        {name: 'AGI',   key: '_baseStats.agi'}
-        {name: 'CON',   key: '_baseStats.con'}
-        {name: 'INT',   key: '_baseStats.int'}
-        {name: 'WIS',   key: '_baseStats.wis'}
+        {name: 'Luck',  key: '_statCache.luck'}
+        {name: 'STR',   key: '_statCache.str'}
+        {name: 'DEX',   key: '_statCache.dex'}
+        {name: 'AGI',   key: '_statCache.agi'}
+        {name: 'CON',   key: '_statCache.con'}
+        {name: 'INT',   key: '_statCache.int'}
+        {name: 'WIS',   key: '_statCache.wis'}
         {name: 'HP',    key: 'hp.maximum'}
         {name: 'MP',    key: 'mp.maximum'}
         {name: 'Gold',  key: 'gold.__current'}

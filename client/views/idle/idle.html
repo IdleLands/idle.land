@@ -14,8 +14,9 @@
         <div class="row both-margins-15 filter-header">
             <div class="col-md-3 col-sm-3 col-xs-6"
                  ng-repeat="player in filtered = (allPlayers() |
-                filter:{name:filters.name, professionName: filters.profession, map: filters.map} |
-                orderBy:filters.stat:true)"
+                 filter:{map:filters.map}:(filters.map?true:false) |
+                 filter:{name:filters.name, professionName: filters.profession} |
+                 orderBy:filters.stat:true)"
                  ng-if="decompose(player, filters.stat)">
                 <div class="small-box" ng-class="{
                 'bg-gray ': !player.isOnline,

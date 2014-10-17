@@ -140,7 +140,7 @@ if Meteor.isClient
       ###
       want to reload maps?
 
-      cd /public/maps
+      cd public/map
       find ../../../idle/assets/map/ -type f -print0 | xargs -0 cp -t .
 
       ###
