@@ -14,7 +14,8 @@
         <div class="row both-margins-15 filter-header">
             <div class="col-md-3 col-sm-3 col-xs-6"
                  ng-repeat="player in filtered = (allPlayers() |
-                 filter:{map:filters.map}:(filters.map?true:false) |
+                 hasAchievement:filters.achievement |
+                 filter:{map:filters.map}:(filters.map ? true : false) |
                  filter:{name:filters.name, professionName: filters.profession} |
                  orderBy:filters.stat:true)"
                  ng-if="decompose(player, filters.stat)">
@@ -92,8 +93,10 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <h4 class="text-center filter-header">Stat</h4>
-                <select class="form-control" ng-model="editing.stat" ng-options="stat.key as stat.name for stat in _filterData.stats">
+                <h4 class="text-center filter-header">Achievement</h4>
+                <select class="form-control" ng-model="editing.achievement" placeholder="Select an achievement...">
+                    <option selected="selected" value="">(any)</option>
+                    <option ng-repeat="achievement in _filterData.achievements">[[achievement]]</option>
                 </select>
             </div>
         </div>
@@ -112,6 +115,13 @@
                 <select class="form-control" ng-model="editing.map" placeholder="Select a map...">
                     <option selected="selected" value="">(any)</option>
                     <option ng-repeat="map in _filterData.maps">[[map]]</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center filter-header">Stat</h4>
+                <select class="form-control" ng-model="editing.stat" ng-options="stat.key as stat.name for stat in _filterData.stats">
                 </select>
             </div>
         </div>
