@@ -182,8 +182,9 @@ if Meteor.isClient
         game = new Phaser.Game '100%',300, Phaser.AUTO, 'map', phaserOpts
         null
 
-      $scope.isHtmlStat = (stat) ->
-        stat in ['calculated kills', 'calculated kills by class', 'calculated class changes', 'calculated boss kills', 'calculated map changes']
+      $scope.isHtmlStat = (player, stat) ->
+        _.isObject player.statistics[stat]
+        #stat in ['calculated kills', 'calculated kills by class', 'calculated class changes', 'calculated boss kills', 'calculated map changes']
 
       $scope.statsObj = (player, key) ->
         val = player.statistics[key] or 0
@@ -199,7 +200,7 @@ if Meteor.isClient
           .join ""
 
         return "<ul class='kills no-margin'>#{buildHtmlFromObject val, true}</ul>" if (_.isObject val) and key is 'calculated kills'
-        return "<ul class='kills no-margin'>#{buildHtmlFromObject val, false}</ul>" if (_.isObject val) and $scope.isHtmlStat key
+        return "<ul class='kills no-margin'>#{buildHtmlFromObject val, false}</ul>" if (_.isObject val) and key isnt 'calculated kills'
         parseInt val
 
       $scope.getStats = (player) ->
