@@ -16,6 +16,7 @@ if Meteor.isServer
     yesterday.setDate yesterday.getDate() - 1
 
     IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}}
+      ,{fields: {_statCache: 1, name: 1, map: 1, mapRegion: 1, achievements: 1, hp: 1, mp: 1, gold: 1, professionName: 1, isOnline: 1}}
 
   Meteor.publish 'playerEvents', (playerName) ->
     IdlePlayerEvents.find {player: playerName}, limit: 7, sort: {createdAt: -1}

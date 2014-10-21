@@ -17,9 +17,9 @@ if Meteor.isClient
       $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
 
       $subscribe.subscribe 'allPlayers'
-
-      $collection IdleCollections.IdlePlayers
-      .bind $scope, 'players'
+      .then ->
+        $collection IdleCollections.IdlePlayers
+        .bind $scope, 'players'
 
       $scope.filteredPlayers = ->
         return 0 if not $scope.filtered
