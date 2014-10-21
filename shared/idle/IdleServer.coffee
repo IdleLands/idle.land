@@ -27,8 +27,12 @@ if Meteor.isServer
   Meteor.publish 'singlePlayerAnalytics', (playerName) ->
     IdleAnalytics.find {name: playerName}
 
-  Meteor.publish 'monsters', ->
-    IdleMonsters.find()
+  Meteor.methods
+    monsterCount: -> IdleMonsters.find().count()
 
-  Meteor.publish 'items', ->
-    IdleItems.find()
+    itemCount: ->
+      ret = {}
+      items = _.groupBy _.pluck IdleItems.find().fetch(), 'type'
+      _.each (_.keys items), (itemType) ->
+        ret[itemType] = items[itemType].length
+      ret

@@ -2,29 +2,28 @@
 if Meteor.isClient
 
   angular.module('kurea.web').controller 'IdleGlobalStats', [
-    '$scope', '$collection', '$subscribe', 'IdleFilterData', 'IdleCollections', 'PageTitle',
-    ($scope, $collection, $subscribe, Filters, IdleCollections, PageTitle) ->
+    '$scope', '$collection', '$subscribe', '$methods', 'IdleFilterData', 'IdleCollections', 'PageTitle',
+    ($scope, $collection, $subscribe, $methods, Filters, IdleCollections, PageTitle) ->
 
       PageTitle.setTitle "Idle Lands - Global Stats"
 
-      $subscribe.subscribe 'monsters'
       $subscribe.subscribe 'allPlayers'
-      $subscribe.subscribe 'items'
+
+      $scope.cached = {}
+
+      $methods.call 'monsterCount'
+      .then (data) -> $scope.cached.monsters = data
+
+      $methods.call 'itemCount'
+      .then (data) -> _.extend $scope.cached, data
 
       $scope._ = window._
       $collection IdleCollections.IdlePlayers
       .bind $scope, 'players'
 
-      $collection IdleCollections.IdleMonsters
-      .bind $scope, 'monsters'
-
-      $collection IdleCollections.IdleItems
-      .bind $scope, 'items'
-
       $scope._filters = Filters
       $scope.filters = {}
 
-      $scope.cached = {}
       $scope.topEquipment = []
 
       $scope.statisticsToShow = _.sortBy Filters.getFilterData().extraStats.concat [
@@ -113,14 +112,4 @@ if Meteor.isClient
         return if newVal is oldVal
         $scope.filters = newVal
       , yes
-
-      $scope.$watch 'monsters', (newVal, oldVal) ->
-        return if newVal is oldVal
-        $scope.cached.monsters = newVal.length
-
-      $scope.$watch 'items', (newVal, oldVal) ->
-        return if newVal is oldVal
-        items = _.groupBy _.pluck newVal, 'type'
-        _.each (_.keys items), (itemType) ->
-          $scope.cached[itemType] = items[itemType].length
   ]
