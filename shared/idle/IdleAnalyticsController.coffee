@@ -39,6 +39,10 @@ if Meteor.isClient
 
           xAxis:
             allowDecimals: no
+            startOnTick: no
+            endOnTick: no
+            min: 1
+            max: 100
 
           tooltip:
             shared: yes
@@ -91,10 +95,14 @@ if Meteor.isClient
           array = if stat.type is "player" then $scope.individualPlayer else $scope.sortedPlayers
           return {name:'', data:[]} if not $scope.individualPlayer and stat.type is "player"
 
-          name: "#{stat.name} (#{displayType})"
-          data: _.map (_.keys array), (level) ->
+          statArray = _.map (_.keys array), (level) ->
             val = $scope.functions[filterType] array[level], stat.key
             if _.isNaN val then 0 else val
+
+          statArray.unshift 0
+
+          name: "#{stat.name} (#{displayType})"
+          data: statArray
 
         $scope.setUpDataForChart()
 
