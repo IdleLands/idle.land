@@ -11,19 +11,20 @@ if Meteor.isClient
       $scope.data = []
       $scope.sortedPlayers = {}
 
-      $subscribe.subscribe 'analytics'
-
       $scope.playerName = $stateParams.playerName
 
       PageTitle.setTitle "Idle Lands - #{if $stateParams.playerName then "#{$stateParams.playerName} (Analytics)" else "Global Analytics"}"
 
-      $collection IdleCollections.IdleAnalytics
-      .bind $scope, 'playerSnapshots'
-
       if $scope.playerName
         $subscribe.subscribe 'singlePlayerAnalytics', $stateParams.playerName
-        $collection IdleCollections.IdleAnalytics, name: $stateParams.playerName
-        .bind $scope, 'individualSnapshots'
+        .then ->
+          $collection IdleCollections.IdleAnalytics, name: $stateParams.playerName
+          .bind $scope, 'individualSnapshots'
+
+      $subscribe.subscribe 'analytics'
+      .then ->
+        $collection IdleCollections.IdleAnalytics
+        .bind $scope, 'playerSnapshots'
 
       $scope.options =
         options:

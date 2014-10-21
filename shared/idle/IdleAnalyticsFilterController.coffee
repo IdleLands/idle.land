@@ -13,13 +13,13 @@ if Meteor.isClient
       selectedFunction: ''
       newFilter: type: 'avg', key: '_baseStats.luck'
       chartStats: [
-        { name: "STR",  key: "_baseStats.str",  type: defaultType }
-        { name: "INT",  key: "_baseStats.int",  type: defaultType }
-        { name: "DEX",  key: "_baseStats.dex",  type: defaultType }
-        { name: "CON",  key: "_baseStats.con",  type: defaultType }
-        { name: "WIS",  key: "_baseStats.wis",  type: defaultType }
-        { name: "AGI",  key: "_baseStats.agi",  type: defaultType }
-        { name: "Luck", key: "_baseStats.luck", type: defaultType }
+        { name: "STR",  key: "_statCache.str",  type: defaultType }
+        { name: "INT",  key: "_statCache.int",  type: defaultType }
+        { name: "DEX",  key: "_statCache.dex",  type: defaultType }
+        { name: "CON",  key: "_statCache.con",  type: defaultType }
+        { name: "WIS",  key: "_statCache.wis",  type: defaultType }
+        { name: "AGI",  key: "_statCache.agi",  type: defaultType }
+        { name: "Luck", key: "_statCache.luck", type: defaultType }
       ]
 
     $scope.clearSelection = ->

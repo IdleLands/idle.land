@@ -8,9 +8,9 @@ if Meteor.isClient
       $scope._ = window._
 
       $subscribe.subscribe 'singlePlayer', $stateParams.playerName
-
-      $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
-      .bind $scope, 'player'
+      .then ->
+        $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
+        .bind $scope, 'player'
 
       $scope.getJSONFor = (player) ->
         str = JSON.stringify player, null, 4

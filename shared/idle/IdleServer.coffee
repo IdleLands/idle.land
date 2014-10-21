@@ -8,6 +8,8 @@ if Meteor.isServer
   IdleMonsters = new Mongo.Collection "monsters", _driver: driver
   IdleItems = new Mongo.Collection "items", _driver: driver
 
+  analyticsFields = {name: 1, statistics: 1, _statCache: 1, level: 1, hp: 1, mp: 1, gold: 1}
+
   Meteor.publish 'allPlayers', ->
 
     yesterday = new Date
@@ -22,10 +24,10 @@ if Meteor.isServer
     IdlePlayers.find {name: playerName}
 
   Meteor.publish 'analytics', ->
-    IdleAnalytics.find()
+    IdleAnalytics.find {}, {fields: analyticsFields}
 
   Meteor.publish 'singlePlayerAnalytics', (playerName) ->
-    IdleAnalytics.find {name: playerName}
+    IdleAnalytics.find {name: playerName}, {fields: analyticsFields}
 
   Meteor.methods
     monsterCount: -> IdleMonsters.find().count()

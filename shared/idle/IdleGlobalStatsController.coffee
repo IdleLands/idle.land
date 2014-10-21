@@ -7,8 +7,6 @@ if Meteor.isClient
 
       PageTitle.setTitle "Idle Lands - Global Stats"
 
-      $subscribe.subscribe 'allPlayers'
-
       $scope.cached = {}
 
       $methods.call 'monsterCount'
@@ -18,8 +16,10 @@ if Meteor.isClient
       .then (data) -> _.extend $scope.cached, data
 
       $scope._ = window._
-      $collection IdleCollections.IdlePlayers
-      .bind $scope, 'players'
+      $subscribe.subscribe 'allPlayers'
+      .then ->
+        $collection IdleCollections.IdlePlayers
+        .bind $scope, 'players'
 
       $scope._filters = Filters
       $scope.filters = {}

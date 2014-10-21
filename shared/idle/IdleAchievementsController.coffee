@@ -1,15 +1,15 @@
 
 if Meteor.isClient
   angular.module('kurea.web').controller 'IdleAchievements', [
-    '$scope', '$stateParams', '$collection', 'IdleCollections', 'PageTitle',
-    ($scope, $stateParams, $collection, IdleCollections, PageTitle) =>
+    '$scope', '$stateParams', '$collection', '$subscribe', 'IdleCollections', 'PageTitle',
+    ($scope, $stateParams, $collection, $subscribe, IdleCollections, PageTitle) =>
       $scope._ = window._
       $scope.playerName = $stateParams.playerName
 
       PageTitle.setTitle "Idle Lands - #{if $stateParams.playerName then "#{$stateParams.playerName} (Achievements)" else "Global Achievements"}"
 
       $scope.getAchievements = ->
-        if $scope.playerName then $scope.player[0].achievements else $scope.calculatedAchievements
+        if $scope.playerName then $scope.player?[0].achievements else $scope.calculatedAchievements
 
       $scope.calculateAchievements = ->
         achievementFinalList = []
@@ -28,11 +28,15 @@ if Meteor.isClient
         $scope.calculatedAchievements = achievementFinalList
 
       if $scope.playerName
-        $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
-        .bind $scope, 'player'
+        $subscribe.subscribe 'singlePlayer', $stateParams.playerName
+        .then ->
+          $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
+          .bind $scope, 'player'
       else
-        $collection IdleCollections.IdlePlayers
-        .bind $scope, 'players'
+        $subscribe.subscribe 'allPlayers'
+        .then ->
+          $collection IdleCollections.IdlePlayers
+          .bind $scope, 'players'
 
       $scope.$watch 'players', ->
         $scope.calculateAchievements()
