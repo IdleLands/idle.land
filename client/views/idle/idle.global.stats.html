@@ -112,7 +112,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Stat</th>
+                    <th class="text-right">Stat</th>
                     <th>Player</th>
                     <th class="text-center">Value</th>
                 </tr>
@@ -196,7 +196,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Stat</th>
+                    <th class="text-right">Stat</th>
                     <th>Player</th>
                     <th>Count</th>
                     <th>Contribution</th>
@@ -228,7 +228,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Stat</th>
+                    <th class="text-right">Stat</th>
                     <th>Count</th>
                 </tr>
                 </thead>
@@ -280,7 +280,7 @@
                 </tr>
                 </thead>
                 <tr ng-if="_.isEmpty(filters.cache.map)">
-                    <td colspan="2">No one has a class! :(</td>
+                    <td colspan="2">No players are available! :(</td>
                 </tr>
                 <tr ng-repeat="kv in filters.sorted.profession">
                     <td>[[ kv[0] ]]</td>
@@ -305,7 +305,7 @@
                 </tr>
                 </thead>
                 <tr ng-if="_.isEmpty(filters.cache.map)">
-                    <td colspan="2">No one is on any maps! :(</td>
+                    <td colspan="2">No players are available! :(</td>
                 </tr>
                 <tr ng-repeat="kv in filters.sorted.map">
                     <td>[[ kv[0] ]]</td>
