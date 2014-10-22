@@ -278,7 +278,7 @@
                 <tr ng-if="!playerEvents || playerEvents.length === 0">
                     <td colspan="2">Nothing has happened with this character recently :(</td>
                 </tr>
-                <tr ng-repeat="event in playerEvents | filter:{player:playerName}" ng-if="$index < 7">
+                <tr ng-repeat="event in playerEvents | filter:{player:playerName} | orderBy:'createdAt':true" ng-if="$index < 7">
                     <td am-time-ago="[[event.createdAt]]" class="col-md-3">
                     </td>
                     <td>
