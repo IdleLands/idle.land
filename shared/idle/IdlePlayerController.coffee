@@ -84,6 +84,7 @@ if Meteor.isClient
           when 'pro'              then return 'bg-purple'
           when 'idle'             then return 'bg-rainbow'
           when 'godly'            then return 'bg-black'
+          when 'custom'           then return 'bg-blue'
 
       $scope.equipmentStatArray = [
         {name: 'str', fa: 'fa-legal fa-rotate-90'}
