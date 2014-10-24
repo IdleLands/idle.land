@@ -35,7 +35,7 @@ if Meteor.isClient
 
       $scope.decompose = (player, key) ->
         try
-          _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
+          Math.round _.reduce (key.split "."), ((prev, cur) -> prev[cur]), player
 
       $scope.$watch '_filters.getFilters()', (newVal, oldVal) ->
         return if newVal is oldVal
