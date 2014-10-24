@@ -14,33 +14,33 @@ if Meteor.isClient
             controller: 'IdleFilter'
 
       .state 'idle.urlone',
-        url: '/idle'
+        url: '/s/'
       .state 'idle.urltwo',
-        url: '/idle/'
+        url: '/s/'
 
       .state 'idleglobalstats',
-        url: '/idle/stats'
+        url: '/s/stats'
         views:
           'content':
             template: UiRouter.template 'idleglobalstats'
             controller: 'IdleGlobalStats'
 
       .state 'idleglobalachievements',
-        url: '/idle/achievements'
+        url: '/s/achievements'
         views:
           'content':
             template: UiRouter.template 'idleachievements'
             controller: 'IdleAchievements'
 
       .state 'idleplayerachievements',
-        url: '/idle/achievements/:playerName'
+        url: '/s/achievements/:playerName'
         views:
           'content':
             template: UiRouter.template 'idleachievements'
             controller: 'IdleAchievements'
 
       .state 'idleglobalanalytics',
-        url: '/idle/analytics'
+        url: '/s/analytics'
         views:
           'content':
             template: UiRouter.template 'idleanalytics'
@@ -50,7 +50,7 @@ if Meteor.isClient
             controller: 'IdleAnalyticsFilter'
 
       .state 'idleplayeranalytics',
-        url: '/idle/analytics/:playerName'
+        url: '/s/analytics/:playerName'
         views:
           'content':
             template: UiRouter.template 'idleanalytics'
@@ -60,21 +60,21 @@ if Meteor.isClient
             controller: 'IdleAnalyticsFilter'
 
       .state 'idleplayerevents',
-        url: '/idle/events/:playerName'
+        url: '/s/events/:playerName'
         views:
           'content':
             template: UiRouter.template 'idleevents'
             controller: 'IdleEvents'
 
       .state 'idleglobalevents',
-        url: '/idle/events'
+        url: '/s/events'
         views:
           'content':
             template: UiRouter.template 'idleevents'
             controller: 'IdleEvents'
 
       .state 'idleplayer',
-        url: '/idle/stats/:playerName'
+        url: '/s/stats/:playerName'
         views:
           'content':
             template: UiRouter.template 'idleplayer'
@@ -84,7 +84,7 @@ if Meteor.isClient
             controller: 'IdlePlayerSidebar'
 
       .state 'idlespecialthanks',
-        url: '/idle/thanks'
+        url: '/s/thanks'
         views:
           'content':
             template: UiRouter.template 'idlespecialthanks'

@@ -2,7 +2,7 @@
 if Meteor.isClient
 
   angular.module('kurea.web').service 'PageTitle', ->
-    pageTitle = defaultTitle = 'Kurea Web Interface'
+    pageTitle = defaultTitle = 'Idle Lands'
 
     setTitle: (title) -> pageTitle = if not title then defaultTitle else title
     getTitle: -> pageTitle
