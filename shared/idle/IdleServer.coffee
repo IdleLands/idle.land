@@ -22,7 +22,7 @@ if Meteor.isServer
     IdlePlayerEvents.find {player: playerName}, {limit: 7, sort: {createdAt: -1}}
 
   Meteor.publish 'singlePlayer', (playerName) ->
-    IdlePlayers.find {name: playerName}, {fields: {pushbulletApiKey: 0}}
+    IdlePlayers.find {name: playerName}, {fields: {pushbulletApiKey: 0, password: 0}}
 
   Meteor.publish 'analytics', ->
     IdleAnalytics.find {}, {fields: analyticsFields}
