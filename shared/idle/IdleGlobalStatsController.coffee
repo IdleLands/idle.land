@@ -104,7 +104,7 @@ if Meteor.isClient
         $scope.topEquipment = (_.sortBy (_.compact $scope.topEquipment), (item) -> -item?._calcScore or 0)[0..10]
 
       $scope.$watch 'players', (newVal, oldVal) ->
-        return if newVal.length is 0 or newVal is oldVal
+        return if not newVal or newVal.length is 0 or newVal is oldVal
         $scope._filters.loadFiltersFromPlayers newVal
         $scope.getTopEquipment()
 
