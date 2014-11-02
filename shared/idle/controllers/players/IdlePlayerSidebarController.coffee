@@ -45,6 +45,13 @@ if Meteor.isClient
         gauge.set player.xp.__current
         null
 
+      $scope.determineGuildIcon = (status) ->
+        switch status
+          when 0 then 'fa-star-o'
+          when 1 then 'fa-star-half-o'
+          when 2 then 'fa-star'
+          else 'fa-sitemap'
+
       $scope.$watch (->CurrentPlayer.getPlayer()), (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.player = newVal
