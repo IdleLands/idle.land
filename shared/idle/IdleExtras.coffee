@@ -1,15 +1,13 @@
 
-#IdlePlayers = new Mongo.Collection "players"
-#IdleAnalytics = new Mongo.Collection "analytics"
-
 if Meteor.isClient
 
   angular.module('kurea.web').service 'IdleCollections', ->
 
     IdlePlayers = new Mongo.Collection "players"
     IdleAnalytics = new Mongo.Collection "analytics"
+    IdleGuilds = new Mongo.Collection "guilds"
 
-    { IdlePlayers, IdleAnalytics }
+    { IdlePlayers, IdleAnalytics, IdleGuilds }
 
   angular.module('kurea.web').service 'IdleFilterData', ->
     filters = {}
@@ -42,8 +40,8 @@ if Meteor.isClient
         {name: 'Healing Given',           key: 'statistics.calculated total healing given'}
         {name: 'Gold Found',              key: 'statistics.calculated total gold gained'}
         {name: 'Gold Lost',               key: 'statistics.calculated total gold lost'}
-        {name: 'Experience Gained',       key: 'statistics.calculated total xp gained'}
-        {name: 'Experience Lost',         key: 'statistics.calculated total xp lost'}
+        {name: 'XP Gained',               key: 'statistics.calculated total xp gained'}
+        {name: 'XP Lost',                 key: 'statistics.calculated total xp lost'}
         {name: 'Steps Taken',             key: 'statistics.explore walk'}
         {name: 'Fled From Combat',        key: 'statistics.combat self flee'}
         {name: 'Events Experienced',      key: 'statistics.event'}
@@ -51,6 +49,7 @@ if Meteor.isClient
         {name: 'Times Fallen',            key: 'statistics.explore transfer fall'}
         {name: 'Times Ascended',          key: 'statistics.explore transfer ascend'}
         {name: 'Times Descended',         key: 'statistics.explore transfer descend'}
+        {name: 'Teleports Taken',         key: 'statistics.explore transfer teleport'}
         {name: 'Walls Walked Into',       key: 'statistics.explore hit wall'}
         {name: 'Items Sold',              key: 'statistics.player sellItem'}
         {name: 'Monster Battles',         key: 'statistics.event monsterbattle'}
@@ -60,6 +59,8 @@ if Meteor.isClient
         {name: 'Enchantments',            key: 'statistics.event enchant'}
         {name: 'Class Changes',           key: 'statistics.player profession change'}
         {name: 'Times Gained XP',         key: 'statistics.player xp gain'}
+        {name: 'Times Lost XP',           key: 'statistics.player xp lose'}
+        {name: 'Treasures Found',         key: 'statistics.event treasurechest find'}
         {name: 'Player Kills',            key: 'statistics.combat self kill'}
         {name: 'Player Deaths',           key: 'statistics.combat self killed'}
         {name: 'Attacks Made',            key: 'statistics.combat self attack'}

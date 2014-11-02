@@ -1,16 +1,16 @@
 
 if Meteor.isClient
   angular.module('kurea.web').controller 'IdlePlayerSidebar', [
-    '$scope', '$stateParams', '$subscribe', '$collection', 'IdleCollections',
-    ($scope, $stateParams, $subscribe, $collection, IdleCollections) =>
+    '$scope', 'CurrentPlayer',
+    ($scope, CurrentPlayer) =>
 
-      $scope.playerName = $stateParams.playerName
+      #$scope.playerName = $stateParams.playerName
       $scope._ = window._
 
-      $subscribe.subscribe 'singlePlayer', $stateParams.playerName
-      .then ->
-        $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
-        .bind $scope, 'player'
+      #$subscribe.subscribe 'singlePlayer', $stateParams.playerName
+      #.then ->
+      #  $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
+      #  .bind $scope, 'player'
 
       $scope.getJSONFor = (player) ->
         str = JSON.stringify player, null, 4
@@ -44,4 +44,8 @@ if Meteor.isClient
         gauge.maxValue = player.xp.maximum
         gauge.set player.xp.__current
         null
+
+      $scope.$watch (->CurrentPlayer.getPlayer()), (newVal, oldVal) ->
+        return if newVal is oldVal
+        $scope.player = newVal
   ]

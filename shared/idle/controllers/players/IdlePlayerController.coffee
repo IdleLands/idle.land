@@ -1,8 +1,8 @@
 
 if Meteor.isClient
   angular.module('kurea.web').controller 'IdlePlayer', [
-    '$scope', '$stateParams', '$sce', '$collection', '$subscribe', 'IdleCollections', 'PageTitle'
-    ($scope, $stateParams, $sce, $collection, $subscribe, IdleCollections, PageTitle) =>
+    '$scope', '$stateParams', '$sce', '$collection', '$subscribe', 'IdleCollections', 'PageTitle', 'CurrentPlayer'
+    ($scope, $stateParams, $sce, $collection, $subscribe, IdleCollections, PageTitle, CurrentPlayer) =>
 
       window.scrollTo 0,0
 
@@ -208,4 +208,8 @@ if Meteor.isClient
       $scope.playerItemScore = (player, item) ->
         return 0 if not item._calcScore or not player._baseStats.itemFindRange
         parseInt (item._calcScore / player._baseStats.itemFindRange) * 100
+
+      $scope.$watch 'player', (newVal, oldVal) ->
+        return if newVal is oldVal
+        CurrentPlayer.setPlayer newVal
   ]

@@ -21,6 +21,11 @@ if Meteor.isClient
         $collection IdleCollections.IdlePlayers
         .bind $scope, 'players'
 
+      $subscribe.subscribe 'guilds'
+      .then ->
+        $collection IdleCollections.IdleGuilds
+        .bind $scope, 'guilds'
+
       $scope._filters = Filters
       $scope.filters = {}
 

@@ -67,7 +67,10 @@
             </a>
         </li>
         <li>
-            <a>
+            <a href ui-sref="idleguild({guildName: item.guild})" ng-if="item.guild">
+                <i class="fa fa-fw fa-sitemap"></i> [[item.guild ? item.guild : 'No Guild']]
+            </a>
+            <a ng-if="!item.guild">
                 <i class="fa fa-fw fa-sitemap"></i> [[item.guild ? item.guild : 'No Guild']]
             </a>
         </li>

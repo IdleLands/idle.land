@@ -4,6 +4,7 @@ if Meteor.isServer
   driver = new MongoInternals.RemoteCollectionDriver "mongodb://localhost:27017/idlelands"
   IdlePlayers = new Mongo.Collection "players", _driver: driver
   IdleAnalytics = new Mongo.Collection "analytics", _driver: driver
+  IdleGuilds = new Mongo.Collection "guilds", _driver: driver
 
   share.IdlePlayers = IdlePlayers
   share.IdleAnalytics = IdleAnalytics
@@ -30,6 +31,12 @@ if Meteor.isServer
 
   Meteor.publish 'singlePlayerAnalytics', (playerName) ->
     IdleAnalytics.find {name: playerName}, {fields: analyticsFields}
+
+  Meteor.publish 'guilds', ->
+    IdleGuilds.find {}
+
+  Meteor.publish 'singleGuild', (guildName) ->
+    IdleGuilds.find {name: guildName}
 
   Meteor.methods
     monsterCount: -> IdleMonsters.find().count()

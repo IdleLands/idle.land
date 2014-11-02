@@ -8,7 +8,7 @@
     <section>
         <div class="row both-margins-15">
             <span class="col-md-2">
-                <span class="fa fa-users text-info"></span> [[players.length]] players
+                <span class="fa fa-users text-info"></span> [[players.length]] players <span ng-if="filtered.length !== players.length">([[filtered.length]] shown)</span>
             </span>
         </div>
         <div class="row both-margins-15 filter-header">
@@ -22,9 +22,9 @@
                  orderBy:filters.stat:true)"
                  ng-if="decompose(player, filters.stat)">
                 <div class="small-box" ng-class="{
-                'bg-gray ': !player.isOnline,
-                'bg-green': player.isOnline
-            }">
+                    'bg-gray ': !player.isOnline,
+                    'bg-green': player.isOnline
+                    }">
                     <div class="inner">
                         <h3>[[filters.statName]] [[decompose(player, filters.stat)]]</h3>
                         <p>[[player.map]] | [[player.mapRegion]]</p>
@@ -45,7 +45,7 @@
     </section>
     <section class="filter-header">
         <div class="row">
-            <div class="col-md-3 text-center">
+            <div class="col-md-4 text-center">
                 <a ui-sref="idleglobalanalytics">
                     <span class="fa fa-line-chart"
                           bs-tooltip
@@ -54,7 +54,7 @@
                           data-title="Global Analytics"></span>
                 </a>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-4 text-center">
                 <a ui-sref="idleglobalstats">
                     <span class="fa fa-calculator"
                           bs-tooltip
@@ -63,7 +63,7 @@
                           data-title="Global Statistics"></span>
                 </a>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-4 text-center">
                 <a ui-sref="idleglobalachievements">
                     <span class="fa icon-trophy"
                           bs-tooltip
@@ -72,7 +72,25 @@
                           data-title="Global Achievements"></span>
                 </a>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-4 text-center">
+                <a ui-sref="idleguildlist">
+                    <span class="fa fa-sitemap"
+                          bs-tooltip
+                          data-container="body"
+                          data-placement="right"
+                          data-title="Guilds"></span>
+                </a>
+            </div>
+            <div class="col-md-4 text-center">
+                <a disabled>
+                    <span class="fa fa-globe text-muted"
+                          bs-tooltip
+                          data-container="body"
+                          data-placement="right"
+                          data-title="World Viewer (under construction!)"></span>
+                </a>
+            </div>
+            <div class="col-md-4 text-center">
                 <a ui-sref="idlespecialthanks">
                     <span class="fa fa-paypal"
                           bs-tooltip

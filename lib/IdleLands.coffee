@@ -91,4 +91,21 @@ if Meteor.isClient
             controller: 'IdleSpecialThanks'
           'sidebar':
             template: UiRouter.template 'idlespecialthankssidebar'
+
+      .state 'idleguildlist',
+        url: '/s/guilds'
+        views:
+          'content':
+            template: UiRouter.template 'idleguildlist'
+            controller: 'IdleGuildList'
+
+      .state 'idleguild',
+        url: '/s/guild/:guildName'
+        views:
+          'content':
+            template: UiRouter.template 'idleguild'
+            controller: 'IdleGuild'
+          'sidebar':
+            template: UiRouter.template 'idleguildsidebar'
+            controller: 'IdleGuildSidebar'
   ]

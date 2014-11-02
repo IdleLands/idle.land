@@ -1,0 +1,83 @@
+<template name="idleguild">
+    <section class="content-header">
+        <h1>IdleLands<small>[[guild.name]]</small></h1>
+        <ol class="breadcrumb">
+            <li>
+                <span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a>
+            </li>
+            <li><span class="fa fa-sitemap"></span> <a href ui-sref="idleguildlist">Guilds</a></li>
+            <li class="active">[[guild.name]]</li>
+        </ol>
+    </section>
+
+    <div class="row">
+        <h1 class="col-md-3 col-md-offset-1"><span class="fa fa-star"></span> Leader</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3" ng-repeat="player in leader">
+            {{> idleguildmember}}
+        </div>
+    </div>
+
+    <div class="row">
+        <h1 class="col-md-3 col-md-offset-1"><span class="fa fa-star-half-o"></span> Admins</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3" ng-repeat="player in admins">
+          {{> idleguildmember}}
+        </div>
+    </div>
+
+    <div class="row">
+        <h1 class="col-md-3 col-md-offset-1"><span class="fa fa-star-o"></span> Members</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3" ng-repeat="player in members">
+          {{> idleguildmember}}
+        </div>
+    </div>
+</template>
+
+<template name="idleguildmember">
+    <div class="small-box" ng-class="{
+                    'bg-gray ': !player.isOnline,
+                    'bg-green': player.isOnline
+                    }">
+        <div class="inner">
+            <h3>Level [[player.level.__current]]</h3>
+            <p>[[player.map]] | [[player.mapRegion]]</p>
+            <p>[[player.professionName]]</p>
+        </div>
+        <a ui-sref="idleplayer({playerName: player.name})" class="small-box-footer">
+            [[player.name]] <span class="fa fa-arrow-circle-right"></span>
+        </a>
+    </div>
+</template>
+
+<template name="idleguildsidebar">
+    <ul class="sidebar-menu">
+        <li>
+            <a>
+                <i class="fa fa-fw fa-clock-o"></i> Founded <span am-time-ago="guild.createDate"></span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-sitemap"></i> Level [[guild.level]]
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-users"></i> [[guild.members.length]] members
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-envelope"></i> [[guild.invitesAvailable]] invites left
+            </a>
+        </li>
+    </ul>
+</template>

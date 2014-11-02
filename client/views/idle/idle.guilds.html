@@ -1,0 +1,45 @@
+<template name="idleguildlist">
+    <section class="content-header">
+        <h1>IdleLands<small>Guilds</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li class="active"><span class="fa fa-sitemap"></span> Guilds</li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-users text-info"></span> [[guilds.length]] guilds were census'd for this page
+        </span>
+    </div>
+
+    {{> idleguildbody }}
+</template>
+
+<template name="idleguildbody">
+    <div class="row filter-header">
+        <div ng-repeat="guild in guilds | orderBy:['-level', 'name']">
+            {{> idleguilditem }}
+        </div>
+    </div>
+</template>
+
+<template name="idleguilditem">
+    <div class="col-sm-6 col-md-3">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h4>[[guild.name]]</h4>
+                <p><small>[[guild.members.length]] members, led by <strong>[[guild.leader]]</strong></small></p>
+                <p><small>Founded <span am-time-ago="guild.createDate"></span></small></p>
+            </div>
+            <div class="icon">
+                Lv[[guild.level]]
+            </div>
+            <a class="small-box-footer">
+                <a ui-sref="idleguild({guildName: guild.name})" class="small-box-footer">
+                    [[guild.name]] <span class="fa fa-arrow-circle-right"></span>
+                </a>
+            </a>
+        </div>
+    </div>
+</template>
