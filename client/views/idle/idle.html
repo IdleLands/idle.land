@@ -17,6 +17,7 @@
                  hasAchievement:filters.achievement |
                  hasPersonality:filters.personality |
                  filter:{map:filters.map}:(filters.map ? true : false) |
+                 filter:{guild:filters.guild}:(filters.guild ? true : false) |
                  filter:{name:filters.name, professionName: filters.profession} |
                  orderBy:filters.stat:true)"
                  ng-if="decompose(player, filters.stat)">
@@ -107,6 +108,15 @@
                 <select class="form-control" ng-model="editing.profession" placeholder="Select a class...">
                     <option selected="selected" value="">(any)</option>
                     <option ng-repeat="profession in _filterData.classes">[[profession]]</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center filter-header">Guild</h4>
+                <select class="form-control" ng-model="editing.guild" placeholder="Select a guild...">
+                    <option selected="selected" value="">(any)</option>
+                    <option ng-repeat="guild in _filterData.guilds">[[guild]]</option>
                 </select>
             </div>
         </div>
