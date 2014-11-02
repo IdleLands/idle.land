@@ -285,10 +285,10 @@
         </div>
         <div class="box-body no-padding">
             <table class="table table-striped table-condensed no-margin">
-                <tr ng-if="!playerEvents || playerEvents.length === 0">
+                <tr ng-if="!item.recentEvents || item.recentEvents.length === 0">
                     <td colspan="2">Nothing has happened with this character recently :(</td>
                 </tr>
-                <tr ng-repeat="event in playerEvents | filter:{player:playerName} | orderBy:'createdAt':true" ng-if="$index < 7">
+                <tr ng-repeat="event in item.recentEvents | orderBy:'createdAt':true">
                     <td am-time-ago="[[event.createdAt]]" class="col-md-3">
                     </td>
                     <td>

@@ -1,14 +1,18 @@
 
 if Meteor.isServer
-  driver = new MongoInternals.RemoteCollectionDriver "mongodb://localhost:27017/idlelands"
 
+  driver = new MongoInternals.RemoteCollectionDriver "mongodb://localhost:27017/idlelands"
   IdlePlayers = new Mongo.Collection "players", _driver: driver
-  IdlePlayerEvents = new Mongo.Collection "playerEvents", _driver: driver
   IdleAnalytics = new Mongo.Collection "analytics", _driver: driver
+
+  share.IdlePlayers = IdlePlayers
+  share.IdleAnalytics = IdleAnalytics
+
   IdleMonsters = new Mongo.Collection "monsters", _driver: driver
   IdleItems = new Mongo.Collection "items", _driver: driver
 
   analyticsFields = {name: 1, statistics: 1, _statCache: 1, level: 1, hp: 1, mp: 1, gold: 1}
+  playerFields = {_statCache: 1, name: 1, map: 1, mapRegion: 1, achievements: 1, hp: 1, mp: 1, gold: 1, professionName: 1, isOnline: 1, guild: 1, personalityStrings: 1}
 
   Meteor.publish 'allPlayers', ->
 
@@ -16,10 +20,7 @@ if Meteor.isServer
     yesterday.setDate yesterday.getDate() - 1
 
     IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}}
-      ,{fields: {_statCache: 1, name: 1, map: 1, mapRegion: 1, achievements: 1, hp: 1, mp: 1, gold: 1, professionName: 1, isOnline: 1}}
-
-  Meteor.publish 'playerEvents', (playerName) ->
-    IdlePlayerEvents.find {player: playerName}, {limit: 7, sort: {createdAt: -1}}
+      ,{fields: playerFields}
 
   Meteor.publish 'singlePlayer', (playerName) ->
     IdlePlayers.find {name: playerName}, {fields: {pushbulletApiKey: 0, password: 0}}

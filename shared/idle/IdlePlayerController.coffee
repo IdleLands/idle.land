@@ -4,7 +4,6 @@ if Meteor.isClient
     '$scope', '$stateParams', '$sce', '$collection', '$subscribe', 'IdleCollections', 'PageTitle'
     ($scope, $stateParams, $sce, $collection, $subscribe, IdleCollections, PageTitle) =>
 
-
       window.scrollTo 0,0
 
       $scope.$sce = $sce
@@ -17,13 +16,6 @@ if Meteor.isClient
       .then ->
         $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
         .bind $scope, 'player'
-
-      $scope.playerEvents = []
-
-      $subscribe.subscribe 'playerEvents', $stateParams.playerName
-      .then ->
-        $collection IdleCollections.IdlePlayerEvents
-        .bind $scope, 'playerEvents'
 
       $scope.getPlayerTagline = (player) ->
         player.messages?.web
