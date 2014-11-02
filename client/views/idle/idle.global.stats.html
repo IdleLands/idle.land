@@ -30,6 +30,11 @@
                     {{> idleglobalstatsnewest }}
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalstatsguilds }}
+                </div>
+            </div>
         </div>
         <div class="col-md-5">
             <div class="row">
@@ -63,6 +68,32 @@
         </div>
         <div class="col-md-3">
             {{> idleglobalstatspoppers }}
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalstatsguilds">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">Guilded</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Guild</th>
+                    <th>Level</th>
+                    <th>Leader</th>
+                    <th>Members</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="guild in guilds | orderBy:['-level', 'name']" ng-if="$index < 5">
+                    <td><a ui-sref="idleguild({guildName:guild.name})">[[guild.name]]</a></td>
+                    <td>[[guild.level]]</td>
+                    <td><a ui-sref="idleplayer({playerName:player.name})">[[guild.leaderName || guild.leader]]</a></td>
+                    <td>[[guild.members.length]]</td>
+                </tr>
+            </table>
         </div>
     </div>
 </template>
@@ -150,7 +181,7 @@
                     <th>XP</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="player in getOrderedByXpPercent()" ng-if="$index < 7">
+                <tr ng-repeat="player in getOrderedByXpPercent()" ng-if="$index < 5">
                     <td><a ui-sref="idleplayer({playerName:player.name})">[[player.name]]</a></td>
                     <td>[[player.level.__current]]</td>
                     <td>[[(player.xp.__current/player.xp.maximum*100).toFixed(3)]]%</td>
@@ -174,7 +205,7 @@
                     <th class="text-center">Join Time</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="player in getOrderedByJoinTime()" ng-if="$index < 7">
+                <tr ng-repeat="player in getOrderedByJoinTime()" ng-if="$index < 5">
                     <td><a ui-sref="idleplayer({playerName:player.name})">[[player.name]]</a></td>
                     <td class="text-center"
                         am-time-ago="player.registrationDate"
