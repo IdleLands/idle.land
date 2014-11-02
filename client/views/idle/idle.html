@@ -15,6 +15,7 @@
             <div class="col-md-3 col-sm-3 col-xs-6"
                  ng-repeat="player in filtered = (allPlayers() |
                  hasAchievement:filters.achievement |
+                 hasPersonality:filters.personality |
                  filter:{map:filters.map}:(filters.map ? true : false) |
                  filter:{name:filters.name, professionName: filters.profession} |
                  orderBy:filters.stat:true)"
@@ -115,6 +116,15 @@
                 <select class="form-control" ng-model="editing.map" placeholder="Select a map...">
                     <option selected="selected" value="">(any)</option>
                     <option ng-repeat="map in _filterData.maps">[[map]]</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 class="text-center filter-header">Personality</h4>
+                <select class="form-control" ng-model="editing.personality" placeholder="Select a personality...">
+                    <option selected="selected" value="">(any)</option>
+                    <option ng-repeat="personality in _filterData.personalities">[[personality]]</option>
                 </select>
             </div>
         </div>

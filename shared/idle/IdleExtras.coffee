@@ -69,6 +69,7 @@ if Meteor.isClient
       classes: []
       maps: []
       achievements: []
+      personalities: []
 
     loadFiltersFromPlayers: (players) ->
       filterData.cache.map = {}
@@ -86,6 +87,7 @@ if Meteor.isClient
         filterData.maps.push player.map
         filterData.classes.push player.professionName
         filterData.achievements.push (_.pluck player.achievements, 'name')...
+        filterData.personalities.push player.personalityStrings...
 
         filterData.cache.map[player.map]++
         filterData.cache.profession[player.professionName]++
@@ -101,6 +103,7 @@ if Meteor.isClient
       filterData.maps = (_.uniq filterData.maps).sort()
       filterData.classes = (_.uniq filterData.classes).sort()
       filterData.achievements = (_.uniq filterData.achievements).sort()
+      filterData.personalities = (_.uniq filterData.personalities).sort()
 
     getFilters: -> filters
     setFilters: (newFilters) -> filters = newFilters

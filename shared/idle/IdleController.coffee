@@ -7,6 +7,11 @@ if Meteor.isClient
       return players if not achievement
       _.filter players, (player) -> _.findWhere player.achievements, {name: achievement}
 
+  angular.module('kurea.web').filter 'hasPersonality', ->
+    (players, personality) ->
+      return players if not personality
+      _.filter players, (player) -> _.contains player.personalityStrings, personality
+
   angular.module('kurea.web').controller 'Idle', [
     '$scope', '$collection', '$subscribe', 'IdleFilterData', 'IdleCollections', 'PageTitle',
     ($scope, $collection, $subscribe, Filters, IdleCollections, PageTitle) =>
