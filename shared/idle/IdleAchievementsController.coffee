@@ -25,7 +25,8 @@ if Meteor.isClient
           achievement.percent = (parseInt achievement.achieved / $scope.players.length*100).toFixed 0
           achievementFinalList.push achievement
 
-        $scope.calculatedAchievements = achievementFinalList
+        sortedAchievements = _.sortBy achievementFinalList, (achievement) -> achievement.name
+        $scope.calculatedAchievements = sortedAchievements
 
       if $scope.playerName
         $subscribe.subscribe 'singlePlayer', $stateParams.playerName
