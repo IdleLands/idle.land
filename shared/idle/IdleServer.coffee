@@ -40,6 +40,8 @@ if Meteor.isServer
     isOnline: 1
     guild: 1
     personalityStrings: 1
+    statistics: 1
+    registrationDate: 1
 
   Meteor.publish 'allPlayers', ->
 
