@@ -33,6 +33,7 @@ if Meteor.isServer
     mapRegion: 1
     achievements: 1
     hp: 1
+    xp: 1
     mp: 1
     gold: 1
     level: 1
