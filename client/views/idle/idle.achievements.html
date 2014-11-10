@@ -47,6 +47,9 @@
             <div class="icon" ng-if="achievement.percent">
                 [[achievement.percent]]%
             </div>
+            <div class="icon" ng-if="!achievement.percent">
+                ~1%
+            </div>
             <a class="small-box-footer">
                 [[achievement.reward]]
             </a>

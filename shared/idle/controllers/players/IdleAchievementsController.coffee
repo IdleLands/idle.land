@@ -22,8 +22,7 @@ if Meteor.isClient
         _.each (_.keys groupedAchievements), (key) ->
           achievement = groupedAchievements[key][0]
           achievement.achieved = groupedAchievements[key].length
-          testPerc = ((parseInt achievement.achieved / $scope.players.length*100).toFixed 0)
-          achievement.percent = if testPerc then testPerc else '~1'
+          achievement.percent = ((parseInt achievement.achieved / $scope.players.length*100).toFixed 0)
           achievementFinalList.push achievement
 
         sortedAchievements = _.sortBy achievementFinalList, (achievement) -> achievement.name
