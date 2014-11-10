@@ -33,7 +33,21 @@ if Meteor.isServer
     mapRegion: 1
     achievements: 1
     hp: 1
-    xp: 1
+    mp: 1
+    gold: 1
+    level: 1
+    professionName: 1
+    isOnline: 1
+    guild: 1
+    personalityStrings: 1
+
+  globalStatsFields =
+    _statCache: 1
+    name: 1
+    map: 1
+    mapRegion: 1
+    achievements: 1
+    hp: 1
     mp: 1
     gold: 1
     level: 1
@@ -43,6 +57,8 @@ if Meteor.isServer
     personalityStrings: 1
     statistics: 1
     registrationDate: 1
+    xp: 1
+    equipment: 1
 
   Meteor.publish 'allPlayers', ->
 
@@ -50,6 +66,13 @@ if Meteor.isServer
     yesterday.setDate yesterday.getDate() - 1
 
     IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}, fields: playerFields}
+
+  Meteor.publish 'globalStatsPlayers', ->
+
+    yesterday = new Date
+    yesterday.setDate yesterday.getDate() - 1
+
+    IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}, fields: globalStatsFields}
 
   Meteor.publish 'singlePlayer', (playerName) ->
     IdlePlayers.find {name: playerName}, {fields: singlePlayerFields}

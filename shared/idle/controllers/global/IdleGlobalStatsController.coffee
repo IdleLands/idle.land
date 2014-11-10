@@ -16,7 +16,7 @@ if Meteor.isClient
       .then (data) -> _.extend $scope.cached, data
 
       $scope._ = window._
-      $subscribe.subscribe 'allPlayers'
+      $subscribe.subscribe 'globalStatsPlayers'
       .then ->
         $collection IdleCollections.IdlePlayers
         .bind $scope, 'players'
