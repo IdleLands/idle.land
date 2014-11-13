@@ -1,16 +1,15 @@
 
 if Meteor.isServer
 
-  driver = new MongoInternals.RemoteCollectionDriver "mongodb://localhost:27017/idlelands"
-  IdlePlayers = new Mongo.Collection "players", _driver: driver
-  IdleAnalytics = new Mongo.Collection "analytics", _driver: driver
-  IdleGuilds = new Mongo.Collection "guilds", _driver: driver
+  IdlePlayers = new Mongo.Collection "players"
+  IdleAnalytics = new Mongo.Collection "analytics"
+  IdleGuilds = new Mongo.Collection "guilds"
 
   share.IdlePlayers = IdlePlayers
   share.IdleAnalytics = IdleAnalytics
 
-  IdleMonsters = new Mongo.Collection "monsters", _driver: driver
-  IdleItems = new Mongo.Collection "items", _driver: driver
+  IdleMonsters = new Mongo.Collection "monsters"
+  IdleItems = new Mongo.Collection "items"
 
   singlePlayerFields =
     pushbulletApiKey: 0
