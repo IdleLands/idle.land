@@ -1,14 +1,15 @@
 
 if Meteor.isClient
   angular.module('kurea.web').controller 'IdlePlayer', [
-    '$scope', '$stateParams', '$sce', '$collection', '$subscribe', 'IdleCollections', 'PageTitle', 'CurrentPlayer'
-    ($scope, $stateParams, $sce, $collection, $subscribe, IdleCollections, PageTitle, CurrentPlayer) =>
+    '$scope', '$stateParams', '$sce', '$collection', '$subscribe', 'IdleCollections', 'PageTitle', 'CurrentPlayer', 'CurrentMap'
+    ($scope, $stateParams, $sce, $collection, $subscribe, IdleCollections, PageTitle, CurrentPlayer, CurrentMap) =>
 
       window.scrollTo 0,0
 
       $scope.$sce = $sce
       $scope._ = window._
       $scope.playerName = $stateParams.playerName
+      $scope.currentMap = {}
 
       PageTitle.setTitle "Idle Lands - #{$scope.playerName} (Stats)"
 
@@ -140,6 +141,7 @@ if Meteor.isClient
 
       ###
       $scope.drawMap = (player) ->
+        return if _.isEmpty $scope.currentMap
 
         newMapName = player.map if not newMapName
 
@@ -158,7 +160,7 @@ if Meteor.isClient
           preload: ->
             @game.load.image "tiles", "../../img/tiles.png", 16, 16
             @game.load.spritesheet "interactables", "../../img/tiles.png", 16, 16
-            @game.load.tilemap newMapName, "../../map/#{newMapName}.json", null, Phaser.Tilemap.TILED_JSON
+            @game.load.tilemap newMapName, null, $scope.currentMap.map, Phaser.Tilemap.TILED_JSON
 
           create: ->
             map = @game.add.tilemap newMapName
@@ -212,4 +214,8 @@ if Meteor.isClient
       $scope.$watch 'player', (newVal, oldVal) ->
         return if newVal is oldVal
         CurrentPlayer.setPlayer newVal
+
+      $scope.$watch (-> CurrentMap.getMap()), (newVal, oldVal) ->
+        return if newVal is oldVal
+        $scope.currentMap = newVal
   ]

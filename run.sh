@@ -1,1 +1,1 @@
-MONGO_URL=mongodb://localhost:27017/kurea meteor --port 3000
+MONGO_URL=mongodb://localhost:27017/idlelands meteor --port 3000

@@ -5,11 +5,11 @@ if Meteor.isServer
   IdleAnalytics = new Mongo.Collection "analytics"
   IdleGuilds = new Mongo.Collection "guilds"
 
-  share.IdlePlayers = IdlePlayers
-  share.IdleAnalytics = IdleAnalytics
-
   IdleMonsters = new Mongo.Collection "monsters"
   IdleItems = new Mongo.Collection "items"
+
+  share.IdlePlayers = IdlePlayers
+  share.IdleAnalytics = IdleAnalytics
 
   singlePlayerFields =
     pushbulletApiKey: 0
