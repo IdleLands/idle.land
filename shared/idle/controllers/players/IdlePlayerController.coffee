@@ -133,13 +133,6 @@ if Meteor.isClient
       mapName = null
       newMapName = null
 
-      ###
-      want to reload maps?
-
-      cd public/map
-      find ../../../idle/assets/map/ -type f -print0 | xargs -0 cp -t .
-
-      ###
       $scope.drawMap = (player) ->
         return if _.isEmpty $scope.currentMap
 

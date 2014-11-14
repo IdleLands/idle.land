@@ -77,7 +77,11 @@ if Meteor.isServer
     IdlePlayers.find {name: playerName}, {fields: singlePlayerFields}
 
   Meteor.publish 'analytics', ->
-    IdleAnalytics.find {}, {fields: analyticsFields}
+
+    twoWeeksAgo = new Date
+    twoWeeksAgo.setDate twoWeeksAgo.getDate() - 14
+
+    IdleAnalytics.find {saveTime: {$gt: twoWeeksAgo}}, {fields: analyticsFields}
 
   Meteor.publish 'singlePlayerAnalytics', (playerName) ->
     IdleAnalytics.find {name: playerName}, {fields: analyticsFields}
