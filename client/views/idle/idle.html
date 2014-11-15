@@ -7,12 +7,12 @@
     </section>
     <section>
         <div class="row both-margins-15">
-            <span class="col-md-2">
+            <span class="col-md-12">
                 <span class="fa fa-users text-info"></span> [[players.length]] players <span ng-if="filtered.length !== players.length">([[filtered.length]] shown)</span>
             </span>
         </div>
         <div class="row both-margins-15 filter-header">
-            <div class="col-md-3 col-sm-3 col-xs-6"
+            <div class="col-xs-6 col-sm-4 col-md-3"
                  ng-repeat="player in filtered = (allPlayers() |
                  hasAchievement:filters.achievement |
                  hasPersonality:filters.personality |
@@ -45,7 +45,7 @@
     </section>
     <section class="filter-header">
         <div class="row">
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-center">
                 <a ui-sref="idleglobalanalytics">
                     <span class="fa fa-line-chart"
                           bs-tooltip
@@ -54,7 +54,7 @@
                           data-title="Global Analytics"></span>
                 </a>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-center">
                 <a ui-sref="idleglobalstats">
                     <span class="fa fa-calculator"
                           bs-tooltip
@@ -63,7 +63,7 @@
                           data-title="Global Statistics"></span>
                 </a>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-center">
                 <a ui-sref="idleglobalachievements">
                     <span class="fa icon-trophy"
                           bs-tooltip
@@ -72,7 +72,7 @@
                           data-title="Global Achievements"></span>
                 </a>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-center">
                 <a ui-sref="idleguildlist">
                     <span class="fa fa-sitemap"
                           bs-tooltip
@@ -81,7 +81,7 @@
                           data-title="Guilds"></span>
                 </a>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-center">
                 <a disabled>
                     <span class="fa fa-globe text-muted"
                           bs-tooltip
@@ -90,7 +90,7 @@
                           data-title="World Viewer (under construction!)"></span>
                 </a>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-center">
                 <a ui-sref="idlespecialthanks">
                     <span class="fa fa-paypal"
                           bs-tooltip
