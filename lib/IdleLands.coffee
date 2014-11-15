@@ -108,4 +108,21 @@ if Meteor.isClient
           'sidebar':
             template: UiRouter.template 'idleguildsidebar'
             controller: 'IdleGuildSidebar'
+
+      .state 'idlebattlelist',
+        url: '/s/battles'
+        views:
+          'content':
+            template: UiRouter.template 'idlebattlelist'
+            controller: 'IdleBattleList'
+
+      .state 'idlebattle',
+        url: '/s/battles/:battleName'
+        views:
+          'content':
+            template: UiRouter.template 'idlebattle'
+            controller: 'IdleBattle'
+          'sidebar':
+            template: UiRouter.template 'idlebattlesidebar'
+            controller: 'IdleBattleSidebar'
   ]

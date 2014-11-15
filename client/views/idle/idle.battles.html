@@ -1,0 +1,46 @@
+<template name="idlebattlelist">
+    <section class="content-header">
+        <h1>IdleLands<small>Battles</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li class="active"><span class="fa fa-legal fa-rotate-90"></span> Battles</li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <span class="col-md-12">
+            <span class="fa fa-users text-info"></span> [[battles.length]] battles involved much death to create this page
+        </span>
+    </div>
+
+  {{> idlebattlebody }}
+</template>
+
+<template name="idlebattlebody">
+    <div class="row filter-header">
+        <div ng-repeat="battle in battles | orderBy:['-started', 'name']">
+          {{> idlebattleitem }}
+        </div>
+    </div>
+</template>
+
+<template name="idlebattleitem">
+    <div class="col-sm-6 col-md-3">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h4>[[battle.name]]</h4>
+                <p><small>[[countInvolvedMembers(battle)]] combatants</small></p>
+                <p><small>[[battle.messages.length]] events</small></p>
+                <p><small>Happened <span am-time-ago="battle.started"></span></small></p>
+            </div>
+            <div class="icon">
+                Lv[[avgLevel(battle)]]
+            </div>
+            <a class="small-box-footer">
+                <a ui-sref="idlebattle({battleName: battle.name})" class="small-box-footer">
+                    [[battle.name]] <span class="fa fa-arrow-circle-right"></span>
+                </a>
+            </a>
+        </div>
+    </div>
+</template>

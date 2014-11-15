@@ -4,6 +4,7 @@ if Meteor.isServer
   IdlePlayers = new Mongo.Collection "players"
   IdleAnalytics = new Mongo.Collection "analytics"
   IdleGuilds = new Mongo.Collection "guilds"
+  IdleBattles = new Mongo.Collection "battles"
 
   IdleMonsters = new Mongo.Collection "monsters"
   IdleItems = new Mongo.Collection "items"
@@ -72,6 +73,12 @@ if Meteor.isServer
     yesterday.setDate yesterday.getDate() - 1
 
     IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}, fields: globalStatsFields}
+
+  Meteor.publish 'allBattles', ->
+    IdleBattles.find {}
+
+  Meteor.publish 'singleBattle', (name) ->
+    IdleBattles.find {name: name}
 
   Meteor.publish 'singlePlayer', (playerName) ->
     IdlePlayers.find {name: playerName}, {fields: singlePlayerFields}

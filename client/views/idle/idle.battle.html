@@ -1,0 +1,97 @@
+<template name="idlebattle">
+    <section class="content-header">
+        <h1>IdleLands<small>[[battle.name]]</small></h1>
+        <ol class="breadcrumb">
+            <li>
+                <span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a>
+            </li>
+            <li><span class="fa fa-legal fa-rotate-90"></span> <a href ui-sref="idleguildlist">Battles</a></li>
+            <li class="active">[[battle.name]]</li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <div class="col-md-6">
+            <div class="alert alert-warning">
+                <i class="fa fa-warning"></i>
+                <b>Warning!</b> This is a snapshot of player data, it may not be 100% up to date.
+            </div>
+        </div>
+    </div>
+
+    {{> idlebattleteams }}
+    {{> idlebattlecombatlog }}
+
+</template>
+
+<template name="idlebattleteams">
+    <div ng-repeat="team in battle.teams">
+        {{> idlebattleteam }}
+    </div>
+</template>
+
+<template name="idlebattleteam">
+
+    <div class="row">
+        <h1 class="col-md-11 col-md-offset-1"><span class="fa fa-star"></span> Team "[[team.name]]"</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6" ng-repeat="member in team.members">
+            {{> idlebattlemember}}
+        </div>
+    </div>
+</template>
+
+<template name="idlebattlemember">
+    <div class="small-box" ng-class="{
+                    'bg-gray ': !member.isPlayer,
+                    'bg-green': member.isPlayer
+                    }">
+        <div class="inner">
+            <h3>Level [[member.level]]</h3>
+            <p>[[member.profession]]</p>
+        </div>
+        <a ui-sref="idleplayer({playerName: member.name})" class="small-box-footer" ng-if="member.isPlayer">
+            [[member.name]] <span class="fa fa-arrow-circle-right"></span>
+        </a>
+        <a class="small-box-footer" ng-if="!member.isPlayer">
+            [[member.name]]
+        </a>
+    </div>
+</template>
+
+<template name="idlebattlecombatlog">
+    <div class="row">
+        <h1 class="col-md-11 col-md-offset-1"><i class="fa fa-fw fa-info-circle"></i> Combat Log</h1>
+    </div>
+
+    <div class="row">
+        <htmldiv class="col-md-12" ng-repeat="message in battle.messages track by $index" content="filterMessage(message)"></htmldiv>
+    </div>
+</template>
+
+<template name="idlebattlesidebar">
+    <ul class="sidebar-menu">
+        <li>
+            <a>
+                <i class="fa fa-fw fa-clock-o"></i> Happened <span am-time-ago="battle.started"></span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-group"></i> [[countInvolvedMembers()]] combatants
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw icon-universal-access"></i> Average Level: [[avgLevel()]]
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-info-circle"></i> [[battle.messages.length]] events
+            </a>
+        </li>
+    </ul>
+</template>
