@@ -25,7 +25,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3" ng-repeat="player in admins">
+        <div class="col-md-3" ng-repeat="player in admins track by $index">
           {{> idleguildmember}}
         </div>
     </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6" ng-repeat="player in members">
+        <div class="col-md-3 col-sm-6" ng-repeat="player in members track by $index">
           {{> idleguildmember}}
         </div>
     </div>
