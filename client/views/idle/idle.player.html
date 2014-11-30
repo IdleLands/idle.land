@@ -56,6 +56,11 @@
                 <i class="fa fa-fw icon-money"></i> [[_.str.numberFormat(item.gold.__current)]] Gold
             </a>
         </li>
+        <li ng-if="item.shop">
+            <a>
+                <i class="fa fa-fw fa-spin icon-money"></i> In shop [[item.shop.region]]!
+            </a>
+        </li>
         <li>
             <a href ui-sref="idleplayerachievements({playerName: item.name})">
                 <i class="fa fa-fw icon-trophy"></i> [[item.achievements.length]] Achievements

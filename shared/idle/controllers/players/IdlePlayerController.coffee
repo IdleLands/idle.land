@@ -48,10 +48,23 @@ if Meteor.isClient
 
           items.unshift lastCalc
 
+        shop = player.shop
+
+        if shop
+          _.each shop.slots, (slot, index) ->
+            item = slot.item
+            item.cost = slot.price
+            item.headerColor = "primary"
+            item.bgColor = 'bg-green'
+            item.bgClassColor = $scope.classToColor item.itemClass
+            item.extraColor = 'bg-primary'
+            item.extraText = "SHOP #{index}"
+            items.push item
+
         overflow = player.overflow
 
         if overflow
-          _.each player.overflow, (item, index) ->
+          _.each overflow, (item, index) ->
             item.headerColor = "success"
             item.bgColor = 'bg-green'
             item.bgClassColor = $scope.classToColor item.itemClass
