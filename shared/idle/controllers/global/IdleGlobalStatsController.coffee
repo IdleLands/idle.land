@@ -51,7 +51,8 @@ if Meteor.isClient
           stat.max = @getMaxOfStat stat.key
 
       $scope.getOrderedByXpPercent = ->
-        _.sortBy $scope.players, (player) -> -(player.xp.__current / player.xp.maximum) or 0
+        playerList = _.filter $scope.players, (player) -> player.xp.__current < player.xp.maximum
+        _.sortBy playerList, (player) -> -(player.xp.__current / player.xp.maximum) or 0
 
       $scope.getOrderedByJoinTime = ->
         _.sortBy $scope.players, (player) -> -player.registrationDate.getTime() or 0
