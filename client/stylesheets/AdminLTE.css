@@ -176,6 +176,7 @@ img {
 .bg-orange,
 .bg-fuchsia,
 .bg-purple,
+.bg-cyan,
 .bg-maroon,
 .bg-black {
   color: #f9f9f9 !important;
@@ -246,6 +247,9 @@ img {
 }
 .bg-maroon {
   background-color: #85144b !important;
+}
+.bg-cyan {
+  background-color: #006064 !important;
 }
 /* Text colors */
 .text-red {
