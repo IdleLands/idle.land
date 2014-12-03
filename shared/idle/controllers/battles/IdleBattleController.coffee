@@ -71,7 +71,6 @@ if Meteor.isClient
         for search, replaceFunc of BattleColorMap
           regexp = new RegExp "(<#{search}>)([\\s\\S]*?)(<\\/#{search}>)", 'g'
           message = message.replace regexp, (match, p1, p2) ->
-            console.log p2
             replaceFunc p2
 
         message
