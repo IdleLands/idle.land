@@ -120,7 +120,7 @@
                 <tr ng-repeat="item in topEquipment track by $index">
                     <td><a ui-sref="idleplayer({playerName:item.owner})">[[item.owner]]</a></td>
                     <td>[[item.itemClass]] [[item.type]]</td>
-                    <td>[[item.name]]</td>
+                    <td>[[item.enchantLevel ? '+'+item.enchantLevel+' ' : '']][[item.name]]</td>
                     <td>[[item._calcScore]]</td>
                     <td ng-repeat="header in topEquipmentDisplayOrder"
                         ng-class="{
