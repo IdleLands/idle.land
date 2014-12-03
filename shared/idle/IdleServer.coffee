@@ -40,7 +40,14 @@ if Meteor.isServer
     isOnline: 1
     guild: 1
     personalityStrings: 1
+
+  guildFields =
+    name: 1
+    professionName: 1
+    isOnline: 1
     identifier: 1
+    lastLogin: 1
+    level: 1
 
   globalStatsFields =
     _statCache: 1
@@ -60,6 +67,9 @@ if Meteor.isServer
     registrationDate: 1
     xp: 1
     equipment: 1
+
+  Meteor.publish 'guildPlayers', ->
+    IdlePlayers.find {}, {fields: guildFields}
 
   Meteor.publish 'allPlayers', ->
 

@@ -48,7 +48,7 @@
                     }">
         <div class="inner">
             <h3>Level [[player.level.__current]]</h3>
-            <p ng-if="player.isOnline">&nbsp;</p>
+            <p ng-if="player.isOnline">Currently Online</p>
             <p ng-if="!player.isOnline">Last seen <span am-time-ago="player.lastLogin"></span></p>
             <p>[[player.professionName]]</p>
         </div>

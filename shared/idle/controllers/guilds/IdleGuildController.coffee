@@ -15,10 +15,10 @@ if Meteor.isClient
         $collection IdleCollections.IdleGuilds
         .bind $scope, 'guilds'
 
-        $subscribe.subscribe 'allPlayers'
-        .then ->
-          $collection IdleCollections.IdlePlayers
-          .bind $scope, 'players'
+      $subscribe.subscribe 'guildPlayers'
+      .then ->
+        $collection IdleCollections.IdlePlayers
+        .bind $scope, 'players'
 
       $scope.leader = []
       $scope.admins = []
@@ -48,15 +48,11 @@ if Meteor.isClient
       $scope.$watch 'guilds', (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.guild = _.findWhere newVal, {name: $scope.guildName}
-        console.log $scope.guild
         CurrentGuild.setGuild $scope.guild
 
       $scope.$watch 'players', (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.refreshMembers()
-
         console.log $scope.players
-        console.log "---"
-        console.log $scope.leader, $scope.admins, $scope.members
 
   ]
