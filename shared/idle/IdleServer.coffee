@@ -40,6 +40,7 @@ if Meteor.isServer
     isOnline: 1
     guild: 1
     personalityStrings: 1
+    identifier: 1
 
   globalStatsFields =
     _statCache: 1
