@@ -42,8 +42,6 @@ if Meteor.isClient
             allowDecimals: no
             startOnTick: no
             endOnTick: no
-            min: 1
-            max: 100
 
           tooltip:
             shared: yes
