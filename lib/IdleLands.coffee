@@ -39,6 +39,20 @@ if Meteor.isClient
             template: UiRouter.template 'idleachievements'
             controller: 'IdleAchievements'
 
+      .state 'idleglobalcollectibles',
+        url: '/s/collectibles'
+        views:
+          'content':
+            template: UiRouter.template 'idlecollectibles'
+            controller: 'IdleCollectibles'
+
+      .state 'idleplayercollectibles',
+        url: '/s/collectibles/:playerName'
+        views:
+          'content':
+            template: UiRouter.template 'idlecollectibles'
+            controller: 'IdleCollectibles'
+
       .state 'idleglobalanalytics',
         url: '/s/analytics'
         views:

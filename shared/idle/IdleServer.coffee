@@ -68,6 +68,12 @@ if Meteor.isServer
     xp: 1
     equipment: 1
 
+  collectibleFields =
+    collectibles: 1
+
+  achievementFields =
+    achievements: 1
+
   Meteor.publish 'guildPlayers', ->
     IdlePlayers.find {}, {fields: guildFields}
 
@@ -84,6 +90,20 @@ if Meteor.isServer
     yesterday.setDate yesterday.getDate() - 1
 
     IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {sort: {'name': 1, 'level.__current': -1}, fields: globalStatsFields}
+
+  Meteor.publish 'collectiblePlayers', ->
+
+    yesterday = new Date
+    yesterday.setDate yesterday.getDate() - 1
+
+    IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {fields: collectibleFields}
+
+  Meteor.publish 'achievementPlayers', ->
+
+    yesterday = new Date
+    yesterday.setDate yesterday.getDate() - 1
+
+    IdlePlayers.find {$or: [ {lastLogin: {$gt: yesterday}}, {isOnline: yes} ]}, {fields: achievementFields}
 
   Meteor.publish 'allBattles', ->
     IdleBattles.find {}

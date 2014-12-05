@@ -34,7 +34,7 @@ if Meteor.isClient
           $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
           .bind $scope, 'player'
       else
-        $subscribe.subscribe 'allPlayers'
+        $subscribe.subscribe 'achievementPlayers'
         .then ->
           $collection IdleCollections.IdlePlayers
           .bind $scope, 'players'

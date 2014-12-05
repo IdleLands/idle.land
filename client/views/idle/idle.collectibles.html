@@ -1,0 +1,55 @@
+<template name="idlecollectibles">
+    <section class="content-header">
+        <h1>IdleLands<small>[[playerName ? playerName+"'s" : 'Global']] Collectibles [[playerName ? "("+player[0].collectibles.length+")" : '']]</small></h1>
+        <ol class="breadcrumb">
+            <li>
+                <span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a>
+            </li>
+            <li ng-class="{active: !playerName}"><span class="fa fa-gift"></span> <a href ui-sref="idleglobalcollectibles">Collectibles</a></li>
+            <li ng-if="playerName" class="active"><a href ui-sref="idleplayer({playerName:playerName})">[[playerName]]</a></li>
+        </ol>
+    </section>
+
+    <div ng-if="!player">
+        {{> idleglobalcollectiblesheader }}
+        {{> idlecollectiblebody }}
+    </div>
+
+    <div ng-repeat="item in player" ng-if="player">
+        {{> idlecollectiblebody }}
+    </div>
+
+</template>
+
+<template name="idleglobalcollectiblesheader">
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-users text-info"></span> [[players.length]] players were counted in the making of this page
+        </span>
+    </div>
+</template>
+
+<template name="idlecollectiblebody">
+    <div class="row filter-header">
+        <div ng-repeat="collectible in getCollectibles()">
+            {{> idlecollectible }}
+        </div>
+    </div>
+</template>
+
+<template name="idlecollectible">
+    <div class="col-sm-6 col-md-3">
+        <div class="small-box bg-cyan achievement-box">
+            <div class="inner">
+                <h4>[[collectible.name]]</h4>
+                <p><small>[[collectible.desc]]</small></p>
+            </div>
+            <div class="icon" ng-if="!!collectible.percent">
+                ~[[collectible.percent]]%
+            </div>
+            <a class="small-box-footer">
+                [[collectible.reward]]
+            </a>
+        </div>
+    </div>
+</template>

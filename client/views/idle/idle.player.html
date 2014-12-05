@@ -66,6 +66,11 @@
                 <i class="fa fa-fw icon-trophy"></i> [[item.achievements.length]] Achievements
             </a>
         </li>
+        <li ng-if="item.collectibles">
+            <a href ui-sref="idleplayercollectibles({playerName: item.name})">
+                <i class="fa fa-fw fa-gift"></i> [[item.collectibles.length]] Collectibles
+            </a>
+        </li>
         <li>
             <a href ui-sref="idleplayeranalytics({playerName: item.name})">
                 <i class="fa fa-fw fa-line-chart"></i> Analytics
