@@ -12,6 +12,12 @@ if Meteor.isClient
       #  $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
       #  .bind $scope, 'player'
 
+      $scope.getGenderFor = (player) ->
+        switch player.gender
+          when "male" then "male"
+          when "female" then "female"
+          else "question"
+
       $scope.getJSONFor = (player) ->
         str = JSON.stringify player, null, 4
         blob = new Blob [str], type: 'application/json'

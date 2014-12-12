@@ -112,7 +112,8 @@ if Meteor.isClient
         {name: 'piety'},
         {name: 'enchantLevel'},
         {name: '_calcScore'},
-        {name: '_baseScore'}
+        {name: '_baseScore'},
+        {name: 'uid'}
 
       $scope.getPopoverFor = (player, stat) ->
         string = "<table class='table table-striped table-condensed'>"
