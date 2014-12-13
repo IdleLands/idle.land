@@ -58,6 +58,11 @@
         </li>
         <li>
             <a>
+                <i class="fa fa-fw fa-[[getTypeIcon(item)]]"></i> [[item._configCache.category]]
+            </a>
+        </li>
+        <li>
+            <a>
                 <i class="fa fa-fw fa-[[getGenderFor(item)]]"></i> [[item.gender]]
             </a>
         </li>
@@ -132,8 +137,36 @@
 <template name="idlepetbody">
     <div class="row">
         <div class="col-xs-12">
-            <div class="row" ng-init="allEquipment = getEquipmentAndTotals(item)">
+            <div class="row" ng-init="allEquipment = getPetSoulAndTotals(item)">
                 <div class="col-xs-12" ng-repeat="equipment in allEquipment">
+                    {{> idlepetequipment }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-repeat="key in getEquipmentTypes(item)">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="text-center">[[key]] [[getEquipmentOfType(item, key).length]]/[[ item._configCache.slots[key] ]]</h3>
+                </div>
+            </div>
+            <div class="row" ng-repeat="equipment in getEquipmentOfType(item, key)">
+                <div class="col-xs-12">
+                    {{> idlepetequipment }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="text-center">inventory [[item.inventory.length]]/[[ item._configCache.scale.inventory[item.scaleLevel.inventory] ]]</h3>
+                </div>
+            </div>
+            <div class="row" ng-repeat="equipment in getInventory(item)">
+                <div class="col-xs-12">
                     {{> idlepetequipment }}
                 </div>
             </div>
@@ -215,7 +248,7 @@
         <div class="box-header">
             <div class="row">
                 <div class="col-xs-12">
-                    <h3 class="box-title">[[equipment.enchantLevel ? '+'+equipment.enchantLevel+' ' : '']][[equipment.name]]</h3>
+                    <h3 class="box-title">[[equipment.enchantLevel ? '+'+equipment.enchantLevel+' ' : '']][[equipment.name]] <small ng-if="canSeeUid(item, equipment)">([[equipment.uid]])</small></h3>
                     <div class="box-tools pull-right">
                         <div class="label [[equipment.bgClassColor]] class-label pull-right" ng-if="equipment.itemClass">[[equipment.itemClass]]</div>
                         <br ng-if="equipment.itemClass">
@@ -225,7 +258,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="equipment.foundAt && equipment.name !== 'empty'">
+            <div class="row" ng-if="equipment.foundAt && equipment.name !== 'empty' && equipment.type !== 'pet soul'">
                 <div class="col-xs-4 margin-left-15 subnote">
                     Found <span am-time-ago="equipment.foundAt" data-title="[[equipment.foundAt]]" bs-tooltip></span>
                 </div>

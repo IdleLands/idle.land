@@ -12,6 +12,12 @@ if Meteor.isClient
           when "female" then "female"
           else "question"
 
+      $scope.getTypeIcon = (pet) ->
+        switch pet._configCache.category
+          when "Non-Combat" then "book"
+          when "Combat" then "bomb"
+          else "adjust"
+
       gauge = null
       $scope.updateXp = (player) ->
         if not gauge

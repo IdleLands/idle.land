@@ -64,6 +64,71 @@ if Meteor.isClient
       $scope.getPetTagline = (pet) ->
         pet._configCache.description
 
+      $scope.getEquipmentTypes = (pet) ->
+        _.keys pet._configCache.slots
+
+      $scope.getEquipmentOfType = (pet, type) ->
+        items = $scope.getEquipment pet
+
+        _.filter items, (item) -> type is item.type
+
+      $scope.canSeeUid = (pet, item) ->
+        item.type isnt "pet soul" and -1 isnt pet.equipment.indexOf item
+
+      $scope.getInventory = (pet) ->
+        overflow = pet.inventory
+
+        items = []
+
+        if overflow
+          _.each overflow, (item, index) ->
+            item.headerColor = "success"
+            item.bgColor = 'bg-green'
+            item.bgClassColor = $scope.classToColor item.itemClass
+            item.extraColor = 'bg-orange'
+            item.extraText = "SLOT #{index}"
+            items.push item
+
+        items
+
+      $scope.getPetSoulAndTotals = (pet) ->
+        items = $scope.getEquipment pet
+
+        totals = []
+
+        lastCalc = pet._statCache
+
+        if lastCalc
+          _.each (_.keys lastCalc), (key) -> lastCalc[key] = lastCalc[key].toFixed 1
+
+          lastCalc.name = 'Last Cached Calculated Stats'
+          lastCalc.type = 'CACHED'
+          lastCalc.bgColor = 'bg-maroon'
+          lastCalc.headerColor = 'primary'
+
+          $scope.lastCalcObj = [lastCalc]
+
+        test = _.reduce items, (prev, cur) ->
+          for key, val of cur
+            prev[key] = 0 if not (key of prev) and _.isNumber val
+            prev[key] += val if _.isNumber val
+          prev
+        , {name: 'Equipment Stat Totals', type: 'EQUIPMENT', bgColor: 'bg-maroon', headerColor: 'primary'}
+
+        totals.push _.findWhere items, {type: "pet soul"}
+
+        totals.unshift test
+
+        totals
+
+      $scope.itemItemScore = (item) ->
+        return 0 if not item._baseScore or not item._calcScore
+        parseInt (item._calcScore / item._baseScore) * 100
+
+      $scope.playerItemScore = (player, item) ->
+        return 0 if not item._calcScore or not player._baseStats.itemFindRange
+        parseInt (item._calcScore / player._baseStats.itemFindRange) * 100
+
       $scope.getEquipmentAndTotals = (player) ->
         items = $scope.getEquipment player
 
@@ -88,21 +153,10 @@ if Meteor.isClient
 
         items.unshift test
 
-        overflow = player.inventory
-
-        if overflow
-          _.each overflow, (item, index) ->
-            item.headerColor = "success"
-            item.bgColor = 'bg-green'
-            item.bgClassColor = $scope.classToColor item.itemClass
-            item.extraColor = 'bg-orange'
-            item.extraText = "SLOT #{index}"
-            items.push item
-
         items
 
-      $scope.getEquipment = (player) ->
-        base = _.sortBy player.equipment, (item) -> item.type
+      $scope.getEquipment = (pet) ->
+        base = _.sortBy pet.equipment, (item) -> item.type
 
         _.each base, (item) ->
           item.bgColor = 'bg-aqua'
