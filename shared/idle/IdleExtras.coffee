@@ -7,8 +7,9 @@ if Meteor.isClient
     IdleAnalytics = new Mongo.Collection "analytics"
     IdleGuilds = new Mongo.Collection "guilds"
     IdleBattles = new Mongo.Collection "battles"
+    IdlePets = new Mongo.Collection "pets"
 
-    { IdlePlayers, IdleAnalytics, IdleGuilds, IdleBattles }
+    { IdlePlayers, IdleAnalytics, IdleGuilds, IdleBattles, IdlePets }
 
   angular.module('kurea.web').service 'IdleFilterData', ->
     filters = {}

@@ -4,13 +4,7 @@ if Meteor.isClient
     '$scope', 'CurrentPlayer',
     ($scope, CurrentPlayer) =>
 
-      #$scope.playerName = $stateParams.playerName
       $scope._ = window._
-
-      #$subscribe.subscribe 'singlePlayer', $stateParams.playerName
-      #.then ->
-      #  $collection IdleCollections.IdlePlayers, name: $stateParams.playerName
-      #  .bind $scope, 'player'
 
       $scope.getGenderFor = (player) ->
         switch player.gender
@@ -48,8 +42,22 @@ if Meteor.isClient
           gauge = new Donut(xpEl).setOptions opts
 
         gauge.maxValue = player.xp.maximum
-        gauge.set player.xp.__current
+        gauge.set player.xp.__current or 1
         null
+
+      $scope.boughtPets = (player) ->
+        pets = 0
+        _.each (_.keys player.foundPets), (petKey) ->
+          pets++ if player.foundPets[petKey].purchaseDate
+
+        pets
+
+      $scope.unboughtPets = (player) ->
+        pets = []
+        _.each (_.keys player.foundPets), (petKey) ->
+          pets.push petKey if not player.foundPets[petKey].purchaseDate
+
+        "Unpurchased pets:<br><br> #{pets.join '<br>'}" if pets.length > 0
 
       $scope.determineGuildIcon = (status) ->
         switch status

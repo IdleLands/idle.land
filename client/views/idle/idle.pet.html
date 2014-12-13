@@ -1,26 +1,26 @@
 
-<template name="idleplayer">
-    <section class="content-header" ng-repeat="item in player">
-        <h1>IdleLands<small>[[item.name]], the level [[item.level.__current]] [[item.professionName]]</small></h1>
+<template name="idlepet">
+    <section class="content-header" ng-repeat="item in pet">
+        <h1>IdleLands<small>[[item.name]], the level [[item.level.__current]]/[[item.level.maximum]] [[item.type]] [[item.professionName]] with [[ item.attrs[0] ]] and [[ item.attrs[1] ]]</small></h1>
         <ol class="breadcrumb">
             <li>
                 <span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a>
             </li>
-            <li><span class="fa fa-calculator"></span> <a href ui-sref="idleglobalstats">Stats</a></li>
-            <li class="active">[[playerName]]</li>
+            <li><span class="fa fa-paw"></span> <a href ui-sref="idlepets">Pets</a></li>
+            <li><span class="fa fa-user"></span> <a ui-sref="idleplayer({playerName: item.owner.name})">[[item.owner.name]]</a></li>
+            <li class="active">[[item.name]]</li>
         </ol>
     </section>
 
-    <div ng-repeat="item in player">
-        <div ng-init="setPlayerInSession(item)"></div>
-        {{> idleplayerheader }}
-        {{> idleplayerbody }}
+    <div ng-repeat="item in pet">
+        {{> idlepetheader }}
+        {{> idlepetbody }}
     </div>
 
 </template>
 
-<template name="idleplayersidebar">
-    <div class="user-panel" ng-repeat="item in player">
+<template name="idlepetsidebar">
+    <div class="user-panel" ng-repeat="item in pet">
         <div class="info">
             [[updateXp(item)]]
             <div id="xp-container">
@@ -33,17 +33,27 @@
             </div>
         </div>
     </div>
-    <ul class="sidebar-menu" ng-repeat="item in player">
+    <ul class="sidebar-menu" ng-repeat="item in pet">
         <li>
             <a>
-                <i class="fa fa-fw fa-home"></i> [[item.identifier]]
+                <i class="fa fa-fw fa-key"></i> [[item.createdAt]]
+            </a>
+        </li>
+        <li>
+            <a ui-sref="idleplayer({playerName: item.creator.name})">
+                <i class="fa fa-fw fa-home"></i> [[item.creator.name]]
+            </a>
+        </li>
+        <li>
+            <a ui-sref="idleplayer({playerName: item.owner.name})">
+                <i class="fa fa-fw fa-user"></i> [[item.owner.name]]
             </a>
         </li>
         <li>
             <a>
                 <i class="fa fa-fw fa-certificate" ng-class="{
-                    'text-muted': !item.isOnline,
-                    'text-success': item.isOnline}"></i> <span>[[item.isOnline ? 'Online' : 'Offline']]</span>
+                    'text-muted': !item.isActive,
+                    'text-success': item.isActive}"></i> <span>[[item.isActive ? 'Active' : 'Inactive']]</span>
             </a>
         </li>
         <li>
@@ -53,124 +63,115 @@
         </li>
         <li>
             <a>
-                <i class="fa fa-fw fa-clock-o"></i> Started <span am-time-ago="item.registrationDate"></span>
+                <i class="fa fa-fw fa-clock-o"></i> Found <span am-time-ago="item.createdAt"></span>
             </a>
         </li>
         <li>
             <a>
-                <i class="fa fa-fw icon-money"></i> [[_.str.numberFormat(item.gold.__current)]] Gold
+                <i class="fa fa-fw icon-money"></i> [[_.str.numberFormat(item.gold.__current)]]/[[_.str.numberFormat(item.gold.maximum)]] Gold
             </a>
         </li>
-        <li ng-if="item.shop">
+        <li ng-if="item.nextItemFind">
             <a>
-                <i class="fa fa-fw fa-spin icon-money"></i> In shop [[item.shop.region]]!
-            </a>
-        </li>
-        <li>
-            <a href ui-sref="idleplayerachievements({playerName: item.name})">
-                <i class="fa fa-fw icon-trophy"></i> [[item.achievements.length]] Achievements
-            </a>
-        </li>
-        <li ng-if="item.collectibles">
-            <a href ui-sref="idleplayercollectibles({playerName: item.name})">
-                <i class="fa fa-fw fa-gift"></i> [[item.collectibles.length]] Collectibles
-            </a>
-        </li>
-        <li ng-if="boughtPets(item)">
-            <a href ui-sref="idleplayerpets({playerName: item.name})" bs-tooltip data-html="true" data-title="[[unboughtPets(item)]]">
-                <i class="fa fa-fw fa-paw"></i> [[boughtPets(item)]]/[[_.keys(item.foundPets).length]] Pets
-            </a>
-        </li>
-        <li ng-if="!boughtPets(item)">
-            <a href bs-tooltip data-html="true" data-title="[[unboughtPets(item)]]">
-                <i class="fa fa-fw fa-paw"></i> [[boughtPets(item)]]/[[_.keys(item.foundPets).length]] Pets
-            </a>
-        </li>
-        <li>
-            <a href ui-sref="idleplayeranalytics({playerName: item.name})">
-                <i class="fa fa-fw fa-line-chart"></i> Analytics
-            </a>
-        </li>
-        <li>
-            <a href ui-sref="idleguild({guildName: item.guild})" ng-if="item.guild">
-                <i class="fa fa-fw [[ $parent.determineGuildIcon(item.guildStatus) ]]"></i> [[item.guild ? item.guild : 'No Guild']]
-            </a>
-            <a ng-if="!item.guild">
-                <i class="fa fa-fw fa-sitemap"></i> [[item.guild ? item.guild : 'No Guild']]
+                <i class="fa fa-fw fa-refresh"></i> Next find <span am-time-ago="item.nextItemFind"></span>
             </a>
         </li>
         <li>
             <a>
-                <i class="fa fa-fw fa-group"></i> [[item.partyName ? item.partyName : 'No Party']]
+                <i class="fa fa-fw fa-[[item.smartSell ? 'check' : 'remove']]"></i> Smart Sell
             </a>
         </li>
         <li>
-            <a href="#" ng-click="getJSONFor(item)">
-                <i class="fa fa-fw fa-file-code-o"></i> Download JSON
+            <a>
+                <i class="fa fa-fw fa-[[item.smartEquip ? 'check' : 'remove']]"></i> Smart Equip
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw fa-[[item.smartSelf ? 'check' : 'remove']]"></i> Smart Self
             </a>
         </li>
     </ul>
 </template>
 
-<template name="idleplayerheader">
+<template name="idlepetheader">
     <div class="row">
-        <div class="col-md-5 col-xs-7">
-            <blockquote ng-if="getPlayerTagline(item)">
-                <p>
-                    [[getPlayerTagline(item)]]
-                </p>
-                <small>[[item.name]]</small>
-            </blockquote>
+        <div class="col-md-7 col-xs-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <blockquote ng-if="getPetTagline(item)">
+                        <p>
+                            [[getPetTagline(item)]]
+                        </p>
+                        <small>Mantra of the [[item.type]]</small>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idlepetstats }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" ng-repeat="equipment in lastCalcObj">
+                    {{> idlepetequipment }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5 col-xs-12">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idlepetstatlevels }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
-<template name="idleplayerbody">
+<template name="idlepetbody">
     <div class="row">
-        <div class="col-md-6 col-lg-7">
-            <div class="row">
-                <div class="col-md-12">
-                    {{> idleplayerstats }}
-                </div>
-            </div>
+        <div class="col-xs-12">
             <div class="row" ng-init="allEquipment = getEquipmentAndTotals(item)">
                 <div class="col-xs-12" ng-repeat="equipment in allEquipment">
-                    {{> idleplayerequipment }}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-5">
-            <div class="row">
-                <div class="col-md-12">
-                    {{> idleplayerevents }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> idleplayermap }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> idleplayerpersonalities }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> idleplayerpriority }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{> idleplayerstatistics }}
+                    {{> idlepetequipment }}
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<template name="idleplayerstats">
+<template name="idlepetstatlevels">
+    <div class="stat-box box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Upgrade Levels</h3>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped table-condensed no-margin">
+                <tr>
+                    <th>Stat</th>
+                    <th>Level</th>
+                    <th>Gift</th>
+                </tr>
+                <tr ng-repeat="(stat, level) in item.scaleLevel">
+                    <td>[[petUpgradeData[stat].stat]]</td>
+                    <td>
+                        <span
+                            data-title="Next level cost: [[_.str.numberFormat(item._configCache.scaleCost[stat][item.scaleLevel[stat]+1])]]"
+                            bs-tooltip
+                            data-trigger="[[item.scaleLevel[stat]+1 !== item._configCache.scale[stat].length ? 'hover focus' : 'manual']]"
+                            ng-class="{
+                            'stat-total': item.scaleLevel[stat]+1 !== item._configCache.scale[stat].length}
+                        ">[[item.scaleLevel[stat]+1]]/[[item._configCache.scale[stat].length]]</span>
+                    </td>
+                    <td>[[petUpgradeData[stat].gift.split("%gift").join(formatGift(stat, item._configCache.scale[stat][ item.scaleLevel[stat] ]))]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idlepetstats">
     <div ng-class="{'col-xs-4': item.special.name, 'col-xs-6': !item.special.name}">
         <div class="small-box bg-red">
             <div class="inner">
@@ -209,7 +210,7 @@
     </div>
 </template>
 
-<template name="idleplayerequipment">
+<template name="idlepetequipment">
     <div class="stat-box box box-[[equipment.headerColor || 'info']]">
         <div class="box-header">
             <div class="row">
@@ -284,86 +285,6 @@
                     [[getExtraStats(equipment)]]
                 </div>
             </div>
-        </div>
-    </div>
-</template>
-
-<template name="idleplayermap">
-    <div class="panel box box-danger">
-        <div class="box-header">
-            <h3 class="box-title">[[item.map]] - [[item.x]], [[item.y]] | [[item.mapRegion]]</h3>
-        </div>
-        <div class="box-body">
-            [[drawMap(item)]]
-            <div id="map"></div>
-        </div>
-    </div>
-</template>
-
-<template name="idleplayerpersonalities">
-    <div class="panel box box-danger">
-        <div class="box-header">
-            <h3 class="box-title">Personalities</h3>
-        </div>
-        <div class="box-body">
-            [[getPersonalityString(item)]]
-        </div>
-    </div>
-</template>
-
-<template name="idleplayerpriority">
-    <div class="panel box box-danger">
-        <div class="box-header">
-            <h3 class="box-title">Priority Points</h3>
-        </div>
-        <div class="box-body">
-            <div class="row">
-                <div ng-repeat="(key,val) in item.priorityPoints" class="col-md-2 col-sm-2 col-xs-2">[[key]] [[val]]</div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<template name="idleplayerevents">
-    <div class="panel box box-warning">
-        <div class="box-header">
-            <h3 class="box-title">Adventure Log</h3>
-        </div>
-        <div class="box-body no-padding">
-            <table class="table table-striped table-condensed no-margin">
-                <tr ng-if="!item.recentEvents || item.recentEvents.length === 0">
-                    <td colspan="2">Nothing has happened with this character recently :(</td>
-                </tr>
-                <tr ng-repeat="event in item.recentEvents | orderBy:'createdAt':true">
-                    <td am-time-ago="[[event.createdAt]]" class="col-md-3">
-                    </td>
-                    <td>
-                        [[event.message]]
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</template>
-
-<template name="idleplayerstatistics">
-    <div class="panel box box-success">
-        <div class="box-header">
-            <h3 class="box-title">Player Statistics</h3>
-        </div>
-        <div class="box-body no-padding">
-            <table class="table table-striped table-condensed no-margin">
-                <tr ng-repeat="stat in getStats(item)">
-                    <td>
-                        [[stat]]
-                    </td>
-                    <td ng-if="isHtmlStat(item, stat)" ng-bind-html="$sce.trustAsHtml(statsObj(item, stat))">
-                    </td>
-                    <td ng-if="!isHtmlStat(item, stat)">
-                        [[ _.str.numberFormat(statsObj(item, stat)) ]]
-                    </td>
-                </tr>
-            </table>
         </div>
     </div>
 </template>

@@ -1,0 +1,34 @@
+<template name="idlepets">
+    <section class="content-header">
+        <h1>IdleLands<small>Pets [[playerName ? 'for '+playerName : '']]</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li class="[[playerName ? '' : 'active']]"><span class="fa fa-paw"></span> Pets</li>
+            <li class="active" ng-if="playerName"><span class="fa fa-user"></span> [[playerName]]</li>
+        </ol>
+    </section>
+    <section>
+        <div class="row both-margins-15">
+            <span class="col-md-12">
+                <span class="fa fa-users text-info"></span> [[pets.length]] pets
+            </span>
+        </div>
+        <div class="row both-margins-15 filter-header">
+            <div class="col-xs-6 col-sm-4 col-md-3" ng-repeat="pet in pets">
+                <div class="small-box" ng-class="{
+                    'bg-gray ': !pet.isActive,
+                    'bg-green': pet.isActive
+                    }">
+                    <div class="inner">
+                        <h3>Level [[pet.level.__current]] </h3>
+                        <p>Owned by [[pet.owner.name]]</p>
+                        <p>[[pet.professionName]] [[pet.type]]</p>
+                    </div>
+                    <a ui-sref="idleplayerpet({playerName: pet.owner.name, petUid: pet.createdAt})" class="small-box-footer">
+                        [[pet.name]] <span class="fa fa-arrow-circle-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>

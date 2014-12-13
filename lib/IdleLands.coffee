@@ -139,4 +139,28 @@ if Meteor.isClient
           'sidebar':
             template: UiRouter.template 'idlebattlesidebar'
             controller: 'IdleBattleSidebar'
+
+      .state 'idlepets',
+        url: '/s/pets'
+        views:
+          'content':
+            template: UiRouter.template 'idlepets'
+            controller: 'IdlePets'
+
+      .state 'idleplayerpets',
+        url: '/s/pets/:playerName'
+        views:
+          'content':
+            template: UiRouter.template 'idlepets'
+            controller: 'IdlePets'
+
+      .state 'idleplayerpet',
+        url: '/s/pets/:playerName/:petUid'
+        views:
+          'content':
+            template: UiRouter.template 'idlepet'
+            controller: 'IdlePet'
+          'sidebar':
+            template: UiRouter.template 'idlepetsidebar'
+            controller: 'IdlePetSidebar'
   ]

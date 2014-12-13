@@ -5,6 +5,7 @@ if Meteor.isServer
   IdleAnalytics = new Mongo.Collection "analytics"
   IdleGuilds = new Mongo.Collection "guilds"
   IdleBattles = new Mongo.Collection "battles"
+  IdlePets = new Mongo.Collection "pets"
 
   IdleMonsters = new Mongo.Collection "monsters"
   IdleItems = new Mongo.Collection "items"
@@ -73,6 +74,20 @@ if Meteor.isServer
 
   achievementFields =
     achievements: 1
+
+  petListFields =
+    isActive: 1
+    level: 1
+    name: 1
+    type: 1
+    owner: 1
+    createdAt: 1
+
+  Meteor.publish 'allPets', (filter = {}) ->
+    IdlePets.find filter, {sort: {name: 1}, fields: petListFields}
+
+  Meteor.publish 'singlePet', (petUid) ->
+    IdlePets.find {createdAt: petUid}
 
   Meteor.publish 'guildPlayers', ->
     IdlePlayers.find {}, {fields: guildFields}
