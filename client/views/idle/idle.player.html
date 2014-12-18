@@ -67,6 +67,11 @@
             </a>
         </li>
         <li>
+            <a>
+                <i class="fa fa-fw fa-link"></i> Max Item Score: [[item._baseStats.itemFindRange | number:0]]
+            </a>
+        </li>
+        <li>
             <a href ui-sref="idleplayerachievements({playerName: item.name})">
                 <i class="fa fa-fw icon-trophy"></i> [[item.achievements.length]] Achievements
             </a>
@@ -225,7 +230,7 @@
                 </div>
             </div>
             <div class="row" ng-if="equipment.foundAt && equipment.name !== 'empty'">
-                <div class="col-xs-4 margin-left-15 subnote">
+                <div class="col-xs-3 margin-left-15 subnote">
                     Found <span am-time-ago="equipment.foundAt" data-title="[[equipment.foundAt]]" bs-tooltip></span>
                 </div>
                 <div class="col-xs-3 subnote">
@@ -247,6 +252,9 @@
                         'text-warning': itemItemScore(equipment) < 70,
                         'text-success': itemItemScore(equipment) >= 70}">
                     IR [[itemItemScore(equipment)]]%</span>
+                </div>
+                <div class="col-xs-2 subnote">
+                    <span class="fa fa-link"></span> Score: [[equipment._calcScore]]
                 </div>
             </div>
         </div>

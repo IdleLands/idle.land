@@ -14,7 +14,7 @@ if Meteor.isClient
           when "battleJoinPercent" then "#{gift}%"
           when "goldStorage" then _.str.numberFormat gift
           when "itemFindBonus" then "+#{gift}"
-          when "itemFindRangeMultiplier", "itemSellMultiplier" then "#{gift*100}%"
+          when "itemFindRangeMultiplier", "itemSellMultiplier" then "#{Math.round gift*100}%"
           else gift
 
       $scope.petUpgradeData =
@@ -49,6 +49,10 @@ if Meteor.isClient
         itemFindRangeMultiplier:
           stat: "Item Equip Bonus"
           gift: "Bonus to equipping is %gift"
+
+        maxItemScore:
+          stat: "Max Item Score"
+          gift: "Highest findable score is %gift"
 
         xpPerGold:
           stat: "XP / gold"
