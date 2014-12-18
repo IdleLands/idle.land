@@ -22,7 +22,7 @@
                     <div class="inner">
                         <h3>Level [[pet.level.__current]] </h3>
                         <p>Owned by [[pet.owner.name]]</p>
-                        <p>[[pet.professionName]] [[pet.type]]</p>
+                        <p>[[pet.type]] | [[pet.professionName || 'Monster']]</p>
                     </div>
                     <a ui-sref="idleplayerpet({playerName: pet.owner.name, petUid: pet.createdAt})" class="small-box-footer">
                         [[pet.name]] <span class="fa fa-arrow-circle-right"></span>
