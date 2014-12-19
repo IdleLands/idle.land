@@ -82,6 +82,7 @@ if Meteor.isServer
     type: 1
     owner: 1
     createdAt: 1
+    professionName: 1
 
   Meteor.publish 'allPets', (filter = {}) ->
     IdlePets.find filter, {sort: {name: 1}, fields: petListFields}
