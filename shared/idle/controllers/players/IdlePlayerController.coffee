@@ -115,6 +115,11 @@ if Meteor.isClient
         {name: '_baseScore'},
         {name: 'uid'}
 
+      $scope.getEquipColor = (player, item) ->
+        return "text-success" if item.equippedBy and -1 isnt item.equippedBy?.indexOf player.name
+        return "text-info" if player._baseStats.itemFindRange >= item._calcScore
+        "text-danger"
+
       $scope.getPopoverFor = (player, stat) ->
         string = "<table class='table table-striped table-condensed'>"
         items = 0

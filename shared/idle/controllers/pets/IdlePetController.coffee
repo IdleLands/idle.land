@@ -65,6 +65,11 @@ if Meteor.isClient
         $collection IdleCollections.IdlePets, createdAt: $stateParams.petUid
         .bind $scope, 'pet'
 
+      $scope.getEquipColor = (pet, item) ->
+        return "text-success" if item.equippedBy and -1 isnt item.equippedBy?.indexOf pet.createdAt
+        return "text-info" if pet._baseStats.itemFindRange >= item._calcScore
+        "text-danger"
+
       $scope.getPetTagline = (pet) ->
         pet._configCache.description
 
