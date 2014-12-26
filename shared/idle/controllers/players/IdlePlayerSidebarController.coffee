@@ -17,7 +17,7 @@ if Meteor.isClient
         blob = new Blob [str], type: 'application/json'
         url = URL.createObjectURL blob
         a = document.createElement 'a'
-        a.download = "#{player.name}-#{Date.now()}.json"
+        a.download = "#{player.name}-stats-level-#{player.level.__current}-#{Date.now()}.json"
         a.href = url
         a.click()
 
