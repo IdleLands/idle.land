@@ -9,7 +9,7 @@ if Meteor.isClient
       PageTitle.setTitle "Idle Lands - #{if $stateParams.playerName then "#{$stateParams.playerName} (Collectibles)" else "Global Collectibles"}"
 
       $scope.getCollectibles = ->
-        if $scope.playerName then $scope.player?[0].collectibles else $scope.calculatedCollectibles
+        if $scope.playerName then _.sortBy $scope.player?[0].collectibles, (col) -> col.name else $scope.calculatedCollectibles
 
       $scope.calculateCollectibles = ->
         collectibleFinalList = []
