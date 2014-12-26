@@ -19,7 +19,7 @@ if Meteor.isClient
       PageTitle.setTitle "Idle Lands - Player List"
 
       $scope._filters = Filters
-      $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: ''
+      $scope.filters = statName: 'Level', stat: 'level.__current', name: '', profession: '', map: '', guild: ''
 
       $subscribe.subscribe 'allPlayers'
       .then ->

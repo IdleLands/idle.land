@@ -26,8 +26,10 @@
                     'bg-green': player.isOnline
                     }">
                     <div class="inner">
-                        <h3>[[filters.statName]] [[decompose(player, filters.stat)]]</h3>
-                        <p>[[player.map]] | [[player.mapRegion]]</p>
+                        <h3 class="hidden-xs hidden-sm">[[filters.statName]] [[decompose(player, filters.stat)]]</h3>
+                        <h4 class="visible-xs visible-sm">[[filters.statName]] [[decompose(player, filters.stat)]]</h4>
+                        <p>[[player.map]]</p>
+                        <p>[[player.mapRegion]]</p>
                         <p>[[player.professionName]]</p>
                     </div>
                     <a ui-sref="idleplayer({playerName: player.name})" class="small-box-footer">
