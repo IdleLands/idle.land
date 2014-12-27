@@ -53,6 +53,5 @@ if Meteor.isClient
       $scope.$watch 'players', (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.refreshMembers()
-        console.log $scope.players
 
   ]
