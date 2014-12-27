@@ -231,4 +231,5 @@ if Meteor.isClient
       $scope.$watch (-> CurrentMap.getMap()), (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.currentMap = newVal
+        _.each $scope.currentMap?.map?.layers[2].objects, (object) -> object.properties = {}
   ]
