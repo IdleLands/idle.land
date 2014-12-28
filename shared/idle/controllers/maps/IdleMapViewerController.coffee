@@ -89,8 +89,10 @@ if Meteor.isClient
             itemText = ""
             itemText = "#{child.realtype}: #{child.name}" if child.realtype and child.realtype isnt "Door"
 
+            itemText += "\n\"#{child.flavorText}\"" if child.flavorText
+
             requires = no
-            requirementText = "Requirements\n------------------"
+            requirementText = "\nRequirements\n-------------------"
             if child.requireAchievement then requirementText += "\nAchievement: #{child.requireAchievement}";requires=yes
             if child.requireBoss then requirementText += "\nBoss Kill: #{child.requireBoss}";requires=yes
             if child.requireClass then requirementText += "\nClass: #{child.requireClass}";requires=yes
@@ -176,6 +178,7 @@ if Meteor.isClient
               requireCollectible: object.properties.requireCollectible
               requireAchievement: object.properties.requireAchievement
               requireClass:       object.properties.requireClass
+              flavorText:         object.properties.flavorText
 
           $scope.drawMap()
 
