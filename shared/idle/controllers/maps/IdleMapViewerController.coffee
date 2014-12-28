@@ -1,5 +1,11 @@
 
 if Meteor.isClient
+  angular.module('kurea.web').controller 'IdleMapViewerDummyController', [
+    '$state', '$stateParams'
+    ($state, $stateParams) ->
+      $state.go 'idlemapviewer', $stateParams
+  ]
+
   angular.module('kurea.web').controller 'IdleMapViewer', [
     '$scope', '$http', '$state', '$location', '$stateParams', 'PageTitle'
     ($scope, $http, $state, $location, $stateParams, PageTitle) =>
@@ -82,6 +88,8 @@ if Meteor.isClient
 
       handleObjects = ->
         _.each objectGroup.children, (child) ->
+
+          console.log child
 
           child.inputEnabled = yes
 

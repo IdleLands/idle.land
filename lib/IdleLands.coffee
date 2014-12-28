@@ -178,6 +178,6 @@ if Meteor.isClient
         views:
           'content':
             template: UiRouter.template 'idlemaps'
-            controller: ($state, $stateParams) -> $state.go 'idlemapviewer', $stateParams
+            controller: 'IdleMapViewerDummyController'
 
   ]
