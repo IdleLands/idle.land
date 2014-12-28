@@ -86,7 +86,17 @@ if Meteor.isClient
           child.inputEnabled = yes
 
           child.events.onInputOver.add ->
-           itemText = "#{child.realtype}: #{child.name}" if child.realtype and child.realtype isnt "Door"
+            itemText = ""
+            itemText = "#{child.realtype}: #{child.name}" if child.realtype and child.realtype isnt "Door"
+
+            requires = no
+            requirementText = "Requirements\n------------------"
+            if child.requireAchievement then requirementText += "\nAchievement: #{child.requireAchievement}";requires=yes
+            if child.requireBoss then requirementText += "\nBoss Kill: #{child.requireBoss}";requires=yes
+            if child.requireClass then requirementText += "\nClass: #{child.requireClass}";requires=yes
+            if child.requireCollectible then requirementText += "\nCollectible: #{child.requireCollectible}";requires=yes
+
+            itemText = "#{itemText}\n#{requirementText}" if requires
 
           child.events.onInputOut.add ->
             itemText = ""
@@ -160,6 +170,10 @@ if Meteor.isClient
               teleportY: parseInt object.properties.desty
               teleportMap:        object.properties.map
               teleportLocation:   object.properties.toLoc
+              requireBoss:        object.properties.requireBoss
+              requireCollectible: object.properties.requireCollectible
+              requireAchievement: object.properties.requireAchievement
+              requireClass:       object.properties.requireClass
 
           $scope.drawMap()
 
