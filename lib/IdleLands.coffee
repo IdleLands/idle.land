@@ -163,4 +163,21 @@ if Meteor.isClient
           'sidebar':
             template: UiRouter.template 'idlepetsidebar'
             controller: 'IdlePetSidebar'
+
+      .state 'idlemapviewer',
+        url: '/s/maps/:mapName?x&y'
+        reloadOnSearch: no
+        views:
+          'content':
+            template: UiRouter.template 'idlemaps'
+            controller: 'IdleMapViewer'
+
+      .state 'idlemapviewerd',
+        url: '/s/mapsd/:mapName?x&y'
+        reloadOnSearch: no
+        views:
+          'content':
+            template: UiRouter.template 'idlemaps'
+            controller: ($state, $stateParams) -> $state.go 'idlemapviewer', $stateParams
+
   ]
