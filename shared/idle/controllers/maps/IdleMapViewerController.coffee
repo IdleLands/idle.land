@@ -107,8 +107,10 @@ if Meteor.isClient
             if child.teleportLocation
               loc = $scope.teleportLocations[child.teleportLocation]
               [x, y, map] = [loc.x, loc.y, loc.map]
-            else
+            else if child.teleportMap
               [x, y, map] = [child.teleportX, child.teleportY, child.teleportMap]
+
+            else return
 
             $state.go 'idlemapviewerd', {mapName: map, x: x, y: y} #haxy workaround
 
