@@ -103,6 +103,8 @@ if Meteor.isClient
             if child.requireBoss        then requirementText += "\nBoss Kill: #{child.requireBoss}";requires=yes
             if child.requireClass       then requirementText += "\nClass: #{child.requireClass}";requires=yes
             if child.requireCollectible then requirementText += "\nCollectible: #{child.requireCollectible}";requires=yes
+            if child.requireMap         then requirementText += "\nMap Visited: #{child.requireMap}";requires=yes
+            if child.requireRegion      then requirementText += "\nRegion Visited: #{child.requireRegion}";requires=yes
             if child.requireHoliday     then requirementText += "\nHoliday: #{child.requireHoliday}";requires=yes
 
             itemText = "#{itemText}\n#{requirementText}" if requires
@@ -185,6 +187,8 @@ if Meteor.isClient
               requireCollectible: object.properties.requireCollectible
               requireAchievement: object.properties.requireAchievement
               requireClass:       object.properties.requireClass
+              requireMap:         object.properties.requireMap
+              requireRegion:      object.properties.requireRegion
               flavorText:         object.properties.flavorText
               requireHoliday:     object.properties.holiday
 
