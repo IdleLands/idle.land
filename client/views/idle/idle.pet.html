@@ -81,7 +81,7 @@
                 <i class="fa fa-fw fa-link"></i> Max Item Score: [[item._baseStats.itemFindRange | number:0]]
             </a>
         </li>
-        <li ng-if="item.nextItemFind">
+        <li ng-if="item.nextItemFind && item.isActive">
             <a>
                 <i class="fa fa-fw fa-refresh"></i> Next find <span am-time-ago="item.nextItemFind"></span>
             </a>
