@@ -89,8 +89,6 @@ if Meteor.isClient
       handleObjects = ->
         _.each objectGroup.children, (child) ->
 
-          console.log child
-
           child.inputEnabled = yes
 
           child.events.onInputOver.add ->
