@@ -73,7 +73,7 @@ if Meteor.isClient
           message = message.replace regexp, (match, p1, p2) ->
             replaceFunc p2
 
-        message
+        "<p>#{message}</p>"
 
       $scope.$watch '_battle', (newVal, oldVal) ->
         return if newVal is oldVal
