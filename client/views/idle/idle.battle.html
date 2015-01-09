@@ -45,17 +45,27 @@
 
 <template name="idlebattlemember">
     <div class="small-box" ng-class="{
-                    'bg-gray ': !member.isPlayer,
-                    'bg-green': member.isPlayer
+                    'bg-gray  ': !member.isPlayer && !member.petUid,
+                    'bg-orange': member.petUid,
+                    'bg-green ': member.isPlayer
                     }">
         <div class="inner">
             <h3>Level [[member.level]]</h3>
             <p>[[member.profession]]</p>
         </div>
+        <div class="icon" ng-if="member.isPlayer">
+            <span class="fa fa-user"></span>
+        </div>
+        <div class="icon" ng-if="member.petUid">
+            <span class="fa fa-paw"></span>
+        </div>
         <a ui-sref="idleplayer({playerName: member.name})" class="small-box-footer" ng-if="member.isPlayer">
             [[member.name]] <span class="fa fa-arrow-circle-right"></span>
         </a>
-        <a class="small-box-footer" ng-if="!member.isPlayer">
+        <a ui-sref="idleplayerpet({playerName: member.petOwner, petUid: member.petUid})" class="small-box-footer" ng-if="member.petUid">
+            [[member.name]] <span class="fa fa-arrow-circle-right"></span>
+        </a>
+        <a class="small-box-footer" ng-if="!member.isPlayer && !member.petUid">
             [[member.name]]
         </a>
     </div>
