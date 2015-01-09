@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'enhancements';
-  src: url('../fonts/enhancements.eot?52332843');
-  src: url('../fonts/enhancements.eot?52332843#iefix') format('embedded-opentype'),
-       url('../fonts/enhancements.woff?52332843') format('woff'),
-       url('../fonts/enhancements.ttf?52332843') format('truetype'),
-       url('../fonts/enhancements.svg?52332843#enhancements') format('svg');
+  src: url('/font/enhancements.eot?52332843');
+  src: url('/font/enhancements.eot?52332843#iefix') format('embedded-opentype'),
+       url('/font/enhancements.woff?52332843') format('woff'),
+       url('/font/enhancements.ttf?52332843') format('truetype'),
+       url('/font/enhancements.svg?52332843#enhancements') format('svg');
   font-weight: normal;
   font-style: normal;
 }

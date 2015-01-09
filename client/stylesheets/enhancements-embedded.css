@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'enhancements';
-  src: url('../fonts/enhancements.eot?71295636');
-  src: url('../fonts/enhancements.eot?71295636#iefix') format('embedded-opentype'),
-       url('../fonts/enhancements.svg?71295636#enhancements') format('svg');
+  src: url('/font/enhancements.eot?71295636');
+  src: url('/font/enhancements.eot?71295636#iefix') format('embedded-opentype'),
+       url('/font/enhancements.svg?71295636#enhancements') format('svg');
   font-weight: normal;
   font-style: normal;
 }
