@@ -55,7 +55,7 @@ if Meteor.isClient
 
       $scope.unboughtPets = (player) ->
         pets = []
-        return pets if not _.size player.foundPets
+        return "" if not _.size player.foundPets
         _.each (_.keys player.foundPets), (petKey) ->
           pets.push petKey if not player.foundPets[petKey].purchaseDate
 

@@ -83,12 +83,12 @@
         </li>
         <li ng-if="boughtPets(item)">
             <a href ui-sref="idleplayerpets({playerName: item.name})" bs-tooltip data-html="true" data-title="[[unboughtPets(item)]]">
-                <i class="fa fa-fw fa-paw"></i> [[boughtPets(item)]]/[[_.keys(item.foundPets).length]] Pets
+                <i class="fa fa-fw fa-paw"></i> [[boughtPets(item)]]/[[_.size(item.foundPets)]] Pets
             </a>
         </li>
         <li ng-if="!boughtPets(item)">
             <a href bs-tooltip data-html="true" data-title="[[unboughtPets(item)]]">
-                <i class="fa fa-fw fa-paw"></i> [[boughtPets(item)]]/[[_.keys(item.foundPets).length]] Pets
+                <i class="fa fa-fw fa-paw"></i> [[boughtPets(item)]]/[[_.size(item.foundPets)]] Pets
             </a>
         </li>
         <li>
