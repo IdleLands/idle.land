@@ -1,7 +1,7 @@
 
 <template name="idleplayer">
     <section class="content-header" ng-repeat="item in player">
-        <h1>IdleLands<small>[[item.name]], the level [[item.level.__current]] [[item.professionName]]</small></h1>
+        <h1>IdleLands<small>[[item.name]], [[item.title ? 'the '+item.title+', ' : '']]the level [[item.level.__current]] [[item.professionName]]</small></h1>
         <ol class="breadcrumb">
             <li>
                 <span class="fa fa-group"></span> <a href ui-sref="idle.urlone">Player List</a>
@@ -163,6 +163,11 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    {{> idleplayertitles }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     {{> idleplayerpriority }}
                 </div>
             </div>
@@ -318,6 +323,17 @@
         </div>
         <div class="box-body">
             [[getPersonalityString(item)]]
+        </div>
+    </div>
+</template>
+
+<template name="idleplayertitles">
+    <div class="panel box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">Titles</h3>
+        </div>
+        <div class="box-body">
+            [[getTitleString(item)]]
         </div>
     </div>
 </template>

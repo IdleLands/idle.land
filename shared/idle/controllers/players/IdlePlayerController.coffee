@@ -148,6 +148,9 @@ if Meteor.isClient
       $scope.getPersonalityString = (player) ->
         if player.personalityStrings?.length > 0 then (_.sortBy player.personalityStrings, (string) -> string).join ', ' else "No personalities selected"
 
+      $scope.getTitleString = (player) ->
+        if player.titles?.length > 0 then (_.sortBy player.titles, (string) -> string).join ', ' else "No titles unlocked"
+
       sprite = null
       game = null
       mapName = null
