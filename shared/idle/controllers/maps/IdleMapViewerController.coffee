@@ -175,6 +175,7 @@ if Meteor.isClient
         $http.post "//api.idle.land/game/map", {map: mapName}
         .then (res) ->
           $scope.currentMap = res.data.map
+          console.log $scope.currentMap
           _.each $scope.currentMap?.map?.layers[2].objects, (object) ->
 
             object.properties =
