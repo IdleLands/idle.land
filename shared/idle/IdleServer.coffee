@@ -90,8 +90,8 @@ if Meteor.isServer
   Meteor.publish 'singlePet', (petUid) ->
     IdlePets.find {createdAt: petUid}
 
-  Meteor.publish 'guildPlayers', ->
-    IdlePlayers.find {}, {fields: guildFields}
+  Meteor.publish 'guildPlayers', (guildName) ->
+    IdlePlayers.find {guild: guildName}, {fields: guildFields}
 
   Meteor.publish 'allPlayers', ->
 

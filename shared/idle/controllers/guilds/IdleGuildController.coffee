@@ -15,7 +15,7 @@ if Meteor.isClient
         $collection IdleCollections.IdleGuilds
         .bind $scope, 'guilds'
 
-      $subscribe.subscribe 'guildPlayers'
+      $subscribe.subscribe 'guildPlayers', $scope.guildName
       .then ->
         $collection IdleCollections.IdlePlayers
         .bind $scope, 'players'
