@@ -28,3 +28,31 @@ a.dropdown-toggle {
     top: 0;
   }
 }
+
+.spaced-nav {
+  display: inline;
+  list-style-type: none;
+  width: 100%;
+  padding-right: 40px;
+  height: 32px;
+
+  li {
+    text-align: center;
+    display: inline;
+    vertical-align: middle;
+    line-height: 32px;
+
+    a {
+      width: 10%;
+      color: #000;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &.active a {
+      color: #cac;
+    }
+  }
+}
