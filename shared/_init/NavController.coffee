@@ -7,5 +7,11 @@ if Meteor.isClient
       $scope.isSidebarCollapsed = not $scope.isSidebarCollapsed
       SidebarCollapse.setCollapse $scope.isSidebarCollapsed
 
+    $scope.dropdown = [
+      {
+        text: 'test'
+        'ui-sref': 'idlepets'
+      }
+    ]
 
   ]
