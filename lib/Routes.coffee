@@ -129,6 +129,9 @@ if Meteor.isClient
           'content':
             template: UiRouter.template 'idlebattlelist'
             controller: 'IdleBattleList'
+          'sidebar':
+            template: UiRouter.template 'idlebattlelistsidebar'
+            controller: 'IdleBattleListSidebar'
 
       .state 'idlebattle',
         url: '/s/battles/:battleName'

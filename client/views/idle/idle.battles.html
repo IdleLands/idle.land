@@ -16,9 +16,23 @@
   {{> idlebattlebody }}
 </template>
 
+<template name="idlebattlelistsidebar">
+    <section class="content-header">
+        <h3 class="text-center filter-header">Filters</h3>
+    </section>
+    <section class="filters sidebar-form">
+        <div class="row">
+            <h4 class="text-center filter-header">Combatants</h4>
+            <div class="col-xs-12">
+                <input class="form-control" ng-model="editing.name" placeholder="Search by name..."/>
+            </div>
+        </div>
+    </section>
+</template>
+
 <template name="idlebattlebody">
     <div class="row filter-header">
-        <div ng-repeat="battle in battles | orderBy:['-started', 'name']">
+        <div ng-repeat="battle in getVisibleBattles() | orderBy:['-started', 'name']">
           {{> idlebattleitem }}
         </div>
     </div>
