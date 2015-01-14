@@ -132,8 +132,9 @@ if Meteor.isClient
 
         phaserOpts =
           preload: ->
-            @game.load.image "tiles", "http://api.idle.land/img/tiles.png", 16, 16
-            @game.load.spritesheet "interactables", "http://api.idle.land/img/tiles.png", 16, 16
+            url = "../../img/tiles.png"
+            @game.load.image "tiles", url, 16, 16
+            @game.load.spritesheet "interactables", url, 16, 16
             @game.load.tilemap newMapName, null, $scope.currentMap.map, Phaser.Tilemap.TILED_JSON
 
           create: ->
