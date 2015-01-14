@@ -132,8 +132,8 @@ if Meteor.isClient
 
         phaserOpts =
           preload: ->
-            @game.load.image "tiles", "../../img/tiles.png", 16, 16
-            @game.load.spritesheet "interactables", "../../img/tiles.png", 16, 16
+            @game.load.image "tiles", "http://api.idle.land/img/tiles.png", 16, 16
+            @game.load.spritesheet "interactables", "http://api.idle.land/img/tiles.png", 16, 16
             @game.load.tilemap newMapName, null, $scope.currentMap.map, Phaser.Tilemap.TILED_JSON
 
           create: ->
@@ -145,7 +145,7 @@ if Meteor.isClient
 
             objectGroup = @game.add.group()
 
-            for i in [1, 2, 12, 13, 14, 15, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35]
+            for i in [1, 2, 12, 13, 14, 15, 16, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35, 37]
               map.createFromObjects "Interactables", i, "interactables", i-1, yes, no, objectGroup
 
             handleObjects()
