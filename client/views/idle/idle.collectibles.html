@@ -41,14 +41,16 @@
     <div class="col-sm-6 col-md-3">
         <div class="small-box bg-cyan achievement-box">
             <div class="inner">
-                <h4>[[collectible.name]]</h4>
-                <p><small>Rarity: [[collectible.rarity]]</small></p>
+                <h4>Rarity: [[collectible.rarity]]</h4>
+                <p>Map: [[collectible.map]]</p>
+                <p><small>Region: [[collectible.region]]</small></p>
+                <p ng-if="!collectible.percent"><small>Found <span am-time-ago="collectible.foundAt" data-title="[[collectible.foundAt | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a']]" bs-tooltip></span></small></p>
             </div>
             <div class="icon" ng-if="!!collectible.percent">
                 ~[[collectible.percent]]%
             </div>
             <a class="small-box-footer">
-                [[collectible.map]] ([[collectible.region]])
+                [[collectible.name]]
             </a>
         </div>
     </div>

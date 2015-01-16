@@ -59,10 +59,13 @@
 </template>
 
 <template name="idleguildsidebar">
+    <section class="content-header">
+        <h3 class="text-center filter-header">Stats</h3>
+    </section>
     <ul class="sidebar-menu">
         <li>
             <a>
-                <i class="fa fa-fw fa-clock-o"></i> Founded <span am-time-ago="guild.createDate"></span>
+                <i class="fa fa-fw fa-clock-o"></i> Founded <span am-time-ago="guild.createDate" data-title="[[guild.createDate | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a']]" bs-tooltip></span>
             </a>
         </li>
         <li>
@@ -78,6 +81,21 @@
         <li>
             <a>
                 <i class="fa fa-fw fa-envelope"></i> [[guild.invitesAvailable]] invites left
+            </a>
+        </li>
+        <li>
+            <a>
+                <i class="fa fa-fw icon-money"></i> [[guild.gold.__current | number:0]] gold
+            </a>
+        </li>
+    </ul>
+    <section class="content-header" ng-if="guild.buffs.length > 0">
+        <h3 class="text-center filter-header">Buffs</h3>
+    </section>
+    <ul class="sidebar-menu">
+        <li ng-repeat="buff in guild.buffs">
+            <a>
+                <i class="fa fa-fw [[nameToIcon(buff.type)]]" bs-tooltip data-title="[[buff.name]]"></i> ([[buff.tier]]) Expires <span am-time-ago="buff.expire" data-title="[[buff.expire | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a']]" bs-tooltip></span>
             </a>
         </li>
     </ul>
