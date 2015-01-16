@@ -185,7 +185,7 @@ if Meteor.isClient
             terrain.resizeWorld()
             map.createLayer "Blocking"
 
-            for i in [1, 2, 12, 13, 14, 15, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35]
+            for i in [1, 2, 12, 13, 14, 15, 16, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35, 37, 48, 51]
               map.createFromObjects "Interactables", i, "interactables", i-1
 
             sprite = @game.add.sprite player.x*16, player.y*16, 'interactables',
