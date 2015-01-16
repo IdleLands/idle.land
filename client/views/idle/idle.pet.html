@@ -265,7 +265,7 @@
             </div>
             <div class="row" ng-if="equipment.foundAt && equipment.name !== 'empty' && equipment.type !== 'pet soul'">
                 <div class="col-xs-3 margin-left-15 subnote">
-                    Found <span am-time-ago="equipment.foundAt" data-title="[[equipment.foundAt]]" bs-tooltip></span>
+                    Found <span am-time-ago="equipment.foundAt" data-title="[[equipment.foundAt | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a']]" bs-tooltip></span>
                 </div>
                 <div class="col-xs-3 subnote">
                     <span
