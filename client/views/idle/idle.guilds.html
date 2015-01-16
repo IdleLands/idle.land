@@ -30,7 +30,7 @@
             <div class="inner">
                 <h4>[[guild.name]]</h4>
                 <p><small>[[guild.members.length]] members, led by <strong>[[guild.leaderName || guild.leader]]</strong></small></p>
-                <p><small>Founded <span am-time-ago="guild.createDate"></span></small></p>
+                <p><small>Founded <span am-time-ago="guild.createDate" bs-tooltip data-title="[[guild.createDate | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a']]"></span></small></p>
             </div>
             <div class="icon">
                 Lv[[guild.level]]
