@@ -74,7 +74,7 @@ if Meteor.isClient
 
       updateText = ->
         coordinates = ((game.camera.x+game.input.x)//16) + ", " + ((game.camera.y+game.input.y)//16)
-        textObject.text = "#{coordinates}\n#{itemText}"
+        textObject.text = "#{coordinates}\n#{itemText.split('\\n').join '\n'}"
 
       updateScale = ->
         return #currently, zooming is just a clusterfuck.
@@ -151,7 +151,7 @@ if Meteor.isClient
 
             handleObjects()
 
-            textObject = @game.add.text 10, 10, '', {font: '15px Arial', fill: '#fff', stroke: '#000', strokeThickness: 3}
+            textObject = @game.add.text 10, 10, '', {font: '15px Arial', fill: '#fff', stroke: '#000', strokeThickness: 3, wordWrap: yes, wordWrapWidth: 500}
             textObject.fixedToCamera = yes
 
             @game.camera.focusOnXY (parseInt $stateParams.x)*16, (parseInt $stateParams.y)*16 if $stateParams.x and $stateParams.y
