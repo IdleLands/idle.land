@@ -174,8 +174,9 @@ if Meteor.isClient
 
         phaserOpts =
           preload: ->
-            @game.load.image "tiles", "../../img/tiles.png", 16, 16
-            @game.load.spritesheet "interactables", "../../img/tiles.png", 16, 16
+            url = "//api.idle.land/img/tiles.png"
+            @game.load.image "tiles", url, 16, 16
+            @game.load.spritesheet "interactables", url, 16, 16
             @game.load.tilemap newMapName, null, $scope.currentMap.map, Phaser.Tilemap.TILED_JSON
 
           create: ->
@@ -185,7 +186,7 @@ if Meteor.isClient
             terrain.resizeWorld()
             map.createLayer "Blocking"
 
-            for i in [1, 2, 12, 13, 14, 15, 16, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35, 37, 48, 51]
+            for i in [1..100]
               map.createFromObjects "Interactables", i, "interactables", i-1
 
             sprite = @game.add.sprite player.x*16, player.y*16, 'interactables',
