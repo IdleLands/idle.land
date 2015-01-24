@@ -46,6 +46,7 @@ observe-sequence@1.0.4
 ordered-dict@1.0.2
 pfafman:font-awesome-4@4.2.0_4
 random@1.0.2
+rcy:nouislider@7.0.7_2
 reactive-dict@1.0.5
 reactive-var@1.0.4
 reload@1.1.2

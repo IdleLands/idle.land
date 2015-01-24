@@ -1,7 +1,7 @@
 
 if Meteor.isClient
 
-  angular.module 'kurea.web', ['ui.router', 'angular-meteor', 'mgcrea.ngStrap', 'angularMoment', 'highcharts-ng', 'ngSanitize']
+  angular.module 'kurea.web', ['ui.router', 'angular-meteor', 'mgcrea.ngStrap', 'angularMoment', 'highcharts-ng', 'ngSanitize', 'nouislider']
 
   Meteor.startup ->
     angular.bootstrap document, ['kurea.web']

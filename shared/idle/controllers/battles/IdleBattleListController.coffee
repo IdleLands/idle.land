@@ -9,7 +9,8 @@ if Meteor.isClient
         $collection IdleCollections.IdleBattles
         .bind $scope, 'battles'
 
-      $scope.memberFilter = '';
+      $scope.memberFilter = ''
+      $scope.minEvents = 0
 
       $scope.getVisibleBattles = ->
         return $scope.battles if not $scope.memberFilter
@@ -29,5 +30,6 @@ if Meteor.isClient
       $scope.$watch (->BattleListFilters.getBattleFilters()), (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.memberFilter = newVal.name
+        $scope.minEvents = newVal.min
       , yes
   ]
