@@ -369,8 +369,7 @@
                 <tr ng-repeat="event in item.recentEvents | orderBy:'createdAt':true">
                     <td am-time-ago="[[event.createdAt]]" class="col-md-3">
                     </td>
-                    <td>
-                        [[event.message]]
+                    <td ng-bind-html="event.message | linky">
                     </td>
                 </tr>
             </table>
