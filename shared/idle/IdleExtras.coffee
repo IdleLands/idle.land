@@ -70,6 +70,7 @@ if Meteor.isClient
         {name: 'Attacks Dodged',          key: 'statistics.combat self dodge'}
         {name: 'Heaviest Attack',         key: 'statistics.calculated max damage given'}
         {name: 'Biggest Switcheroo',      key: 'statistics.calculated biggest switcheroo'}
+        {name: 'Most Submissions',        key: 'permanentStatistics.contentSubmissions'}
       ], (item) -> item.name
       classes: []
       maps: []
