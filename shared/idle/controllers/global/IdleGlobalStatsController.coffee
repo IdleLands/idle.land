@@ -31,12 +31,12 @@ if Meteor.isClient
 
       $scope.topEquipment = []
 
-      $scope.statisticsToShow = _.sortBy Filters.getFilterData().extraStats.concat [
+      $scope.statisticsToShow = _.sortBy (Filters.getFilterData().extraStats.concat [
         {name: 'Personalities', key: '__personalities'}
         {name: 'Achievements', key: '__achievements'}
         {name: 'Guild Taxes', key: '__guildtax'}
         {name: 'Guild Donations', key: '__guilddonations'}
-      ]..., (stat) -> stat.name
+      ]), (stat) -> stat.name
 
       $scope.getMaxOfStat = (stat) ->
         list = _.filter $scope.players, (player) -> _.isNumber $scope.decompose player, stat
