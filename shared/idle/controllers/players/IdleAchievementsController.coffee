@@ -8,6 +8,15 @@ if Meteor.isClient
 
       PageTitle.setTitle "Idle Lands - #{if $stateParams.playerName then "#{$stateParams.playerName} (Achievements)" else "Global Achievements"}"
 
+      $scope.achievementTypeToIcon =
+        'class': 'fa-child'
+        'event': 'fa-info'
+        'combat': 'fa-legal'
+        'special': 'fa-gift'
+        'personality': 'fa-group'
+        'exploration': 'fa-compass'
+        'progress': 'fa-signal'
+
       $scope.getAchievements = ->
         if $scope.playerName then $scope.player?[0].achievements else $scope.calculatedAchievements
 

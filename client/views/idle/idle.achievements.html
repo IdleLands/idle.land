@@ -41,15 +41,18 @@
     <div class="col-sm-6 col-md-3">
         <div class="small-box bg-maroon achievement-box">
             <div class="inner">
-                <h4>[[achievement.name]] <span ng-if="achievement.title && !achievement.percent" class="text-right fa fa-tag" bs-tooltip data-title="[[achievement.title]]"></span></h4>
-                <p><small>[[achievement.desc]]</small></p>
+                <p class="big-description">[[achievement.desc]]</p>
+                <p class="big-description"><small>[[achievement.reward]]</small></p>
                 <p ng-if="!achievement.percent"><small>Achieved <span am-time-ago="player[0].achievementTimes[achievement.name]"></span></small></p>
             </div>
             <div class="icon" ng-if="!!achievement.percent">
                 ~[[achievement.percent]]%
             </div>
+            <div class="icon" ng-if="!achievement.percent">
+                <span class="fa [[ achievementTypeToIcon[achievement.type] ]]"></span>
+            </div>
             <a class="small-box-footer">
-                [[achievement.reward]]
+                [[achievement.name]] <span ng-if="achievement.title && !achievement.percent" class="text-right fa fa-tag" bs-tooltip data-title="[[achievement.title]]"></span>
             </a>
         </div>
     </div>
