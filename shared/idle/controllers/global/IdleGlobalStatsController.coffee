@@ -75,8 +75,8 @@ if Meteor.isClient
         switch key
           when "__personalities" then player.personalityStrings?.length
           when "__achievements" then player.achievements?.length
-          when "__guilddonations" then _.reduce (_.values player.statistics["calculated guild donations"] or []), ((prev, val) -> prev+val), 0
-          when "__guildtax" then _.reduce (_.values player.statistics["calculated guild taxes paid"] or []), ((prev, val) -> prev+val), 0
+          when "__guilddonations" then _.reduce (_.values player.statistics?["calculated guild donations"] or []), ((prev, val) -> prev+val), 0
+          when "__guildtax" then _.reduce (_.values player.statistics?["calculated guild taxes paid"] or []), ((prev, val) -> prev+val), 0
           else $scope.decompose player, key
 
       $scope.totalFromStatistics = (key) ->
