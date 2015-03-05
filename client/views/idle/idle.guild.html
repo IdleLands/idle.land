@@ -93,6 +93,11 @@
                 <i class="fa fa-fw icon-money"></i> Tax Percent [[guild.taxPercent]]%
             </a>
         </li>
+        <li>
+            <a ui-sref="idlemapviewer({mapName: guild.baseMapName})">
+                <i class="fa fa-fw fa-globe"></i> Guild Hall
+            </a>
+        </li>
     </ul>
     <section class="content-header" ng-if="guild.buffs.length > 0">
         <h3 class="text-center filter-header">Buffs</h3>
