@@ -43,6 +43,7 @@
             <div class="inner">
                 <h4>[[achievement.name]]</h4>
                 <p><small>[[achievement.desc]]</small></p>
+                <p ng-if="!achievement.percent"><small>Achieved <span am-time-ago="player[0].achievementTimes[achievement.name]"></span></small></p>
             </div>
             <div class="icon" ng-if="!!achievement.percent">
                 ~[[achievement.percent]]%
