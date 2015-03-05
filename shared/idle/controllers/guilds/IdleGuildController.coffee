@@ -45,10 +45,15 @@ if Meteor.isClient
         return [] if not $scope.guild
         _.reject $scope.guild.members, (member) -> member.isAdmin
 
+      $scope.isBuilt = (building) ->
+        _.contains $scope.flatBuilt, building
+
       $scope.$watch 'guilds', (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.guild = _.findWhere newVal, {name: $scope.guildName}
         CurrentGuild.setGuild $scope.guild
+
+        $scope.flatBuilt = $scope.guild.currentlyBuilt.sm.concat $scope.guild.currentlyBuilt.md.concat $scope.guild.currentlyBuilt.lg
 
       $scope.$watch 'players', (newVal, oldVal) ->
         return if newVal is oldVal

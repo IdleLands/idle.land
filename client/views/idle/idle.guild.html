@@ -11,22 +11,31 @@
     </section>
 
     <div class="row">
-        <h1 class="col-md-3 col-md-offset-1"><span class="fa fa-star"></span> Leader</h1>
-    </div>
+        <div class="col-md-6">
 
-    <div class="row">
-        <div class="col-md-3" ng-repeat="player in leader">
-            {{> idleguildmember}}
+            <div class="row">
+                <h1 class="col-md-6 col-md-offset-2"><span class="fa fa-star"></span> Leader</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" ng-repeat="player in leader">
+                    {{> idleguildmember}}
+                </div>
+            </div>
+
+            <div class="row">
+                <h1 class="col-md-6 col-md-offset-2"><span class="fa fa-star-half-o"></span> Admins</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" ng-repeat="player in admins track by $index">
+                    {{> idleguildmember}}
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <h1 class="col-md-3 col-md-offset-1"><span class="fa fa-star-half-o"></span> Admins</h1>
-    </div>
-
-    <div class="row">
-        <div class="col-md-3" ng-repeat="player in admins track by $index">
-          {{> idleguildmember}}
+        <div class="col-md-6">
+            {{> idleguildbuildings }}
         </div>
     </div>
 
@@ -37,6 +46,48 @@
     <div class="row">
         <div class="col-md-3 col-sm-6" ng-repeat="player in members track by $index">
           {{> idleguildmember}}
+        </div>
+    </div>
+</template>
+
+<template name="idleguildbuildings">
+    <div class="panel box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Guild Buildings</h3>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped table-condensed no-margin">
+                <tr>
+                    <th>Building</th>
+                    <th>Level</th>
+                    <th>Props</th>
+                </tr>
+                <tr ng-repeat="(building, data) in guild.validBuildings">
+                    <td>
+                        <span class="fa fa-[[isBuilt(building) ? 'check' : 'close']]"></span>
+                        <span class="stat-total"
+                                data-title="Size: [[data.size]]<br><br>[[data.desc]]"
+                                data-html="true"
+                                bs-tooltip
+                                >[[building]]</span>
+                    </td>
+                    <td>
+                        <span class="stat-total"
+                              data-title="Next Level Cost: [[(guild.buildingLevelCosts[building] | number:0) || 'unbuilt']]"
+                              bs-tooltip
+                                >[[ guild.buildingLevels[building] || 0 ]]</span>
+                    </td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="(prop, val) in guild.buildingProps[building]">
+                                <span class="stat-total"
+                                        data-title="[[val]]"
+                                        bs-tooltip>[[prop]]</span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </template>
@@ -95,7 +146,7 @@
         </li>
         <li>
             <a ui-sref="idlemapviewer({mapName: guild.baseMapName})">
-                <i class="fa fa-fw fa-globe"></i> Guild Hall
+                <i class="fa fa-fw fa-globe"></i> [[guild.base]] Guild Hall
             </a>
         </li>
     </ul>
