@@ -1,0 +1,177 @@
+<template name="idleglobalstatsguilds">
+    <section class="content-header">
+        <h1>IdleLands<small>Global Guilds</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li><span class="fa fa-calculator"></span> <a href="#" ui-sref="idleglobalstats">Stats</a></li>
+            <li class="active"><span class="fa fa-sitemap"></span> Guild</li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-sitemap text-info"></span> [[guilds.length]] guilds were aggregated for this statistics page
+        </span>
+    </div>
+
+    <div class="row filter-header">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalguildsguilds }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalguildsgold }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalguildsage }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalguildsbuildings }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalguildsbuildingtotals }}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalguildsguilds">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">Overall Guildiness</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Guild</th>
+                    <th>Level</th>
+                    <th>Leader</th>
+                    <th>Members</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="guild in guilds | orderBy:['-level', 'name']" ng-if="$index < 5">
+                    <td><a ui-sref="idleguild({guildName:guild.name})">[[guild.name]]</a></td>
+                    <td>[[guild.level]]</td>
+                    <td><a ui-sref="idleplayer({playerName:guild.leaderName})">[[guild.leaderName || guild.leader]]</a></td>
+                    <td>[[guild.members.length]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalguildsgold">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">Gilded Coffers</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Guild</th>
+                    <th>Tax Rate</th>
+                    <th>Gold</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="guild in guilds | orderBy:['-gold.__current']" ng-if="$index < 5">
+                    <td><a ui-sref="idleguild({guildName:guild.name})">[[guild.name]]</a></td>
+                    <td>[[guild.taxPercent]]%</td>
+                    <td>[[guild.gold.__current | number:0]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalguildsage">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">Freshly Guilded</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Guild</th>
+                    <th>Age</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="guild in guilds | orderBy:['-createDate']" ng-if="$index < 5">
+                    <td><a ui-sref="idleguild({guildName:guild.name})">[[guild.name]]</a></td>
+                    <td>
+                        <span am-time-ago="guild.createDate"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalguildsbuildingtotals">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="text-center">Totally Totals</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Building</th>
+                    <th>Level</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="(building,level) in totalLevels">
+                    <td>[[building]]</td>
+                    <td>[[level]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalguildsbuildings">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="text-center">Best Buildings</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Building</th>
+                    <th>Guild</th>
+                    <th class="text-center">Level</th>
+                    <th>Contribution</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="(building,level) in totalLevels">
+                    <td>[[building]]</td>
+                    <td><a ui-sref="idleguild({guildName: getMaxOfBuilding(building).head.name})">[[ getMaxOfBuilding(building).head.name ]]</a></td>
+                    <td bs-tooltip
+                        class="text-center"
+                        data-html="true"
+                        data-container="body"
+                        data-title="[[remainderToString(getMaxOfBuilding(building).runnerups, building)]]"
+                            ><span class="stat-total">[[ getMaxOfBuilding(building).head.buildingLevels[building] ]]</span></td>
+                    <td>[[ getPercentContribution(building) ]]%</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
