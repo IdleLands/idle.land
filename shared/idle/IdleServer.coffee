@@ -69,6 +69,7 @@ if Meteor.isServer
     xp: 1
     equipment: 1
     permanentAchievements: 1
+    collectibles: 1
 
   collectibleFields =
     collectibles: 1

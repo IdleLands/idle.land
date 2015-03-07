@@ -30,6 +30,7 @@ if Meteor.isClient
         {name: 'Achievements', key: '__achievements'}
         {name: 'Guild Taxes', key: '__guildtax'}
         {name: 'Guild Donations', key: '__guilddonations'}
+        {name: 'Collectibles', key: '__collectibles'}
       ]), (stat) -> stat.name
 
       $scope.getMaxOfStat = (stat) ->
@@ -69,6 +70,7 @@ if Meteor.isClient
         switch key
           when "__personalities" then player.personalityStrings?.length
           when "__achievements" then player.achievements?.length
+          when "__collectibles" then player.collectibles?.length
           when "__guilddonations" then _.reduce (_.values player.statistics?["calculated guild donations"] or []), ((prev, val) -> prev+val), 0
           when "__guildtax" then _.reduce (_.values player.statistics?["calculated guild taxes paid"] or []), ((prev, val) -> prev+val), 0
           else $scope.decompose player, key
