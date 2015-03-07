@@ -111,24 +111,24 @@ if Meteor.isClient
         {map, profession, personality} = $scope.filters.sorted
 
         baseOptions =
-          title: 'Top 10'
-
+          title:
+            text: ''
           options:
             credits: no
             chart:
               type: 'pie'
 
-        $scope.personalityChart = _.extend (_.clone baseOptions), series: [{
+        $scope.personalityChart = _.extend (_.clone baseOptions), title: {text: 'Top 10 Personalities'}, series: [{
           name: 'Using'
           data: personality[0..10]
         }]
 
-        $scope.professionChart = _.extend (_.clone baseOptions), series: [{
+        $scope.professionChart = _.extend (_.clone baseOptions), title: {text: 'Top 10 Classes'}, series: [{
           name: 'Representing'
           data: profession[0..10]
         }]
 
-        $scope.mapChart = _.extend (_.clone baseOptions), series: [{
+        $scope.mapChart = _.extend (_.clone baseOptions), title: {text: 'Top 10 Maps'}, series: [{
           name: 'On Map'
           data: map[0..10]
         }]
