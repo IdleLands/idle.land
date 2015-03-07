@@ -56,6 +56,9 @@ if Meteor.isClient
         'luck'
       ]
 
+      $scope.greaterThanNow = (date) ->
+        date > new Date
+
       $scope.getTopEquipment = ->
         $scope.topEquipment = []
 

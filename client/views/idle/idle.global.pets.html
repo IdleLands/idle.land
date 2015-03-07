@@ -123,7 +123,7 @@
                     <th>Next Find</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="pet in pets | orderBy:['-nextItemFind']" ng-if="$index < 7">
+                <tr ng-repeat="pet in pets | filter:{nextItemFind:'!'} | filter:'nextItemFind':greaterThanNow | orderBy:['nextItemFind']" ng-if="$index < 7">
                     <td><a ui-sref="idleplayerpet({playerName:pet.owner.name, petUid: pet.createdAt})">[[pet.name]]</a></td>
                     <td><span am-time-ago="pet.nextItemFind"></span></td>
                 </tr>
