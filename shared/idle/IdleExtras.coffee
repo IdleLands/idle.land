@@ -72,7 +72,6 @@ if Meteor.isClient
         {name: 'Biggest Switcheroo',      key: 'statistics.calculated biggest switcheroo'}
         {name: 'Times Tempted Fate',      key: 'statistics.event providence'}
         {name: 'Lost Levels',             key: 'statistics.event levelDown'}
-        {name: 'Biggest Switcheroo',      key: 'statistics.calculated biggest switcheroo'}
         {name: 'Most Submissions',        key: 'permanentAchievements.contentSubmissions'}
       ], (item) -> item.name
       classes: []
