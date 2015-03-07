@@ -148,7 +148,7 @@
                     <th>Attributes</th>
                 </tr>
                 </thead>
-                <tr ng-repeat="pet in pets | orderBy:['-createDate']" ng-if="$index < 9">
+                <tr ng-repeat="pet in pets | orderBy:['-createDate']" ng-if="$index < 10">
                     <td><a ui-sref="idleplayer({playerName: pet.owner.name})">[[pet.owner.name]]</a></td>
                     <td><a ui-sref="idleplayerpet({playerName:pet.owner.name, petUid: pet.createdAt})">[[pet.name]]</a></td>
                     <td class="text-center"
