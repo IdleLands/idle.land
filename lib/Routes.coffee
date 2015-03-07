@@ -38,6 +38,13 @@ if Meteor.isClient
             template: UiRouter.template 'idleglobalstatsguilds'
             controller: 'IdleGlobalGuilds'
 
+      .state 'idleglobalstatspets',
+        url: '/s/stats/global/pet'
+        views:
+          'content':
+            template: UiRouter.template 'idleglobalstatspets'
+            controller: 'IdleGlobalPets'
+
       .state 'idleglobalachievements',
         url: '/s/achievements'
         views:
@@ -45,8 +52,22 @@ if Meteor.isClient
             template: UiRouter.template 'idleachievements'
             controller: 'IdleAchievements'
 
+      .state 'idleplayerachievements',
+        url: '/s/achievements/:playerName'
+        views:
+          'content':
+            template: UiRouter.template 'idleachievements'
+            controller: 'IdleAchievements'
+
       .state 'idleglobalcollectibles',
         url: '/s/collectibles'
+        views:
+          'content':
+            template: UiRouter.template 'idlecollectibles'
+            controller: 'IdleCollectibles'
+
+      .state 'idleplayercollectibles',
+        url: '/s/collectibles/:playerName'
         views:
           'content':
             template: UiRouter.template 'idlecollectibles'

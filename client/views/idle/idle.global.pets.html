@@ -1,0 +1,218 @@
+<template name="idleglobalstatspets">
+    <section class="content-header">
+        <h1>IdleLands<small>Global Pets</small></h1>
+        <ol class="breadcrumb">
+            <li><span class="fa fa-group"></span> <a href="#" ui-sref="idle.urlone">Player List</a></li>
+            <li><span class="fa fa-calculator"></span> <a href="#" ui-sref="idleglobalstats">Stats</a></li>
+            <li class="active"><span class="fa fa-paw"></span> Pet</li>
+        </ol>
+    </section>
+
+    <div class="row both-margins-15">
+        <span class="col-md-6">
+            <span class="fa fa-paw text-info"></span> [[pets.length]] pets were aggregated for this statistics page
+        </span>
+    </div>
+
+    <div class="row filter-header">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalpetsnewest }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    {{> idleglobalpetspent }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{> idleglobalpetstats }}
+        </div>
+        <div class="col-md-4">
+            {{> idleglobalpetlevels }}
+        </div>
+        <div class="col-md-4">
+            {{> idleglobalpetfinds }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{> idleglobalpetsequipment }}
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalpetsequipment">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h4 class="text-center">Best Items of All Time (For Now)</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Owner Name</th>
+                    <th>Item Categorization</th>
+                    <th>Item Name</th>
+                    <th>Item Score</th>
+                    <th ng-repeat="header in statOrder">[[header.toUpperCase()]]</th>
+                </tr>
+                </thead>
+                <tr ng-if="topEquipment.length === 0">
+                    <td colspan="11">Calculating the best items...</td>
+                </tr>
+                <tr ng-repeat="item in topEquipment track by $index">
+                    <td><a ui-sref="idleplayerpet({playerName:item.owner.player, petUid: item.owner.uid})">[[item.owner.pet]]</a></td>
+                    <td>[[item.itemClass]] [[item.type]]</td>
+                    <td>[[item.enchantLevel ? '+'+item.enchantLevel+' ' : '']][[item.name]]</td>
+                    <td>[[item._calcScore]]</td>
+                    <td ng-repeat="header in statOrder"
+                        ng-class="{
+                            'text-success': item[header] > 0,
+                            'text-danger': item[header] < 0
+                        }">
+                        [[ item[header] ]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalpetlevels">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">So Close...</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Pet</th>
+                    <th>Level</th>
+                    <th>XP%</th>
+                    <th>XP</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="pet in getOrderedByXpPercent()" ng-if="$index < 7">
+                    <td><a ui-sref="idleplayerpet({playerName:pet.owner.name, petUid: pet.createdAt})">[[pet.name]]</a></td>
+                    <td>[[pet.level.__current]]</td>
+                    <td>[[(pet.xp.__current/pet.xp.maximum*100).toFixed(3)]]%</td>
+                    <td>[[pet.xp.__current]]/[[pet.xp.maximum]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalpetfinds">
+    <div class="box box-warning">
+        <div class="box-header">
+            <h4 class="text-center">Playing Fetch</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Pet</th>
+                    <th>Next Find</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="pet in pets | orderBy:['-nextItemFind']" ng-if="$index < 7">
+                    <td><a ui-sref="idleplayerpet({playerName:pet.owner.name, petUid: pet.createdAt})">[[pet.name]]</a></td>
+                    <td><span am-time-ago="pet.nextItemFind"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalpetsnewest">
+    <div class="box box-info">
+        <div class="box-header">
+            <h4 class="text-center">Recently Adopted</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Owner</th>
+                    <th>Name</th>
+                    <th>Adopt Time</th>
+                    <th>Pet Type</th>
+                    <th>Attributes</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="pet in pets | orderBy:['-createDate']" ng-if="$index < 9">
+                    <td><a ui-sref="idleplayer({playerName: pet.owner.name})">[[pet.owner.name]]</a></td>
+                    <td><a ui-sref="idleplayerpet({playerName:pet.owner.name, petUid: pet.createdAt})">[[pet.name]]</a></td>
+                    <td class="text-center"
+                        am-time-ago="pet.createDate"
+                        data-title="[[pet.createDate]]"
+                        data-container="body"
+                        bs-tooltip></td>
+                    <td>[[pet.type]]</td>
+                    <td>[[pet.attrs.join(', ')]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalpetspent">
+    <div class="box box-warning">
+        <div class="box-header">
+            <h4 class="text-center">Gold Sinks</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Total Level</th>
+                    <th>Total Spent</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="(stat, data) in costHash" ng-if="data.level > 0">
+                    <td>[[stat]]</td>
+                    <td>[[data.level]]</td>
+                    <td>[[data.spent | number:0]]</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template name="idleglobalpetstats">
+    <div class="box box-success">
+        <div class="box-header">
+            <h4 class="text-center">Top Stats</h4>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Stat</th>
+                    <th>Pet</th>
+                    <th class="text-center">Score</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="stat in statOrder">
+                    <td>[[stat.toUpperCase()]]</td>
+                    <td><a ui-sref="idleplayerpet({playerName:getMaxOfStat(stat).head.owner.name, petUid: getMaxOfStat(stat).head.createdAt})">[[ getMaxOfStat(stat).head.name ]]</a></td>
+                    <td bs-tooltip
+                        class="text-center"
+                        data-html="true"
+                        data-container="body"
+                        data-title="[[remainderToString(getMaxOfStat(stat).runnerups, stat)]]"
+                            ><span class="stat-total">[[ getMaxOfStat(stat).head._statCache[stat] ]]</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>

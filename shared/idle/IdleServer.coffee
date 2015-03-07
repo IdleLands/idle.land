@@ -85,6 +85,26 @@ if Meteor.isServer
     createdAt: 1
     professionName: 1
 
+  globalPetFields =
+    type: 1
+    professionName: 1
+    owner: 1
+    level: 1
+    equipment: 1
+    inventory: 1
+    createdAt: 1
+    attrs: 1
+    createDate: 1
+    nextItemFind: 1
+    xp: 1
+    name: 1
+    scaleLevel: 1
+    _configCache: 1
+    _statCache: 1
+
+  Meteor.publish 'globalPets', ->
+    IdlePets.find {isActive: yes}, {sort: {name: 1}, fields: globalPetFields}
+
   Meteor.publish 'allPets', (filter = {}) ->
     IdlePets.find filter, {sort: {name: 1}, fields: petListFields}
 
