@@ -9,12 +9,6 @@ if Meteor.isClient
 
       $scope.cached = {}
 
-      $methods.call 'monsterCount'
-      .then (data) -> $scope.cached.monsters = data
-
-      $methods.call 'itemCount'
-      .then (data) -> _.extend $scope.cached, data
-
       $scope._ = window._
       $subscribe.subscribe 'globalStatsPlayers'
       .then ->
@@ -113,6 +107,32 @@ if Meteor.isClient
 
         $scope.topEquipment = (_.sortBy (_.compact $scope.topEquipment), (item) -> -item?._calcScore or 0)[0..10]
 
+      $scope.setupPieCharts = ->
+        {map, profession, personality} = $scope.filters.sorted
+
+        baseOptions =
+          title: 'Top 10'
+
+          options:
+            credits: no
+            chart:
+              type: 'pie'
+
+        $scope.personalityChart = _.extend (_.clone baseOptions), series: [{
+          name: 'Using'
+          data: personality[0..10]
+        }]
+
+        $scope.professionChart = _.extend (_.clone baseOptions), series: [{
+          name: 'Representing'
+          data: profession[0..10]
+        }]
+
+        $scope.mapChart = _.extend (_.clone baseOptions), series: [{
+          name: 'On Map'
+          data: map[0..10]
+        }]
+
       $scope.$watch 'players', (newVal, oldVal) ->
         return if not newVal or newVal.length is 0 or newVal is oldVal
         $scope._filters.loadFiltersFromPlayers newVal
@@ -121,5 +141,6 @@ if Meteor.isClient
       $scope.$watch '_filters.getFilterData()', (newVal, oldVal) ->
         return if newVal is oldVal
         $scope.filters = newVal
+        $scope.setupPieCharts()
       , yes
   ]

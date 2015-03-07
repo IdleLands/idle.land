@@ -16,6 +16,18 @@
 
     <div class="row filter-header">
         <div class="col-md-4">
+            {{> idleglobalstatspopclasses }}
+        </div>
+        <div class="col-md-4">
+            {{> idleglobalstatspopmaps }}
+        </div>
+        <div class="col-md-4">
+            {{> idleglobalstatspoppers }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
             <div class="row">
                 <div class="col-md-12">
                     {{> idleglobalstatsbase }}
@@ -50,20 +62,6 @@
     <div class="row">
         <div class="col-md-12">
             {{> idleglobalstatsitems }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            {{> idleglobalstatsgeneratable }}
-        </div>
-        <div class="col-md-3">
-            {{> idleglobalstatspopclasses }}
-        </div>
-        <div class="col-md-3">
-            {{> idleglobalstatspopmaps }}
-        </div>
-        <div class="col-md-3">
-            {{> idleglobalstatspoppers }}
         </div>
     </div>
 </template>
@@ -242,52 +240,13 @@
     </div>
 </template>
 
-<template name="idleglobalstatsgeneratable">
-    <div class="box box-info">
-        <div class="box-header">
-            <h4 class="text-center">Generally Generatable</h4>
-        </div>
-        <div class="box-body no-padding">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Data Type</th>
-                    <th class="text-center">Total Available</th>
-                </tr>
-                </thead>
-                <tr ng-if="_.isEmpty(cached)">
-                    <td colspan="2">Loading database metrics...</td>
-                </tr>
-                <tr ng-repeat="(key,value) in cached">
-                    <td>[[key]]</td>
-                    <td class="text-center">[[value]]</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</template>
-
 <template name="idleglobalstatspopclasses">
     <div class="box box-info">
         <div class="box-header">
             <h4 class="text-center">Popular Classes</h4>
         </div>
         <div class="box-body no-padding">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Class</th>
-                    <th>Count</th>
-                </tr>
-                </thead>
-                <tr ng-if="_.isEmpty(filters.cache.map)">
-                    <td colspan="2">No players are available! :(</td>
-                </tr>
-                <tr ng-repeat="kv in filters.sorted.profession">
-                    <td>[[ kv[0] ]]</td>
-                    <td>[[ kv[1] ]]</td>
-                </tr>
-            </table>
+            <highchart config="professionChart"></highchart>
         </div>
     </div>
 </template>
@@ -298,21 +257,7 @@
             <h4 class="text-center">Popular Maps</h4>
         </div>
         <div class="box-body no-padding">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Personality</th>
-                    <th>Count</th>
-                </tr>
-                </thead>
-                <tr ng-if="_.isEmpty(filters.cache.map)">
-                    <td colspan="2">No players are available! :(</td>
-                </tr>
-                <tr ng-repeat="kv in filters.sorted.map">
-                    <td>[[ kv[0] ]]</td>
-                    <td>[[ kv[1] ]]</td>
-                </tr>
-            </table>
+            <highchart config="mapChart"></highchart>
         </div>
     </div>
 </template>
@@ -323,21 +268,7 @@
             <h4 class="text-center">Popular Personalities</h4>
         </div>
         <div class="box-body no-padding">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Map</th>
-                    <th>Count</th>
-                </tr>
-                </thead>
-                <tr ng-if="_.isEmpty(filters.cache.personality)">
-                    <td colspan="2">No one is using any personalities :(</td>
-                </tr>
-                <tr ng-repeat="kv in filters.sorted.personality">
-                    <td>[[ kv[0] ]]</td>
-                    <td>[[ kv[1] ]]</td>
-                </tr>
-            </table>
+            <highchart config="personalityChart"></highchart>
         </div>
     </div>
 </template>
